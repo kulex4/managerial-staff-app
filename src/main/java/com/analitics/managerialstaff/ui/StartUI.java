@@ -1,7 +1,10 @@
 package com.analitics.managerialstaff.ui;
 
+import com.analitics.managerialstaff.ui.presenter.BodyPresenter;
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.Title;
+import com.vaadin.navigator.Navigator;
+import com.vaadin.navigator.ViewDisplay;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.ui.UI;
 import com.analitics.managerialstaff.ui.common.Action;
@@ -33,8 +36,14 @@ public class StartUI extends UI {
     @Autowired
     private MainPresenter mainPresenter;
 
+    @Autowired
+    private BodyPresenter bodyPresenter;
+
     @Override
     protected void init(VaadinRequest vaadinRequest) {
+        Navigator navigator = new Navigator(this, (ViewDisplay) bodyPresenter.getView());
+        navigator.addProvider(viewProvider);
+
         eventBus.publish(EventScope.SESSION, this, Action.START);
         setContent(mainPresenter.getView());
     }
