@@ -1,5 +1,6 @@
 package com.analitics.managerialstaff.ui.view;
 
+import com.analitics.managerialstaff.backend.model.Employee;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.ui.Label;
@@ -8,6 +9,7 @@ import org.vaadin.spring.annotation.VaadinUIScope;
 import org.vaadin.spring.navigator.annotation.VaadinView;
 
 import javax.annotation.PostConstruct;
+import java.util.List;
 
 /**
  * @author by nikolai.pashkevich
@@ -18,8 +20,6 @@ public class MainView extends VerticalLayout implements View {
 
     public static final String VIEW_NAME = "main";
 
-    private Label label;
-
     @PostConstruct
     private void init() {
         setMargin(true);
@@ -28,8 +28,16 @@ public class MainView extends VerticalLayout implements View {
     }
 
     public void setData() {
-        label = new Label("Hello from view!");
+        Label label = new Label("Hello from view!");
         addComponent(label);
+    }
+
+    public void printEmployees(List<Employee> employees) {
+        if (employees.size() > 0) {
+            for (Employee employee : employees) {
+                addComponent(new Label(employee.getSurname() + " " + employee.getForename()));
+            }
+        }
     }
 
     @Override
