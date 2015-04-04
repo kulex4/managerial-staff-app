@@ -31,6 +31,6 @@ public class BodyViewDisplayPresenter extends AbstractPresenter<BodyViewDisplay>
 
     @EventBusListenerMethod(scope = EventScope.SESSION, filter = StartupFilter.class)
     public void onStartup(Event<Action> event) {
-
+        getView().setMainMenu(mainMenuPresenter.getView());
     }
 }

@@ -26,12 +26,12 @@ public class BodyViewDisplay extends VerticalSplitPanel implements ViewDisplay {
         setSizeFull();
     }
 
+    public void setMainMenu(Component mainMenu) {
+        setFirstComponent(mainMenu);
+    }
+
     @Override
     public void showView(View view) {
         setSecondComponent((Component) view);
-    }
-
-    public void setMainMenu(Component mainMenu) {
-        setFirstComponent(mainMenu);
     }
 }

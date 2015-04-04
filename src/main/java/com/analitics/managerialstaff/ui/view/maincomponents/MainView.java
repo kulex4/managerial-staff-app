@@ -7,12 +7,21 @@ import com.vaadin.ui.VerticalLayout;
 import org.vaadin.spring.annotation.VaadinComponent;
 import org.vaadin.spring.annotation.VaadinUIScope;
 
+import javax.annotation.PostConstruct;
+
 /**
  * @author by nikolai.pashkevich
  */
 @VaadinComponent
 @VaadinUIScope
 public class MainView extends VerticalLayout implements View {
+
+    @PostConstruct
+    private void init() {
+        setMargin(true);
+        setSpacing(true);
+        setSizeFull();
+    }
 
     public void setHeader(Component header) {
         addComponent(header);
@@ -24,9 +33,5 @@ public class MainView extends VerticalLayout implements View {
     }
 
     @Override
-    public void enter(ViewChangeListener.ViewChangeEvent viewChangeEvent) {
-        setMargin(true);
-        setSpacing(true);
-        setSizeFull();
-    }
+    public void enter(ViewChangeListener.ViewChangeEvent viewChangeEvent) {}
 }
