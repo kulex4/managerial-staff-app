@@ -1,8 +1,7 @@
-package com.analitics.managerialstaff.ui.view;
+package com.analitics.managerialstaff.ui.view.navigations;
 
-import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
-import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.VerticalLayout;
 import org.vaadin.spring.annotation.VaadinUIScope;
 import org.vaadin.spring.navigator.annotation.VaadinView;
 
@@ -10,10 +9,8 @@ import org.vaadin.spring.navigator.annotation.VaadinView;
  * @author by nikolai.pashkevich
  */
 @VaadinUIScope
-@VaadinView(name = MainMenuView.VIEW_NAME)
-public class MainMenuView extends HorizontalLayout implements View {
-
-    public static final String VIEW_NAME = "mainMenu";
+@VaadinView(name = HomeView.NAME)
+public class HomeViewImpl extends VerticalLayout implements HomeView {
 
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent viewChangeEvent) {

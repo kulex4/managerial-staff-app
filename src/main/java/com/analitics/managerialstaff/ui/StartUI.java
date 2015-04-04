@@ -1,6 +1,6 @@
 package com.analitics.managerialstaff.ui;
 
-import com.analitics.managerialstaff.ui.presenter.BodyPresenter;
+import com.analitics.managerialstaff.ui.presenter.maincomponents.BodyViewDisplayPresenter;
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.Title;
 import com.vaadin.navigator.Navigator;
@@ -8,7 +8,7 @@ import com.vaadin.navigator.ViewDisplay;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.ui.UI;
 import com.analitics.managerialstaff.ui.common.Action;
-import com.analitics.managerialstaff.ui.presenter.MainPresenter;
+import com.analitics.managerialstaff.ui.presenter.maincomponents.MainPresenter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.vaadin.spring.annotation.VaadinUI;
 import org.vaadin.spring.annotation.VaadinUIScope;
@@ -20,7 +20,7 @@ import org.vaadin.spring.navigator.SpringViewProvider;
  * @author by nikolai.pashkevich
  */
 @Title("Managerial Staff Application")
-@Theme("valo")
+@Theme("mytheme")
 @VaadinUI
 @VaadinUIScope
 public class StartUI extends UI {
@@ -37,11 +37,11 @@ public class StartUI extends UI {
     private MainPresenter mainPresenter;
 
     @Autowired
-    private BodyPresenter bodyPresenter;
+    private BodyViewDisplayPresenter bodyViewDisplayPresenter;
 
     @Override
     protected void init(VaadinRequest vaadinRequest) {
-        Navigator navigator = new Navigator(this, (ViewDisplay) bodyPresenter.getView());
+        Navigator navigator = new Navigator(this, (ViewDisplay) bodyViewDisplayPresenter.getView());
         navigator.addProvider(viewProvider);
 
         eventBus.publish(EventScope.SESSION, this, Action.START);

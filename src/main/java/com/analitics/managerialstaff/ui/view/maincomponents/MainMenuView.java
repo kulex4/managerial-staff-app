@@ -1,19 +1,17 @@
-package com.analitics.managerialstaff.ui.view;
+package com.analitics.managerialstaff.ui.view.maincomponents;
 
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.ui.HorizontalLayout;
+import org.vaadin.spring.annotation.VaadinComponent;
 import org.vaadin.spring.annotation.VaadinUIScope;
-import org.vaadin.spring.navigator.annotation.VaadinView;
 
 /**
  * @author by nikolai.pashkevich
  */
+@VaadinComponent
 @VaadinUIScope
-@VaadinView(name = HeaderView.VIEW_NAME)
-public class HeaderView extends HorizontalLayout implements View {
-
-    public static final String VIEW_NAME = "header";
+public class MainMenuView extends HorizontalLayout implements View {
 
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent viewChangeEvent) {

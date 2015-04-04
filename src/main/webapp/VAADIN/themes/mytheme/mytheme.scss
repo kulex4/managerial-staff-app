@@ -1,0 +1,15 @@
+@import "../valo/valo";
+@import "addons.scss";
+
+@mixin mytheme {
+  @include valo;
+  @include addons;
+
+  /*Hide 1px splitter for horizontal and vertical split panels*/
+  .v-splitpanel-hsplitter-hide-splitter,
+  .v-splitpanel-hsplitter-hide-splitter div,
+  .v-splitpanel-vsplitter-hide-splitter,
+  .v-splitpanel-vsplitter-hide-splitter div {
+    width: 0;
+  }
+}
