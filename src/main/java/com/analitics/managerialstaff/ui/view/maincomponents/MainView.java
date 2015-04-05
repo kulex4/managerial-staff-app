@@ -25,11 +25,12 @@ public class MainView extends VerticalLayout implements View {
 
     public void setHeader(Component header) {
         addComponent(header);
+        setExpandRatio(header, 1);
     }
 
     public void setBody(Component body) {
         addComponent(body);
-        setExpandRatio(body, 1);
+        setExpandRatio(body, 8);
     }
 
     @Override

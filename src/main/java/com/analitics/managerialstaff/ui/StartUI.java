@@ -20,7 +20,7 @@ import org.vaadin.spring.navigator.SpringViewProvider;
  * @author by nikolai.pashkevich
  */
 @Title("Managerial Staff Application")
-@Theme("mytheme")
+@Theme("valo")
 @VaadinUI
 @VaadinUIScope
 public class StartUI extends UI {

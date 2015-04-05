@@ -2,8 +2,6 @@ package com.analitics.managerialstaff.ui.view.maincomponents;
 
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
-import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.Panel;
 import org.vaadin.spring.annotation.VaadinComponent;
 import org.vaadin.spring.annotation.VaadinUIScope;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
