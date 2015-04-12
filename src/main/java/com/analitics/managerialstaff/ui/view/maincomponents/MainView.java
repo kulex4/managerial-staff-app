@@ -1,11 +1,11 @@
 package com.analitics.managerialstaff.ui.view.maincomponents;
 
-import com.vaadin.navigator.View;
-import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.VerticalLayout;
 import org.vaadin.spring.annotation.VaadinComponent;
 import org.vaadin.spring.annotation.VaadinUIScope;
+import org.vaadin.viritin.layouts.MHorizontalLayout;
+import org.vaadin.viritin.layouts.MVerticalLayout;
 
 import javax.annotation.PostConstruct;
 
@@ -14,25 +14,44 @@ import javax.annotation.PostConstruct;
  */
 @VaadinComponent
 @VaadinUIScope
-public class MainView extends VerticalLayout implements View {
+public class MainView extends VerticalLayout {
+
+    private MVerticalLayout content;
 
     @PostConstruct
     private void init() {
         setMargin(true);
         setSpacing(true);
         setSizeFull();
+        initComponents();
+    }
+
+    private void initComponents() {
+        content = new MVerticalLayout().withFullHeight().withFullWidth().withMargin(false);
+
+        MVerticalLayout leftSide = new MVerticalLayout().withFullHeight().withFullWidth();
+        MVerticalLayout rightSide = new MVerticalLayout().withFullHeight().withFullWidth();
+
+        MHorizontalLayout rootContent = new MHorizontalLayout(
+                leftSide,
+                content,
+                rightSide
+        ).withFullWidth().withFullHeight();
+
+        rootContent.setExpandRatio(leftSide, 2);
+        rootContent.setExpandRatio(content, 8);
+        rootContent.setExpandRatio(rightSide, 2);
+
+        addComponent(rootContent);
     }
 
     public void setHeader(Component header) {
-        addComponent(header);
-        setExpandRatio(header, 1);
+        content.add(header);
+        content.setExpandRatio(header, 1);
     }
 
     public void setBody(Component body) {
-        addComponent(body);
-        setExpandRatio(body, 8);
+        content.add(body);
+        content.setExpandRatio(body, 8);
     }
-
-    @Override
-    public void enter(ViewChangeListener.ViewChangeEvent viewChangeEvent) {}
 }

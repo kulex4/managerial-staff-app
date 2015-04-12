@@ -1,7 +1,5 @@
 package com.analitics.managerialstaff.ui.view.maincomponents;
 
-import com.vaadin.navigator.View;
-import com.vaadin.navigator.ViewChangeListener;
 import org.vaadin.spring.annotation.VaadinComponent;
 import org.vaadin.spring.annotation.VaadinUIScope;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
@@ -13,21 +11,14 @@ import javax.annotation.PostConstruct;
  */
 @VaadinComponent
 @VaadinUIScope
-public class HeaderView extends MHorizontalLayout implements View {
-
-    private MHorizontalLayout headerContent;
+public class HeaderView extends MHorizontalLayout {
 
     @PostConstruct
     private void init() {
-        headerContent = new MHorizontalLayout()
+        MHorizontalLayout headerContent = new MHorizontalLayout()
                 .withFullWidth()
                 .withHeight("200px");
 
         addComponent(headerContent);
-    }
-
-    @Override
-    public void enter(ViewChangeListener.ViewChangeEvent viewChangeEvent) {
-
     }
 }

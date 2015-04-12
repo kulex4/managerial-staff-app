@@ -15,11 +15,9 @@ import javax.annotation.PostConstruct;
 @VaadinView(name = HomeView.NAME)
 public class HomeViewImpl extends VerticalLayout implements HomeView {
 
-    private MHorizontalLayout homeContent;
-
     @PostConstruct
     private void init() {
-        homeContent = new MHorizontalLayout()
+        MHorizontalLayout homeContent = new MHorizontalLayout()
                 .withFullHeight()
                 .withFullWidth();
 

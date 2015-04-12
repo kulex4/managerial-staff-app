@@ -1,7 +1,5 @@
 package com.analitics.managerialstaff.ui.view.maincomponents;
 
-import com.vaadin.navigator.View;
-import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.ui.*;
 import org.vaadin.spring.annotation.VaadinComponent;
 import org.vaadin.spring.annotation.VaadinUIScope;
@@ -13,14 +11,12 @@ import javax.annotation.PostConstruct;
  */
 @VaadinComponent
 @VaadinUIScope
-public class MainMenuView extends VerticalLayout implements View {
-
-    private MenuBar mainMenuBar;
+public class MainMenuView extends VerticalLayout {
 
     @PostConstruct
     private void init() {
 
-        mainMenuBar = new MenuBar();
+        MenuBar mainMenuBar = new MenuBar();
         mainMenuBar.addItem("Главная", null, menuCommand);
         mainMenuBar.addItem("Департаменты", null, menuCommand);
         mainMenuBar.addItem("Аттестация", null, menuCommand);
@@ -31,9 +27,6 @@ public class MainMenuView extends VerticalLayout implements View {
         addComponent(mainMenuBar);
         setComponentAlignment(mainMenuBar, Alignment.MIDDLE_CENTER);
     }
-
-    @Override
-    public void enter(ViewChangeListener.ViewChangeEvent viewChangeEvent) {}
 
     private final MenuBar.Command menuCommand = selectedItem ->
             Notification.show("Action " + selectedItem.getText(), Notification.Type.HUMANIZED_MESSAGE);
