@@ -13,13 +13,13 @@ import javax.annotation.PostConstruct;
  * @author by nikolai.pashkevich
  */
 @VaadinUIScope
-@VaadinView(name = HomeView.NAME)
-public class HomeViewImpl extends VerticalLayout implements HomeView {
+@VaadinView(name = DepartmentsView.NAME)
+public class DepartmentsViewImpl extends VerticalLayout implements DepartmentsView {
 
     @PostConstruct
     private void init() {
         MHorizontalLayout homeContent = new MHorizontalLayout(
-                new Label("Home view")
+                new Label("Departments view")
         ).withFullHeight().withFullWidth().withMargin(true);
         addComponent(homeContent);
     }
