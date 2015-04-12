@@ -17,9 +17,11 @@ import javax.annotation.PostConstruct;
 @VaadinComponent
 public class BodyViewDisplay extends VerticalSplitPanel implements ViewDisplay {
 
+    public static final int HEIGHT = 37;
+
     @PostConstruct
     private void init() {
-        setSplitPosition(32, Unit.PIXELS);
+        setSplitPosition(HEIGHT, Unit.PIXELS);
         setLocked(true);
         setStyleName(MyTheme.PANEL_BORDERLESS);
         setStyleName(MyTheme.HIDE_SPLITTER);
