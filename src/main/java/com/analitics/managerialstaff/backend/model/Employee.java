@@ -13,6 +13,14 @@ import javax.persistence.*;
 @Entity
 public class Employee {
 
+    public static final String SURNAME = "surname";
+    public static final String FORENAME = "forename";
+    public static final String AGE = "age";
+    public static final String POSITION = "position";
+    public static final String GENDER = "gender";
+    public static final String GRADE = "grade";
+    public static final String EXPERIENCE = "experience";
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;

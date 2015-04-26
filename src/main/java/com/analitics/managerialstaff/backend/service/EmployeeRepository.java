@@ -9,6 +9,4 @@ import java.util.List;
  * @author by nikolai.pashkevich
  */
 public interface EmployeeRepository extends CrudRepository<Employee, Long> {
-
-    List<Employee> findAll();
 }

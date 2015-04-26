@@ -2,16 +2,14 @@ package com.analitics.managerialstaff.backend.service;
 
 import com.analitics.managerialstaff.backend.model.Employee;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 /**
  * @author by nikolai.pashkevich
  */
 @Transactional
-@Component("employeeService")
+@Service("employeeService")
 public class EmployeeServiceImpl implements EmployeeService {
 
     private EmployeeRepository employeeRepository;
@@ -22,7 +20,17 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public List<Employee> findEmployees() {
+    public void saveOrUpdate(Employee employee) {
+        employeeRepository.save(employee);
+    }
+
+    @Override
+    public Iterable<Employee> findEmployees() {
         return employeeRepository.findAll();
+    }
+
+    @Override
+    public void remove(Employee employee) {
+        employeeRepository.delete(employee);
     }
 }

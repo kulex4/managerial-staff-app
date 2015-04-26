@@ -4,6 +4,7 @@ import com.analitics.managerialstaff.ui.common.AbstractPresenter;
 import com.analitics.managerialstaff.ui.common.Action;
 import com.analitics.managerialstaff.ui.common.StartupFilter;
 import com.analitics.managerialstaff.ui.components.events.NavigationRequest;
+import com.analitics.managerialstaff.ui.presenter.navigations.EmployeesPresenter;
 import com.analitics.managerialstaff.ui.presenter.navigations.HomePresenter;
 import com.analitics.managerialstaff.ui.view.maincomponents.MainMenuView;
 import com.analitics.managerialstaff.ui.view.navigations.HomeView;
@@ -28,6 +29,8 @@ public class MainMenuPresenter extends AbstractPresenter<MainMenuView> implement
 
     @Autowired
     private HomePresenter homePresenter;
+
+    @Autowired private EmployeesPresenter employeesPresenter;
 
     @Autowired
     public MainMenuPresenter(MainMenuView view, EventBus.UIEventBus eventBus) {
