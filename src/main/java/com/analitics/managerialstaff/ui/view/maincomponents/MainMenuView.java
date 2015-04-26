@@ -20,14 +20,25 @@ public class MainMenuView extends VerticalLayout {
     @Autowired private DepartmentsMenuCommand departmentsMenuCommand;
 
     @PostConstruct
-    private void init() {
+    private void initMainMenu() {
 
         MenuBar mainMenuBar = new MenuBar();
         mainMenuBar.addItem("Главная", null, homeMenuCommand);
         mainMenuBar.addItem("Департаменты", null, departmentsMenuCommand);
         mainMenuBar.addItem("Аттестация", null, menuCommand);
-        mainMenuBar.addItem("Сотрудники", null, menuCommand);
-        mainMenuBar.addItem("Руководители", null, menuCommand);
+
+        MenuBar.MenuItem employeeMenuItem = mainMenuBar.addItem("Сотрудники", null, null);
+        employeeMenuItem.addItem("Список сотрудников", null, menuCommand);
+        employeeMenuItem.addItem("Добавить", null, menuCommand);
+        employeeMenuItem.addItem("Изменить", null, menuCommand);
+        employeeMenuItem.addItem("Удалить", null, menuCommand);
+
+        MenuBar.MenuItem managersMenuItem = mainMenuBar.addItem("Руководители", null, null);
+        managersMenuItem.addItem("Список руководителей", null, menuCommand);
+        managersMenuItem.addItem("Добавить", null, menuCommand);
+        managersMenuItem.addItem("Изменить", null, menuCommand);
+        managersMenuItem.addItem("Удалить", null, menuCommand);
+
         mainMenuBar.addItem("Отчетность", null, menuCommand);
 
         addComponent(mainMenuBar);
