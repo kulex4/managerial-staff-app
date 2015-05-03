@@ -3,6 +3,9 @@ package com.analitics.managerialstaff.ui.view.navigations.employees.forms;
 import com.analitics.managerialstaff.backend.model.Employee;
 import com.analitics.managerialstaff.ui.common.forms.EntityFormImpl;
 import com.analitics.managerialstaff.ui.components.events.EmployeeSaveEvent;
+import com.vaadin.data.validator.IntegerRangeValidator;
+import com.vaadin.data.validator.NullValidator;
+import com.vaadin.data.validator.StringLengthValidator;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.Window;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +30,13 @@ public class EmployeeAddEditFormImpl
         extends EntityFormImpl<Employee>
         implements EmployeeAddEditForm, AbstractForm.SavedHandler<Employee>, AbstractForm.ResetHandler<Employee> {
 
+    public static final int STRING_MIN_VALUE = 2;
+    public static final int STRING_MAX_VALUE = 30;
+    public static final int AGE_MIN_VALUE = 18;
+    public static final int AGE_MAX_VALUE = 100;
+    public static final int EXPERIENCE_MIN_VALUE = 0;
+    public static final int EXPERIENCE_MAX_VALUE = 50;
+
     private MTextField surname;
     private MTextField forename;
     private MTextField age;
@@ -50,22 +60,59 @@ public class EmployeeAddEditFormImpl
     private void initTextFields() {
         surname = new MTextField("Имя")
                 .withInputPrompt("Имя")
+                .withValidator(new StringLengthValidator(
+                        "Имя не может быть пустым",
+                        STRING_MIN_VALUE,
+                        STRING_MAX_VALUE,
+                        false
+                ))
                 .withFullWidth();
         forename = new MTextField("Фамилия")
                 .withInputPrompt("Фамилия")
+                .withValidator(new StringLengthValidator(
+                        "Фамилия не может быть пустой",
+                        STRING_MIN_VALUE,
+                        STRING_MAX_VALUE,
+                        false
+                ))
                 .withFullWidth();
         age = new MTextField("Возраст")
                 .withInputPrompt("Возраст")
+                .withValidator(new IntegerRangeValidator(
+                        String.format("Возраст должен быть от %d до %d",
+                                AGE_MIN_VALUE,
+                                AGE_MAX_VALUE
+                        ),
+                        AGE_MIN_VALUE,
+                        AGE_MAX_VALUE
+                ))
                 .withFullWidth();
         position = new MTextField("Должность")
                 .withInputPrompt("Должность")
+                .withValidator(new StringLengthValidator(
+                        "Должность не может быть пустой",
+                        STRING_MIN_VALUE,
+                        STRING_MAX_VALUE,
+                        false
+                ))
                 .withFullWidth();
         gender = new EnumSelect("Пол")
+                .withValidator(new NullValidator("Выберете пол", false))
                 .withFullWidth();
         grade = new EnumSelect("Грэйд")
+                .withValidator(new NullValidator("Выберете грэйд", false))
                 .withFullWidth();
         experience = new MTextField("Стаж")
                 .withInputPrompt("Стаж")
+                .withValidator(new IntegerRangeValidator(
+                        String.format(
+                                "Стаж должен быть от %d до %d",
+                                EXPERIENCE_MIN_VALUE,
+                                EXPERIENCE_MAX_VALUE
+                        ),
+                        EXPERIENCE_MIN_VALUE,
+                        EXPERIENCE_MAX_VALUE
+                ))
                 .withFullWidth();
     }
 
@@ -80,11 +127,10 @@ public class EmployeeAddEditFormImpl
                 grade,
                 experience
         ).withMargin(true).withWidth("400px");
-        MVerticalLayout result = new MVerticalLayout(
+        return new MVerticalLayout(
                 formLayout,
                 getToolbar()
         ).withMargin(false);
-        return result;
     }
 
     @Override

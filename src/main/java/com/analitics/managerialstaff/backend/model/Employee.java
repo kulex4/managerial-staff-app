@@ -5,6 +5,7 @@ import com.analitics.managerialstaff.backend.model.enums.Grade;
 import lombok.Data;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 /**
  * @author by nikolai.pashkevich
@@ -25,27 +26,27 @@ public class Employee {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(nullable = false)
+    @Column
     private String surname;
 
-    @Column(nullable = false)
+    @Column
     private String forename;
 
-    @Column(nullable = false)
+    @Column
     private int age;
 
-    @Column(nullable = false)
+    @Column
     private String position;
 
     @Column
     @Enumerated(EnumType.STRING)
     private Gender gender;
 
-    @Column(nullable = false)
+    @Column
     @Enumerated(EnumType.STRING)
     private Grade grade;
 
-    @Column(nullable = false)
+    @Column
     private int experience;
 
 }

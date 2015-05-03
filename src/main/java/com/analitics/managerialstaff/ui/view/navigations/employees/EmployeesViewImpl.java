@@ -55,14 +55,13 @@ public class EmployeesViewImpl extends VerticalLayout implements EmployeesView {
 
         initButtons();
         initGrid();
+        setupGridColumns();
     }
 
     private void initButtons() {
         addEmployeeButton = new MButton("Добавить").withIcon(FontAwesome.PLUS);
         editEmployeeButton = new MButton("Изменить").withIcon(FontAwesome.PENCIL);
-        editEmployeeButton.setEnabled(false);
         deleteEmployeeButton = new MButton("Удалить").withIcon(FontAwesome.TRASH_O);
-        deleteEmployeeButton.setEnabled(false);
 
         controlButtonsLayout = new MHorizontalLayout(
                 addEmployeeButton,
@@ -74,6 +73,8 @@ public class EmployeesViewImpl extends VerticalLayout implements EmployeesView {
     private void initGrid() {
         employeeContainer = new BeanItemContainer<>(Employee.class);
         employeesGrid = new Grid(employeeContainer);
+        employeesGrid.setSelectionMode(Grid.SelectionMode.SINGLE);
+        employeesGrid.setImmediate(true);
         employeesGrid.setWidth("99%");
         employeesGrid.setColumnOrder(
                 Employee.SURNAME,
@@ -85,6 +86,23 @@ public class EmployeesViewImpl extends VerticalLayout implements EmployeesView {
                 Employee.GRADE
         );
         employeesGrid.removeColumn("id");
+    }
+
+    private void setupGridColumns() {
+        Grid.Column surnameColumn = employeesGrid.getColumn(Employee.SURNAME);
+        surnameColumn.setHeaderCaption("Имя");
+        Grid.Column forenameColumn = employeesGrid.getColumn(Employee.FORENAME);
+        forenameColumn.setHeaderCaption("Фамилия");
+        Grid.Column genderColumn = employeesGrid.getColumn(Employee.GENDER);
+        genderColumn.setHeaderCaption("Пол");
+        Grid.Column ageColumn = employeesGrid.getColumn(Employee.AGE);
+        ageColumn.setHeaderCaption("Возраст");
+        Grid.Column experienceColumn = employeesGrid.getColumn(Employee.EXPERIENCE);
+        experienceColumn.setHeaderCaption("Стаж");
+        Grid.Column positionColumn = employeesGrid.getColumn(Employee.POSITION);
+        positionColumn.setHeaderCaption("Должность");
+        Grid.Column gradeColumn = employeesGrid.getColumn(Employee.GRADE);
+        gradeColumn.setHeaderCaption("Грэйд");
     }
 
     private void initListeners() {
