@@ -1,4 +1,4 @@
-package com.analitics.managerialstaff.ui.view.navigations;
+package com.analitics.managerialstaff.ui.view.navigations.employees;
 
 import com.analitics.managerialstaff.backend.model.Employee;
 import com.analitics.managerialstaff.ui.components.events.EmployeeAddEvent;
@@ -53,16 +53,25 @@ public class EmployeesViewImpl extends VerticalLayout implements EmployeesView {
         viewNameLabel.setStyleName(MyTheme.LABEL_H2);
         viewNameLabel.addStyleName(MyTheme.LABEL_NO_MARGIN);
 
+        initButtons();
+        initGrid();
+    }
+
+    private void initButtons() {
         addEmployeeButton = new MButton("Добавить").withIcon(FontAwesome.PLUS);
         editEmployeeButton = new MButton("Изменить").withIcon(FontAwesome.PENCIL);
+        editEmployeeButton.setEnabled(false);
         deleteEmployeeButton = new MButton("Удалить").withIcon(FontAwesome.TRASH_O);
+        deleteEmployeeButton.setEnabled(false);
 
         controlButtonsLayout = new MHorizontalLayout(
                 addEmployeeButton,
                 editEmployeeButton,
                 deleteEmployeeButton
         ).withMargin(false);
+    }
 
+    private void initGrid() {
         employeeContainer = new BeanItemContainer<>(Employee.class);
         employeesGrid = new Grid(employeeContainer);
         employeesGrid.setWidth("99%");
@@ -79,11 +88,13 @@ public class EmployeesViewImpl extends VerticalLayout implements EmployeesView {
     }
 
     private void initListeners() {
-        addEmployeeButton.addClickListener(clickEvent ->
-                eventBus.publish(EventScope.UI, this, new EmployeeAddEvent()));
-        editEmployeeButton.addClickListener(clickEvent ->
-                eventBus.publish(EventScope.UI, this, new EmployeeEditEvent(new Employee())));
-        deleteEmployeeButton.addClickListener(clickEvent -> showConfirmationDialog());
+        addEmployeeButton.addClickListener(clickEvent -> eventBus.publish(EventScope.UI, this, new EmployeeAddEvent()));
+        editEmployeeButton.addClickListener(clickEvent -> constructEditEvent());
+        deleteEmployeeButton.addClickListener(clickEvent -> constructDeleteEvent());
+        employeesGrid.addSelectionListener(selectionEvent -> {
+            editEmployeeButton.setEnabled(true);
+            deleteEmployeeButton.setEnabled(true);
+        });
     }
 
     private void constructLayout() {
@@ -97,14 +108,29 @@ public class EmployeesViewImpl extends VerticalLayout implements EmployeesView {
 
     @Override
     public void setEmployeesList(Iterable<Employee> employees) {
+        employeeContainer.removeAllItems();
         employeeContainer.addAll((Collection<? extends Employee>) employees);
     }
 
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent viewChangeEvent) {}
 
-    private void showConfirmationDialog() {
+    private void constructEditEvent() {
+        Employee selectedEmployee = (Employee) employeesGrid.getSelectedRow();
+        if (selectedEmployee != null && employeeContainer.getItemIds().contains(selectedEmployee)) {
+            eventBus.publish(EventScope.UI, this, new EmployeeEditEvent(selectedEmployee));
+        } else {
+            // todo notification 'please select row'
+        }
+    }
+
+    private void constructDeleteEvent() {
         // todo confirmation dialog
-        eventBus.publish(EventScope.UI, this, new EmployeeDeleteEvent(new Employee()));
+        Employee selectedEmployee = (Employee) employeesGrid.getSelectedRow();
+        if (selectedEmployee != null && employeeContainer.getItemIds().contains(selectedEmployee)) {
+            eventBus.publish(EventScope.UI, this, new EmployeeDeleteEvent(selectedEmployee));
+        } else {
+            // todo notification 'please select row'
+        }
     }
 }

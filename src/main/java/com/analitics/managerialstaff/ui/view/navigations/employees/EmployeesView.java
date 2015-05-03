@@ -1,4 +1,4 @@
-package com.analitics.managerialstaff.ui.view.navigations;
+package com.analitics.managerialstaff.ui.view.navigations.employees;
 
 import com.analitics.managerialstaff.backend.model.Employee;
 import com.vaadin.navigator.View;

@@ -1,7 +1,7 @@
 package com.analitics.managerialstaff.ui.view.navigations.commands;
 
 import com.analitics.managerialstaff.ui.components.events.NavigationRequest;
-import com.analitics.managerialstaff.ui.view.navigations.EmployeesView;
+import com.analitics.managerialstaff.ui.view.navigations.employees.EmployeesView;
 import com.vaadin.ui.MenuBar;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.vaadin.spring.annotation.VaadinComponent;
