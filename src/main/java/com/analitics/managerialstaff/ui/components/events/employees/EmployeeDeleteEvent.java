@@ -1,4 +1,4 @@
-package com.analitics.managerialstaff.ui.components.events;
+package com.analitics.managerialstaff.ui.components.events.employees;
 
 import com.analitics.managerialstaff.backend.model.Employee;
 import lombok.Getter;
@@ -9,10 +9,10 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-public class EmployeeEditEvent {
+public class EmployeeDeleteEvent {
     private Employee employee;
 
-    public EmployeeEditEvent(Employee employee) {
+    public EmployeeDeleteEvent(Employee employee) {
         this.employee = employee;
     }
 }

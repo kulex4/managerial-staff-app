@@ -3,6 +3,7 @@ package com.analitics.managerialstaff.ui.view.maincomponents;
 import com.analitics.managerialstaff.ui.view.navigations.commands.DepartmentsMenuCommand;
 import com.analitics.managerialstaff.ui.view.navigations.commands.EmployeesMenuCommand;
 import com.analitics.managerialstaff.ui.view.navigations.commands.HomeMenuCommand;
+import com.analitics.managerialstaff.ui.view.navigations.commands.ManagersMenuCommand;
 import com.vaadin.ui.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.vaadin.spring.annotation.VaadinComponent;
@@ -20,6 +21,7 @@ public class MainMenuView extends VerticalLayout {
     @Autowired private HomeMenuCommand homeMenuCommand;
     @Autowired private DepartmentsMenuCommand departmentsMenuCommand;
     @Autowired private EmployeesMenuCommand employeesMenuCommand;
+    @Autowired private ManagersMenuCommand managersMenuCommand;
 
     @PostConstruct
     private void initMainMenu() {
@@ -29,13 +31,7 @@ public class MainMenuView extends VerticalLayout {
         mainMenuBar.addItem("Департаменты", null, departmentsMenuCommand);
         mainMenuBar.addItem("Аттестация", null, menuCommand);
         mainMenuBar.addItem("Сотрудники", null, employeesMenuCommand);
-
-        MenuBar.MenuItem managersMenuItem = mainMenuBar.addItem("Руководители", null, null);
-        managersMenuItem.addItem("Список руководителей", null, menuCommand);
-        managersMenuItem.addItem("Добавить", null, menuCommand);
-        managersMenuItem.addItem("Изменить", null, menuCommand);
-        managersMenuItem.addItem("Удалить", null, menuCommand);
-
+        mainMenuBar.addItem("Руководители", null, managersMenuCommand);
         mainMenuBar.addItem("Отчетность", null, menuCommand);
 
         addComponent(mainMenuBar);

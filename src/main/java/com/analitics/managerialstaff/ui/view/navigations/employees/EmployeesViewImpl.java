@@ -2,9 +2,9 @@ package com.analitics.managerialstaff.ui.view.navigations.employees;
 
 import com.analitics.managerialstaff.backend.model.Employee;
 import com.analitics.managerialstaff.ui.common.NotificationManager;
-import com.analitics.managerialstaff.ui.components.events.EmployeeAddEvent;
-import com.analitics.managerialstaff.ui.components.events.EmployeeDeleteEvent;
-import com.analitics.managerialstaff.ui.components.events.EmployeeEditEvent;
+import com.analitics.managerialstaff.ui.components.events.employees.EmployeeAddEvent;
+import com.analitics.managerialstaff.ui.components.events.employees.EmployeeDeleteEvent;
+import com.analitics.managerialstaff.ui.components.events.employees.EmployeeEditEvent;
 import com.analitics.managerialstaff.ui.theme.MyTheme;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.navigator.ViewChangeListener;
@@ -86,10 +86,10 @@ public class EmployeesViewImpl extends VerticalLayout implements EmployeesView {
                 Employee.GENDER,
                 Employee.AGE,
                 Employee.EXPERIENCE,
-                Employee.POSITION,
-                Employee.GRADE
+                Employee.POSITION
         );
         employeesGrid.removeColumn("id");
+        employeesGrid.removeColumn(Employee.GRADE);
     }
 
     private void setupGridColumns() {
@@ -105,8 +105,6 @@ public class EmployeesViewImpl extends VerticalLayout implements EmployeesView {
         experienceColumn.setHeaderCaption("Стаж");
         Grid.Column positionColumn = employeesGrid.getColumn(Employee.POSITION);
         positionColumn.setHeaderCaption("Должность");
-        Grid.Column gradeColumn = employeesGrid.getColumn(Employee.GRADE);
-        gradeColumn.setHeaderCaption("Грэйд");
     }
 
     private void initListeners() {

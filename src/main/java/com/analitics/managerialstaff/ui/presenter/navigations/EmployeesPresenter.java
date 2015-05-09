@@ -1,13 +1,12 @@
 package com.analitics.managerialstaff.ui.presenter.navigations;
 
 import com.analitics.managerialstaff.backend.model.Employee;
-import com.analitics.managerialstaff.backend.model.enums.Grade;
 import com.analitics.managerialstaff.backend.service.EmployeeService;
 import com.analitics.managerialstaff.ui.common.AbstractPresenter;
-import com.analitics.managerialstaff.ui.components.events.EmployeeAddEvent;
-import com.analitics.managerialstaff.ui.components.events.EmployeeDeleteEvent;
-import com.analitics.managerialstaff.ui.components.events.EmployeeEditEvent;
-import com.analitics.managerialstaff.ui.components.events.EmployeeSaveEvent;
+import com.analitics.managerialstaff.ui.components.events.employees.EmployeeAddEvent;
+import com.analitics.managerialstaff.ui.components.events.employees.EmployeeDeleteEvent;
+import com.analitics.managerialstaff.ui.components.events.employees.EmployeeEditEvent;
+import com.analitics.managerialstaff.ui.components.events.employees.EmployeeSaveEvent;
 import com.analitics.managerialstaff.ui.view.navigations.employees.EmployeesView;
 import com.analitics.managerialstaff.ui.view.navigations.commands.EmployeesMenuCommand;
 import com.analitics.managerialstaff.ui.view.navigations.employees.forms.EmployeeAddEditForm;
@@ -58,7 +57,7 @@ public class EmployeesPresenter extends AbstractPresenter<EmployeesView> impleme
     private void onEmployeeDeleteEvent(EmployeeDeleteEvent employeeDeleteEvent) {
         employeeService.remove(employeeDeleteEvent.getEmployee());
         getView().deleteEmployeeSuccessNotification();
-        getView().setEmployeesList(employeeService.findEmployees());
+        getView().setEmployeesList(employeeService.findSpecialists());
     }
 
     @EventBusListenerMethod
@@ -69,6 +68,6 @@ public class EmployeesPresenter extends AbstractPresenter<EmployeesView> impleme
         } else {
             getView().editEmployeeSuccessNotification();
         }
-        getView().setEmployeesList(employeeService.findEmployees());
+        getView().setEmployeesList(employeeService.findSpecialists());
     }
 }

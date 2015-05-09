@@ -1,11 +1,10 @@
-package com.analitics.managerialstaff.ui.view.navigations.employees.forms;
+package com.analitics.managerialstaff.ui.view.navigations.managers.forms;
 
 import com.analitics.managerialstaff.backend.model.Employee;
 import com.analitics.managerialstaff.backend.model.enums.Grade;
 import com.analitics.managerialstaff.ui.common.forms.EntityFormImpl;
 import com.analitics.managerialstaff.ui.components.events.employees.EmployeeSaveEvent;
-import com.analitics.managerialstaff.ui.view.navigations.employees.validators.EmployeeForenameValidator;
-import com.analitics.managerialstaff.ui.view.navigations.employees.validators.EmployeeSurnameValidator;
+import com.analitics.managerialstaff.ui.components.events.managers.ManagerSaveEvent;
 import com.vaadin.data.validator.IntegerRangeValidator;
 import com.vaadin.data.validator.NullValidator;
 import com.vaadin.data.validator.StringLengthValidator;
@@ -29,9 +28,9 @@ import javax.annotation.PostConstruct;
  */
 @VaadinUIScope
 @VaadinComponent
-public class EmployeeAddEditFormImpl
+public class ManagerAddEditFormImpl
         extends EntityFormImpl<Employee>
-        implements EmployeeAddEditForm, AbstractForm.SavedHandler<Employee>, AbstractForm.ResetHandler<Employee> {
+        implements ManagerAddEditForm, AbstractForm.SavedHandler<Employee>, AbstractForm.ResetHandler<Employee> {
 
     public static final int STRING_MIN_VALUE = 2;
     public static final int STRING_MAX_VALUE = 30;
@@ -48,13 +47,7 @@ public class EmployeeAddEditFormImpl
     private MTextField experience;
 
     @Autowired
-    private EmployeeSurnameValidator employeeSurnameValidator;
-
-    @Autowired
-    private EmployeeForenameValidator employeeForenameValidator;
-
-    @Autowired
-    public EmployeeAddEditFormImpl(EventBus.UIEventBus eventBus) {
+    public ManagerAddEditFormImpl(EventBus.UIEventBus eventBus) {
         super(eventBus);
     }
 
@@ -74,7 +67,6 @@ public class EmployeeAddEditFormImpl
                         STRING_MAX_VALUE,
                         false
                 ))
-                //.withValidator(employeeSurnameValidator)
                 .withFullWidth();
         forename = new MTextField("Фамилия")
                 .withInputPrompt("Фамилия")
@@ -84,7 +76,6 @@ public class EmployeeAddEditFormImpl
                         STRING_MAX_VALUE,
                         false
                 ))
-                //.withValidator(employeeForenameValidator)
                 .withFullWidth();
         age = new MTextField("Возраст")
                 .withInputPrompt("Возраст")
@@ -140,8 +131,8 @@ public class EmployeeAddEditFormImpl
     }
 
     @Override
-    public void setFormEntity(Employee employee) {
-        setEntity(employee);
+    public void setFormEntity(Employee manager) {
+        setEntity(manager);
     }
 
     @Override
@@ -152,20 +143,20 @@ public class EmployeeAddEditFormImpl
     @Override
     public Window openInModalPopup() {
         Window popup = super.openInModalPopup();
-        popup.setCaption("Создние/Редактирование сотрудника");
+        popup.setCaption("Создние/Редактирование менеджера");
         return popup;
     }
 
     @Override
-    public void onReset(Employee employee) {
+    public void onReset(Employee manager) {
         getPopup().close();
     }
 
     @Override
-    public void onSave(Employee employee) {
-        employee.setGrade(Grade.SPECIALIST);
+    public void onSave(Employee manager) {
+        manager.setGrade(Grade.MANAGER);
         if (isValid()) {
-            eventBus.publish(EventScope.UI, this, new EmployeeSaveEvent(employee, employee.getId() == null));
+            eventBus.publish(EventScope.UI, this, new ManagerSaveEvent(manager, manager.getId() == null));
             getPopup().close();
         }
     }

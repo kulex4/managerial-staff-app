@@ -6,6 +6,7 @@ import com.analitics.managerialstaff.ui.common.StartupFilter;
 import com.analitics.managerialstaff.ui.components.events.NavigationRequest;
 import com.analitics.managerialstaff.ui.presenter.navigations.EmployeesPresenter;
 import com.analitics.managerialstaff.ui.presenter.navigations.HomePresenter;
+import com.analitics.managerialstaff.ui.presenter.navigations.ManagersPresenter;
 import com.analitics.managerialstaff.ui.view.maincomponents.MainMenuView;
 import com.analitics.managerialstaff.ui.view.navigations.HomeView;
 import com.analitics.managerialstaff.ui.view.navigations.commands.HomeMenuCommand;
@@ -27,10 +28,9 @@ import java.io.Serializable;
 @VaadinUIScope
 public class MainMenuPresenter extends AbstractPresenter<MainMenuView> implements Serializable {
 
-    @Autowired
-    private HomePresenter homePresenter;
-
+    @Autowired private HomePresenter homePresenter;
     @Autowired private EmployeesPresenter employeesPresenter;
+    @Autowired private ManagersPresenter managersPresenter;
 
     @Autowired
     public MainMenuPresenter(MainMenuView view, EventBus.UIEventBus eventBus) {

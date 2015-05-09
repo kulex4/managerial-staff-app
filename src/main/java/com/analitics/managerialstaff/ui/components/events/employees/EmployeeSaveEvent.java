@@ -1,4 +1,4 @@
-package com.analitics.managerialstaff.ui.components.events;
+package com.analitics.managerialstaff.ui.components.events.employees;
 
 import com.analitics.managerialstaff.backend.model.Employee;
 import lombok.Getter;

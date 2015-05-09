@@ -1,4 +1,4 @@
-package com.analitics.managerialstaff.ui.components.events;
+package com.analitics.managerialstaff.ui.components.events.employees;
 
 /**
  * @author by nikolai.pashkevich
