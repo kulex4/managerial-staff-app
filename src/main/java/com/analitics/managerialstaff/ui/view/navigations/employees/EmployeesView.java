@@ -11,4 +11,8 @@ import java.util.List;
 public interface EmployeesView extends View {
     String NAME = "employees";
     void setEmployeesList(Iterable<Employee> employees);
+    void emptyEmployeeNotification();
+    void saveEmployeeSuccessNotification();
+    void editEmployeeSuccessNotification();
+    void deleteEmployeeSuccessNotification();
 }

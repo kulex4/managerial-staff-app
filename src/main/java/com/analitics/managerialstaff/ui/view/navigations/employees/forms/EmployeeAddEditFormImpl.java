@@ -3,10 +3,16 @@ package com.analitics.managerialstaff.ui.view.navigations.employees.forms;
 import com.analitics.managerialstaff.backend.model.Employee;
 import com.analitics.managerialstaff.ui.common.forms.EntityFormImpl;
 import com.analitics.managerialstaff.ui.components.events.EmployeeSaveEvent;
+import com.analitics.managerialstaff.ui.view.navigations.employees.validators.EmployeeForenameValidator;
+import com.analitics.managerialstaff.ui.view.navigations.employees.validators.EmployeeSurnameValidator;
+import com.vaadin.data.Validator;
+import com.vaadin.data.validator.BeanValidator;
 import com.vaadin.data.validator.IntegerRangeValidator;
 import com.vaadin.data.validator.NullValidator;
 import com.vaadin.data.validator.StringLengthValidator;
+import com.vaadin.event.FieldEvents;
 import com.vaadin.ui.Component;
+import com.vaadin.ui.Field;
 import com.vaadin.ui.Window;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.vaadin.spring.annotation.VaadinComponent;
@@ -20,6 +26,7 @@ import org.vaadin.viritin.layouts.MFormLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
 import javax.annotation.PostConstruct;
+import java.util.Collection;
 
 /**
  * @author by nikolai.pashkevich
@@ -46,6 +53,12 @@ public class EmployeeAddEditFormImpl
     private MTextField experience;
 
     @Autowired
+    private EmployeeSurnameValidator employeeSurnameValidator;
+
+    @Autowired
+    private EmployeeForenameValidator employeeForenameValidator;
+
+    @Autowired
     public EmployeeAddEditFormImpl(EventBus.UIEventBus eventBus) {
         super(eventBus);
     }
@@ -66,6 +79,7 @@ public class EmployeeAddEditFormImpl
                         STRING_MAX_VALUE,
                         false
                 ))
+                //.withValidator(employeeSurnameValidator)
                 .withFullWidth();
         forename = new MTextField("Фамилия")
                 .withInputPrompt("Фамилия")
@@ -75,6 +89,7 @@ public class EmployeeAddEditFormImpl
                         STRING_MAX_VALUE,
                         false
                 ))
+                //.withValidator(employeeForenameValidator)
                 .withFullWidth();
         age = new MTextField("Возраст")
                 .withInputPrompt("Возраст")
@@ -158,7 +173,7 @@ public class EmployeeAddEditFormImpl
     @Override
     public void onSave(Employee employee) {
         if (isValid()) {
-            eventBus.publish(EventScope.UI, this, new EmployeeSaveEvent(employee));
+            eventBus.publish(EventScope.UI, this, new EmployeeSaveEvent(employee, employee.getId() == null));
             getPopup().close();
         }
     }

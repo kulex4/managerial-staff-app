@@ -1,6 +1,7 @@
 package com.analitics.managerialstaff.ui.presenter.navigations;
 
 import com.analitics.managerialstaff.backend.model.Employee;
+import com.analitics.managerialstaff.backend.model.enums.Grade;
 import com.analitics.managerialstaff.backend.service.EmployeeService;
 import com.analitics.managerialstaff.ui.common.AbstractPresenter;
 import com.analitics.managerialstaff.ui.components.events.EmployeeAddEvent;
@@ -38,7 +39,7 @@ public class EmployeesPresenter extends AbstractPresenter<EmployeesView> impleme
 
     @EventBusListenerMethod
     private void onEmployeesMenuItemSelected(EmployeesMenuCommand employeesMenuCommand) {
-        getView().setEmployeesList(employeeService.findEmployees());
+        getView().setEmployeesList(employeeService.findSpecialists());
     }
 
     @EventBusListenerMethod
@@ -56,14 +57,18 @@ public class EmployeesPresenter extends AbstractPresenter<EmployeesView> impleme
     @EventBusListenerMethod
     private void onEmployeeDeleteEvent(EmployeeDeleteEvent employeeDeleteEvent) {
         employeeService.remove(employeeDeleteEvent.getEmployee());
-        //todo ui notification
+        getView().deleteEmployeeSuccessNotification();
         getView().setEmployeesList(employeeService.findEmployees());
     }
 
     @EventBusListenerMethod
     private void onEmployeeSaveEvent(EmployeeSaveEvent employeeSaveEvent) {
         employeeService.saveOrUpdate(employeeSaveEvent.getEmployee());
-        //todo ui notification
+        if (employeeSaveEvent.isNew()) {
+            getView().saveEmployeeSuccessNotification();
+        } else {
+            getView().editEmployeeSuccessNotification();
+        }
         getView().setEmployeesList(employeeService.findEmployees());
     }
 }

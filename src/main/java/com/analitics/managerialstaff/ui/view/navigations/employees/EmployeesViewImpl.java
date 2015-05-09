@@ -1,6 +1,7 @@
 package com.analitics.managerialstaff.ui.view.navigations.employees;
 
 import com.analitics.managerialstaff.backend.model.Employee;
+import com.analitics.managerialstaff.ui.common.NotificationManager;
 import com.analitics.managerialstaff.ui.components.events.EmployeeAddEvent;
 import com.analitics.managerialstaff.ui.components.events.EmployeeDeleteEvent;
 import com.analitics.managerialstaff.ui.components.events.EmployeeEditEvent;
@@ -27,6 +28,9 @@ import java.util.Collection;
 @VaadinUIScope
 @VaadinView(name = EmployeesView.NAME)
 public class EmployeesViewImpl extends VerticalLayout implements EmployeesView {
+
+    @Autowired
+    private NotificationManager notificationManager;
 
     @Autowired
     private EventBus.UIEventBus eventBus;
@@ -131,6 +135,26 @@ public class EmployeesViewImpl extends VerticalLayout implements EmployeesView {
     }
 
     @Override
+    public void emptyEmployeeNotification() {
+        notificationManager.showNotification("Выберете сотрудника из таблицы", MyTheme.NOTIFICATION_SUCCESS);
+    }
+
+    @Override
+    public void saveEmployeeSuccessNotification() {
+        notificationManager.showNotification("Новый сотрудник успешно создан", MyTheme.NOTIFICATION_SUCCESS);
+    }
+
+    @Override
+    public void editEmployeeSuccessNotification() {
+        notificationManager.showNotification("Данные сотрудника успешно изменены", MyTheme.NOTIFICATION_SUCCESS);
+    }
+
+    @Override
+    public void deleteEmployeeSuccessNotification() {
+        notificationManager.showNotification("Сотрудник успешно удален", MyTheme.NOTIFICATION_SUCCESS);
+    }
+
+    @Override
     public void enter(ViewChangeListener.ViewChangeEvent viewChangeEvent) {}
 
     private void constructEditEvent() {
@@ -138,7 +162,7 @@ public class EmployeesViewImpl extends VerticalLayout implements EmployeesView {
         if (selectedEmployee != null && employeeContainer.getItemIds().contains(selectedEmployee)) {
             eventBus.publish(EventScope.UI, this, new EmployeeEditEvent(selectedEmployee));
         } else {
-            // todo notification 'please select row'
+            emptyEmployeeNotification();
         }
     }
 
@@ -148,7 +172,7 @@ public class EmployeesViewImpl extends VerticalLayout implements EmployeesView {
         if (selectedEmployee != null && employeeContainer.getItemIds().contains(selectedEmployee)) {
             eventBus.publish(EventScope.UI, this, new EmployeeDeleteEvent(selectedEmployee));
         } else {
-            // todo notification 'please select row'
+            emptyEmployeeNotification();
         }
     }
 }
