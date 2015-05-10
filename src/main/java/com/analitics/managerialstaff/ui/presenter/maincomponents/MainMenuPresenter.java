@@ -4,6 +4,7 @@ import com.analitics.managerialstaff.ui.common.AbstractPresenter;
 import com.analitics.managerialstaff.ui.common.Action;
 import com.analitics.managerialstaff.ui.common.StartupFilter;
 import com.analitics.managerialstaff.ui.components.events.NavigationRequest;
+import com.analitics.managerialstaff.ui.presenter.navigations.CertificationsPresenter;
 import com.analitics.managerialstaff.ui.presenter.navigations.EmployeesPresenter;
 import com.analitics.managerialstaff.ui.presenter.navigations.HomePresenter;
 import com.analitics.managerialstaff.ui.presenter.navigations.ManagersPresenter;
@@ -29,6 +30,7 @@ import java.io.Serializable;
 public class MainMenuPresenter extends AbstractPresenter<MainMenuView> implements Serializable {
 
     @Autowired private HomePresenter homePresenter;
+    @Autowired private CertificationsPresenter certificationsPresenter;
     @Autowired private EmployeesPresenter employeesPresenter;
     @Autowired private ManagersPresenter managersPresenter;
 

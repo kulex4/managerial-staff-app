@@ -1,6 +1,8 @@
 package com.analitics.managerialstaff.ui.view.navigations.certification;
 
+import com.analitics.managerialstaff.backend.model.Certification;
 import com.analitics.managerialstaff.backend.model.enums.Grade;
+import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.*;
@@ -13,6 +15,7 @@ import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
 import javax.annotation.PostConstruct;
+import java.util.Collection;
 
 /**
  * @author by nikolai.pashkevich
@@ -31,6 +34,7 @@ public class CertificationsViewImpl extends VerticalLayout implements Certificat
     private Button deleteCertificationButton;
     private Button editCertificationButton;
     private Grid certificationsGrid;
+    private BeanItemContainer<Certification> certificationContainer;
 
     @PostConstruct
     private void init() {
@@ -45,7 +49,6 @@ public class CertificationsViewImpl extends VerticalLayout implements Certificat
         initSelectComponents();
         initButtons();
         initGrid();
-        setupGridColumns();
     }
 
     private void initSelectComponents() {
@@ -91,12 +94,32 @@ public class CertificationsViewImpl extends VerticalLayout implements Certificat
     }
 
     private void initGrid() {
-        certificationsGrid = new Grid("Список аттестации");
-        certificationsGrid.setSizeFull();
+        certificationContainer = new BeanItemContainer<>(Certification.class);
+        certificationsGrid = new Grid("Список аттестации", certificationContainer);
+        certificationsGrid.setSelectionMode(Grid.SelectionMode.SINGLE);
+        certificationsGrid.setImmediate(true);
+        certificationsGrid.setWidth(99, Unit.PERCENTAGE);
+        certificationsGrid.setColumnOrder(
+
+        );
+        removeUnusedColumns();
+        setColumnsCaption();
     }
 
-    private void setupGridColumns() {
+    private void removeUnusedColumns() {
+        certificationsGrid.removeColumn("id");
+        certificationsGrid.removeColumn(Certification.EMPLOYEE);
+    }
 
+    private void setColumnsCaption() {
+        Grid.Column surnameColumn = certificationsGrid.getColumn(Certification.RESPONSIBILITY);
+        surnameColumn.setHeaderCaption("Ответственность");
+        Grid.Column forenameColumn = certificationsGrid.getColumn(Certification.COMPETENCE);
+        forenameColumn.setHeaderCaption("Компетентность");
+        Grid.Column genderColumn = certificationsGrid.getColumn(Certification.COMMUNICABILITY);
+        genderColumn.setHeaderCaption("Коммуникабельность");
+        Grid.Column ageColumn = certificationsGrid.getColumn(Certification.TEST_RESULT);
+        ageColumn.setHeaderCaption("Результаты теста");
     }
 
     private void initListeners() {
@@ -113,6 +136,12 @@ public class CertificationsViewImpl extends VerticalLayout implements Certificat
                 certificationsGrid
         ).expand(certificationsGrid);
         addComponent(resultLayout);
+    }
+
+    @Override
+    public void setCertifications(Iterable<Certification> certifications) {
+        certificationContainer.removeAllItems();
+        certificationContainer.addAll((Collection<? extends Certification>) certifications);
     }
 
     @Override

@@ -1,5 +1,6 @@
 package com.analitics.managerialstaff.ui.presenter.navigations;
 
+import com.analitics.managerialstaff.backend.service.CertificationService;
 import com.analitics.managerialstaff.ui.common.AbstractPresenter;
 import com.analitics.managerialstaff.ui.view.navigations.certification.CertificationsView;
 import com.analitics.managerialstaff.ui.view.navigations.commands.CertificationsMenuCommand;
@@ -19,12 +20,15 @@ import java.io.Serializable;
 public class CertificationsPresenter extends AbstractPresenter<CertificationsView> implements Serializable {
 
     @Autowired
+    private CertificationService certificationService;
+
+    @Autowired
     public CertificationsPresenter(CertificationsView view, EventBus.UIEventBus eventBus) {
         super(view, eventBus);
     }
 
     @EventBusListenerMethod
     private void onCertificationsMenuItemSelected(CertificationsMenuCommand certificationsMenuCommand) {
-
+        getView().setCertifications(certificationService.findCertifications());
     }
 }

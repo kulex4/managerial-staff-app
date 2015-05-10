@@ -57,7 +57,6 @@ public class ManagersViewImpl extends VerticalLayout implements ManagersView {
     private void initComponents() {
         initButtons();
         initGrid();
-        setupGridColumns();
     }
 
     private void initButtons() {
@@ -86,11 +85,19 @@ public class ManagersViewImpl extends VerticalLayout implements ManagersView {
                 Employee.EXPERIENCE,
                 Employee.POSITION
         );
-        managersGrid.removeColumn("id");
-        managersGrid.removeColumn(Employee.GRADE);
+        removeUnusedColumns();
+        setColumnsCaption();
     }
 
-    private void setupGridColumns() {
+    private void removeUnusedColumns() {
+        managersGrid.removeColumn("id");
+        managersGrid.removeColumn(Employee.GRADE);
+        managersGrid.removeColumn(Employee.CERTIFICATIONS);
+        managersGrid.removeColumn(Employee.EDUCATIONS);
+        managersGrid.removeColumn(Employee.TRAININGS);
+    }
+
+    private void setColumnsCaption() {
         Grid.Column surnameColumn = managersGrid.getColumn(Employee.SURNAME);
         surnameColumn.setHeaderCaption("Имя");
         Grid.Column forenameColumn = managersGrid.getColumn(Employee.FORENAME);

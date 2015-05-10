@@ -22,6 +22,9 @@ public class Employee {
     public static final String GENDER = "gender";
     public static final String GRADE = "grade";
     public static final String EXPERIENCE = "experience";
+    public static final String CERTIFICATIONS = "certifications";
+    public static final String EDUCATIONS = "educations";
+    public static final String TRAININGS = "trainings";
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

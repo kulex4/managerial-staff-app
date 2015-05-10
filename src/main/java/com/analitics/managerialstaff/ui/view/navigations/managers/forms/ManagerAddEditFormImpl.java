@@ -53,9 +53,15 @@ public class ManagerAddEditFormImpl
 
     @PostConstruct
     private void init() {
+        initButtons();
         initTextFields();
         setSavedHandler(this);
         setResetHandler(this);
+    }
+
+    private void initButtons() {
+        getSaveButton().setCaption("Сохранить");
+        getResetButton().setCaption("Отмена");
     }
 
     private void initTextFields() {

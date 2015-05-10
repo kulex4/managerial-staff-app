@@ -54,7 +54,6 @@ public class EmployeesViewImpl extends VerticalLayout implements EmployeesView {
     private void initComponents() {
         initButtons();
         initGrid();
-        setupGridColumns();
     }
 
     private void initButtons() {
@@ -83,11 +82,19 @@ public class EmployeesViewImpl extends VerticalLayout implements EmployeesView {
                 Employee.EXPERIENCE,
                 Employee.POSITION
         );
-        employeesGrid.removeColumn("id");
-        employeesGrid.removeColumn(Employee.GRADE);
+        removeUnusedColumns();
+        setColumnsCaption();
     }
 
-    private void setupGridColumns() {
+    private void removeUnusedColumns() {
+        employeesGrid.removeColumn("id");
+        employeesGrid.removeColumn(Employee.GRADE);
+        employeesGrid.removeColumn(Employee.CERTIFICATIONS);
+        employeesGrid.removeColumn(Employee.EDUCATIONS);
+        employeesGrid.removeColumn(Employee.TRAININGS);
+    }
+
+    private void setColumnsCaption() {
         Grid.Column surnameColumn = employeesGrid.getColumn(Employee.SURNAME);
         surnameColumn.setHeaderCaption("Имя");
         Grid.Column forenameColumn = employeesGrid.getColumn(Employee.FORENAME);

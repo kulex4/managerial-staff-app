@@ -11,6 +11,7 @@ import javax.persistence.*;
 @Entity
 public class Certification {
 
+    public static final String EMPLOYEE = "employee";
     public static final String RESPONSIBILITY = "responsibility";
     public static final String COMPETENCE = "competence";
     public static final String COMMUNICABILITY = "communicability";
