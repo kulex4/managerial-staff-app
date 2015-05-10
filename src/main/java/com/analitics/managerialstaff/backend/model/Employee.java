@@ -6,6 +6,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 /**
  * @author by nikolai.pashkevich
@@ -24,6 +25,7 @@ public class Employee {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "employee_id")
     private Long id;
 
     @Column(unique = true)
@@ -48,5 +50,14 @@ public class Employee {
 
     @Column
     private int experience;
+
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy="employee")
+    private List<Certification> certifications;
+
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy="employee")
+    private List<Education> educations;
+
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy="employee")
+    private List<Training> trainings;
 
 }

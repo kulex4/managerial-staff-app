@@ -17,7 +17,12 @@ public class Training {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "training_id")
     private Long id;
+
+    @ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name = "employee_id")
+    private Employee employee;
 
     @Column
     private String trainingName;

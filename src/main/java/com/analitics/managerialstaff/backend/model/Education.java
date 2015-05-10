@@ -20,7 +20,12 @@ public class Education {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "education_id")
     private Long id;
+
+    @ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name = "employee_id")
+    private Employee employee;
 
     @Column
     @Enumerated(EnumType.STRING)
