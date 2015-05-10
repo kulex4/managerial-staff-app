@@ -35,7 +35,6 @@ public class EmployeesViewImpl extends VerticalLayout implements EmployeesView {
     @Autowired
     private EventBus.UIEventBus eventBus;
 
-    private Label viewNameLabel;
     private MHorizontalLayout controlButtonsLayout;
     private Button addEmployeeButton;
     private Button deleteEmployeeButton;
@@ -53,10 +52,6 @@ public class EmployeesViewImpl extends VerticalLayout implements EmployeesView {
     }
 
     private void initComponents() {
-        viewNameLabel = new Label("Список всех сотрудников");
-        viewNameLabel.setStyleName(MyTheme.LABEL_H2);
-        viewNameLabel.addStyleName(MyTheme.LABEL_NO_MARGIN);
-
         initButtons();
         initGrid();
         setupGridColumns();
@@ -76,7 +71,7 @@ public class EmployeesViewImpl extends VerticalLayout implements EmployeesView {
 
     private void initGrid() {
         employeeContainer = new BeanItemContainer<>(Employee.class);
-        employeesGrid = new Grid(employeeContainer);
+        employeesGrid = new Grid("Список всех сотрудников", employeeContainer);
         employeesGrid.setSelectionMode(Grid.SelectionMode.SINGLE);
         employeesGrid.setImmediate(true);
         employeesGrid.setWidth("99%");
@@ -119,7 +114,6 @@ public class EmployeesViewImpl extends VerticalLayout implements EmployeesView {
 
     private void constructLayout() {
         MVerticalLayout homeContent = new MVerticalLayout(
-                viewNameLabel,
                 controlButtonsLayout,
                 employeesGrid
         ).withFullHeight().withFullWidth().withMargin(true).expand(employeesGrid);

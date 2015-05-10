@@ -38,7 +38,6 @@ public class ManagersViewImpl extends VerticalLayout implements ManagersView {
     @Autowired
     private EventBus.UIEventBus eventBus;
 
-    private Label viewNameLabel;
     private MHorizontalLayout controlButtonsLayout;
     private Button addManagerButton;
     private Button deleteManagerButton;
@@ -56,10 +55,6 @@ public class ManagersViewImpl extends VerticalLayout implements ManagersView {
     }
 
     private void initComponents() {
-        viewNameLabel = new Label("Список всех менеджеров");
-        viewNameLabel.setStyleName(MyTheme.LABEL_H2);
-        viewNameLabel.addStyleName(MyTheme.LABEL_NO_MARGIN);
-
         initButtons();
         initGrid();
         setupGridColumns();
@@ -79,7 +74,7 @@ public class ManagersViewImpl extends VerticalLayout implements ManagersView {
 
     private void initGrid() {
         managersContainer = new BeanItemContainer<>(Employee.class);
-        managersGrid = new Grid(managersContainer);
+        managersGrid = new Grid("Список всех менеджеров", managersContainer);
         managersGrid.setSelectionMode(Grid.SelectionMode.SINGLE);
         managersGrid.setImmediate(true);
         managersGrid.setWidth("99%");
@@ -122,7 +117,6 @@ public class ManagersViewImpl extends VerticalLayout implements ManagersView {
 
     private void constructLayout() {
         MVerticalLayout homeContent = new MVerticalLayout(
-                viewNameLabel,
                 controlButtonsLayout,
                 managersGrid
         ).withFullHeight().withFullWidth().withMargin(true).expand(managersGrid);
