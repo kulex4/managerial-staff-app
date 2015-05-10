@@ -30,7 +30,16 @@ public class MainMenuView extends VerticalLayout {
         mainMenuBar.addItem("Аттестация", null, certificationsMenuCommand);
         mainMenuBar.addItem("Сотрудники", null, employeesMenuCommand);
         mainMenuBar.addItem("Руководители", null, managersMenuCommand);
-        mainMenuBar.addItem("Отчетность", null, menuCommand);
+
+        MenuBar.MenuItem reportItem = mainMenuBar.addItem("Отчетность", null, null);
+        reportItem.addItem("Уровень образования и опыт работы", null, menuCommand);
+        reportItem.addItem("Гендерная принадлежность и возраст сотрудников", null, menuCommand);
+        reportItem.addItem("Полный отчет о сотрудниках", null, menuCommand);
+
+        MenuBar.MenuItem coefficientItem = reportItem.addItem("Расчет коэффициента", null, null);
+        coefficientItem.addItem("Среднего балла", null, menuCommand);
+        coefficientItem.addItem("Равномерности", null, menuCommand);
+        coefficientItem.addItem("Профессиональной перспективы", null, menuCommand);
 
         addComponent(mainMenuBar);
         setComponentAlignment(mainMenuBar, Alignment.MIDDLE_CENTER);
