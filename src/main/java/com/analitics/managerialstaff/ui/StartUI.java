@@ -3,6 +3,7 @@ package com.analitics.managerialstaff.ui;
 import com.analitics.managerialstaff.ui.presenter.maincomponents.BodyViewDisplayPresenter;
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.Title;
+import com.vaadin.annotations.Widgetset;
 import com.vaadin.navigator.Navigator;
 import com.vaadin.navigator.ViewDisplay;
 import com.vaadin.server.VaadinRequest;
@@ -21,6 +22,7 @@ import org.vaadin.spring.navigator.SpringViewProvider;
  */
 @Title("Managerial Staff Application")
 @Theme("valo")
+@Widgetset("common.MyAppWidgetset")
 @VaadinUI
 @VaadinUIScope
 public class StartUI extends UI {
