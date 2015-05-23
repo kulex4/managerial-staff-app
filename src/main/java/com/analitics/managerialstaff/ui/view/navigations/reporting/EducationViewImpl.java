@@ -15,8 +15,8 @@ import javax.annotation.PostConstruct;
  * @author by nikolai.pashkevich
  */
 @VaadinUIScope
-@VaadinView(name = GenderView.NAME)
-public class GenderViewImpl extends VerticalLayout implements GenderView {
+@VaadinView(name = EducationView.NAME)
+public class EducationViewImpl extends VerticalLayout implements EducationView {
 
     private Chart pieChart;
     private Configuration pieChartConfiguration;
@@ -46,7 +46,7 @@ public class GenderViewImpl extends VerticalLayout implements GenderView {
 
     private void initConfiguration() {
         pieChartConfiguration = pieChart.getConfiguration();
-        pieChartConfiguration.setTitle("Гендерная принадлежность");
+        pieChartConfiguration.setTitle("Образование наших сотрудников");
     }
 
     private void setPlotOptions() {
@@ -55,15 +55,18 @@ public class GenderViewImpl extends VerticalLayout implements GenderView {
         plotOptions.setShowInLegend(true);
         Labels dataLabels = new Labels();
         dataLabels.setEnabled(true);
-        dataLabels.setFormatter("'<b>'+ this.point.name +'</b>: '+ this.percentage +' %'");
+        dataLabels.setFormatter("'<b>'+ this.point.name +'</b>: '+ this.y");
         plotOptions.setDataLabels(dataLabels);
         pieChartConfiguration.setPlotOptions(plotOptions);
     }
 
     private void setDataSeries() {
         final DataSeries series = new DataSeries();
-        series.add(new DataSeriesItem("Женщины", 68));
-        DataSeriesItem slicedItem = new DataSeriesItem("Мужчины", 32);
+        series.add(new DataSeriesItem("Среднетехническое", 2));
+        series.add(new DataSeriesItem("Неоконченное высшее", 8));
+        series.add(new DataSeriesItem("Второе высшее", 56));
+        series.add(new DataSeriesItem("Ученая степень", 4));
+        DataSeriesItem slicedItem = new DataSeriesItem("Высшее", 361);
         slicedItem.setSliced(true);
         slicedItem.setSelected(true);
         series.add(slicedItem);
