@@ -10,6 +10,7 @@ import org.vaadin.spring.navigator.annotation.VaadinView;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
 import javax.annotation.PostConstruct;
+import java.math.BigDecimal;
 
 /**
  * @author by nikolai.pashkevich
@@ -47,7 +48,7 @@ public class EducationViewImpl extends VerticalLayout implements EducationView {
 
     private void initConfiguration() {
         pieChartConfiguration = pieChart.getConfiguration();
-        pieChartConfiguration.setTitle("Образование наших сотрудников");
+        pieChartConfiguration.setTitle("Образование сотрудников");
     }
 
     private void setPlotOptions() {
@@ -56,18 +57,18 @@ public class EducationViewImpl extends VerticalLayout implements EducationView {
         plotOptions.setShowInLegend(true);
         Labels dataLabels = new Labels();
         dataLabels.setEnabled(true);
-        dataLabels.setFormatter("'<b>'+ this.point.name +'</b>: '+ this.y");
+        dataLabels.setFormatter("'<b>'+ this.point.name +'</b>: '+ this.y +'%'");
         plotOptions.setDataLabels(dataLabels);
         pieChartConfiguration.setPlotOptions(plotOptions);
     }
 
     private void setDataSeries() {
         final DataSeries series = new DataSeries();
-        series.add(new DataSeriesItem("Среднетехническое", 2));
-        series.add(new DataSeriesItem("Неоконченное высшее", 8));
-        series.add(new DataSeriesItem("Второе высшее", 56));
-        series.add(new DataSeriesItem("Ученая степень", 4));
-        DataSeriesItem slicedItem = new DataSeriesItem("Высшее", 361);
+        series.add(new DataSeriesItem("Среднетехническое", calculatePercentage(2, 431)));
+        series.add(new DataSeriesItem("Неоконченное высшее", calculatePercentage(8, 431)));
+        series.add(new DataSeriesItem("Второе высшее", calculatePercentage(56, 431)));
+        series.add(new DataSeriesItem("Ученая степень", calculatePercentage(4, 431)));
+        DataSeriesItem slicedItem = new DataSeriesItem("Высшее", calculatePercentage(361, 431));
         slicedItem.setSliced(true);
         slicedItem.setSelected(true);
         series.add(slicedItem);
@@ -83,4 +84,8 @@ public class EducationViewImpl extends VerticalLayout implements EducationView {
 
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent viewChangeEvent) {}
+
+    private float calculatePercentage(float number, float total) {
+        return new BigDecimal(number * 100 / total).setScale(2, BigDecimal.ROUND_HALF_UP).floatValue();
+    }
 }
