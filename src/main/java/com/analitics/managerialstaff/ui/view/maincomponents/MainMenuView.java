@@ -20,7 +20,7 @@ public class MainMenuView extends VerticalLayout {
     @Autowired private CertificationsMenuCommand certificationsMenuCommand;
     @Autowired private EmployeesMenuCommand employeesMenuCommand;
     @Autowired private ManagersMenuCommand managersMenuCommand;
-    @Autowired private GenderAndAgeMenuCommand genderAndAgeMenuCommand;
+    @Autowired private GenderMenuCommand genderMenuCommand;
 
     @PostConstruct
     private void initMainMenu() {
@@ -33,8 +33,10 @@ public class MainMenuView extends VerticalLayout {
         mainMenuBar.addItem("Руководители", null, managersMenuCommand);
 
         MenuBar.MenuItem reportItem = mainMenuBar.addItem("Отчетность", null, null);
-        reportItem.addItem("Уровень образования и опыт работы", null, menuCommand);
-        reportItem.addItem("Гендерная принадлежность и возраст сотрудников", null, genderAndAgeMenuCommand);
+        reportItem.addItem("Образование сотрудников", null, menuCommand);
+        reportItem.addItem("Опыт работы", null, menuCommand);
+        reportItem.addItem("Гендерная принадлежность", null, genderMenuCommand);
+        reportItem.addItem("Возраст сотрудников", null, menuCommand);
         reportItem.addItem("Полный отчет о сотрудниках", null, menuCommand);
 
         MenuBar.MenuItem coefficientItem = reportItem.addItem("Расчет коэффициента", null, null);

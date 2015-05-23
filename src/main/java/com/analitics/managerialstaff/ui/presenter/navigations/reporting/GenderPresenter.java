@@ -1,8 +1,8 @@
 package com.analitics.managerialstaff.ui.presenter.navigations.reporting;
 
 import com.analitics.managerialstaff.ui.common.AbstractPresenter;
-import com.analitics.managerialstaff.ui.components.commands.GenderAndAgeMenuCommand;
-import com.analitics.managerialstaff.ui.view.navigations.reporting.GenderAndAgeView;
+import com.analitics.managerialstaff.ui.components.commands.GenderMenuCommand;
+import com.analitics.managerialstaff.ui.view.navigations.reporting.GenderView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.vaadin.spring.annotation.VaadinComponent;
 import org.vaadin.spring.annotation.VaadinUIScope;
@@ -16,15 +16,15 @@ import java.io.Serializable;
  */
 @VaadinComponent
 @VaadinUIScope
-public class GenderAndAgePresenter extends AbstractPresenter<GenderAndAgeView> implements Serializable {
+public class GenderPresenter extends AbstractPresenter<GenderView> implements Serializable {
 
     @Autowired
-    public GenderAndAgePresenter(GenderAndAgeView view, EventBus.UIEventBus eventBus) {
+    public GenderPresenter(GenderView view, EventBus.UIEventBus eventBus) {
         super(view, eventBus);
     }
 
     @EventBusListenerMethod
-    private void onGenderAndAgeMenuItemSelected(GenderAndAgeMenuCommand genderAndAgeMenuCommand) {
-
+    private void onGenderMenuItemSelected(GenderMenuCommand genderMenuCommand) {
+        getView().generateChart();
     }
 }

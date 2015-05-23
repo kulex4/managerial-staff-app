@@ -5,6 +5,7 @@ import com.vaadin.navigator.View;
 /**
  * @author by nikolai.pashkevich
  */
-public interface GenderAndAgeView extends View {
-    String NAME = "genderAndAge";
+public interface GenderView extends View {
+    String NAME = "gender";
+    void generateChart();
 }

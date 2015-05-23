@@ -8,7 +8,7 @@ import com.analitics.managerialstaff.ui.presenter.navigations.CertificationsPres
 import com.analitics.managerialstaff.ui.presenter.navigations.EmployeesPresenter;
 import com.analitics.managerialstaff.ui.presenter.navigations.HomePresenter;
 import com.analitics.managerialstaff.ui.presenter.navigations.ManagersPresenter;
-import com.analitics.managerialstaff.ui.presenter.navigations.reporting.GenderAndAgePresenter;
+import com.analitics.managerialstaff.ui.presenter.navigations.reporting.GenderPresenter;
 import com.analitics.managerialstaff.ui.view.maincomponents.MainMenuView;
 import com.analitics.managerialstaff.ui.view.navigations.HomeView;
 import com.vaadin.ui.UI;
@@ -33,7 +33,7 @@ public class MainMenuPresenter extends AbstractPresenter<MainMenuView> implement
     @Autowired private CertificationsPresenter certificationsPresenter;
     @Autowired private EmployeesPresenter employeesPresenter;
     @Autowired private ManagersPresenter managersPresenter;
-    @Autowired private GenderAndAgePresenter genderAndAgePresenter;
+    @Autowired private GenderPresenter genderPresenter;
 
     @Autowired
     public MainMenuPresenter(MainMenuView view, EventBus.UIEventBus eventBus) {
