@@ -8,6 +8,7 @@ import com.analitics.managerialstaff.ui.presenter.navigations.CertificationsPres
 import com.analitics.managerialstaff.ui.presenter.navigations.EmployeesPresenter;
 import com.analitics.managerialstaff.ui.presenter.navigations.HomePresenter;
 import com.analitics.managerialstaff.ui.presenter.navigations.ManagersPresenter;
+import com.analitics.managerialstaff.ui.presenter.navigations.reporting.AverageAgePresenter;
 import com.analitics.managerialstaff.ui.presenter.navigations.reporting.EducationPresenter;
 import com.analitics.managerialstaff.ui.presenter.navigations.reporting.ExperiencePresenter;
 import com.analitics.managerialstaff.ui.presenter.navigations.reporting.GenderPresenter;
@@ -38,6 +39,7 @@ public class MainMenuPresenter extends AbstractPresenter<MainMenuView> implement
     @Autowired private EducationPresenter educationPresenter;
     @Autowired private ExperiencePresenter experiencePresenter;
     @Autowired private GenderPresenter genderPresenter;
+    @Autowired private AverageAgePresenter averageAgePresenter;
 
     @Autowired
     public MainMenuPresenter(MainMenuView view, EventBus.UIEventBus eventBus) {

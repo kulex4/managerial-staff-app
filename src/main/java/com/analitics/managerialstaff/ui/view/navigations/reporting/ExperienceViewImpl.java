@@ -3,7 +3,6 @@ package com.analitics.managerialstaff.ui.view.navigations.reporting;
 import com.vaadin.addon.charts.Chart;
 import com.vaadin.addon.charts.model.*;
 import com.vaadin.addon.charts.model.style.SolidColor;
-import com.vaadin.addon.charts.model.style.Style;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.VerticalLayout;
@@ -44,7 +43,7 @@ public class ExperienceViewImpl extends VerticalLayout implements ExperienceView
 
     private void initColumnChart() {
         columnChart = new Chart(ChartType.COLUMN);
-        columnChart.setWidth(600, Unit.PIXELS);
+        columnChart.setWidth(900, Unit.PIXELS);
         columnChart.setHeight(600, Unit.PIXELS);
     }
 
@@ -63,10 +62,6 @@ public class ExperienceViewImpl extends VerticalLayout implements ExperienceView
                 "Управление консолидированной финансовой отчетности",
                 "Итого"
         );
-        Labels labels = new Labels();
-        labels.setRotation(-70);
-        labels.setAlign(HorizontalAlign.RIGHT);
-        xAxis.setLabels(labels);
         columnChartConfiguration.addxAxis(xAxis);
 
         YAxis yAxis = new YAxis();
