@@ -1,4 +1,4 @@
-package com.analitics.managerialstaff.ui.view.navigations.commands;
+package com.analitics.managerialstaff.ui.components.commands;
 
 import com.analitics.managerialstaff.ui.components.events.NavigationRequest;
 import com.analitics.managerialstaff.ui.view.navigations.employees.EmployeesView;

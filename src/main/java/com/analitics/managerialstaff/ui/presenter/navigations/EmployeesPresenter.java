@@ -8,7 +8,7 @@ import com.analitics.managerialstaff.ui.components.events.employees.EmployeeDele
 import com.analitics.managerialstaff.ui.components.events.employees.EmployeeEditEvent;
 import com.analitics.managerialstaff.ui.components.events.employees.EmployeeSaveEvent;
 import com.analitics.managerialstaff.ui.view.navigations.employees.EmployeesView;
-import com.analitics.managerialstaff.ui.view.navigations.commands.EmployeesMenuCommand;
+import com.analitics.managerialstaff.ui.components.commands.EmployeesMenuCommand;
 import com.analitics.managerialstaff.ui.view.navigations.employees.forms.EmployeeAddEditForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.vaadin.spring.annotation.VaadinComponent;

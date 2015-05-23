@@ -3,7 +3,7 @@ package com.analitics.managerialstaff.ui.presenter.navigations;
 import com.analitics.managerialstaff.backend.service.CertificationService;
 import com.analitics.managerialstaff.ui.common.AbstractPresenter;
 import com.analitics.managerialstaff.ui.view.navigations.certification.CertificationsView;
-import com.analitics.managerialstaff.ui.view.navigations.commands.CertificationsMenuCommand;
+import com.analitics.managerialstaff.ui.components.commands.CertificationsMenuCommand;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.vaadin.spring.annotation.VaadinComponent;
 import org.vaadin.spring.annotation.VaadinUIScope;

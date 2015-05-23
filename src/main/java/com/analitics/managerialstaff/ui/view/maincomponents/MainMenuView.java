@@ -1,6 +1,6 @@
 package com.analitics.managerialstaff.ui.view.maincomponents;
 
-import com.analitics.managerialstaff.ui.view.navigations.commands.*;
+import com.analitics.managerialstaff.ui.components.commands.*;
 import com.vaadin.ui.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.vaadin.spring.annotation.VaadinComponent;
@@ -20,6 +20,7 @@ public class MainMenuView extends VerticalLayout {
     @Autowired private CertificationsMenuCommand certificationsMenuCommand;
     @Autowired private EmployeesMenuCommand employeesMenuCommand;
     @Autowired private ManagersMenuCommand managersMenuCommand;
+    @Autowired private GenderAndAgeMenuCommand genderAndAgeMenuCommand;
 
     @PostConstruct
     private void initMainMenu() {
@@ -33,7 +34,7 @@ public class MainMenuView extends VerticalLayout {
 
         MenuBar.MenuItem reportItem = mainMenuBar.addItem("Отчетность", null, null);
         reportItem.addItem("Уровень образования и опыт работы", null, menuCommand);
-        reportItem.addItem("Гендерная принадлежность и возраст сотрудников", null, menuCommand);
+        reportItem.addItem("Гендерная принадлежность и возраст сотрудников", null, genderAndAgeMenuCommand);
         reportItem.addItem("Полный отчет о сотрудниках", null, menuCommand);
 
         MenuBar.MenuItem coefficientItem = reportItem.addItem("Расчет коэффициента", null, null);

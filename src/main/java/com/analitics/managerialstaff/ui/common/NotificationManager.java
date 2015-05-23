@@ -7,12 +7,14 @@ import com.vaadin.ui.Notification;
 import org.vaadin.spring.annotation.VaadinComponent;
 import org.vaadin.spring.annotation.VaadinUIScope;
 
+import java.io.Serializable;
+
 /**
  * @author by nikolai.pashkevich
  */
 @VaadinUIScope
 @VaadinComponent
-public class NotificationManager {
+public class NotificationManager implements Serializable {
 
     public static final int NOTIFICATION_DELAY = 2000;
 

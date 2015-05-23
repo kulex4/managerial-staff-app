@@ -7,7 +7,7 @@ import com.analitics.managerialstaff.ui.components.events.managers.ManagerAddEve
 import com.analitics.managerialstaff.ui.components.events.managers.ManagerDeleteEvent;
 import com.analitics.managerialstaff.ui.components.events.managers.ManagerEditEvent;
 import com.analitics.managerialstaff.ui.components.events.managers.ManagerSaveEvent;
-import com.analitics.managerialstaff.ui.view.navigations.commands.ManagersMenuCommand;
+import com.analitics.managerialstaff.ui.components.commands.ManagersMenuCommand;
 import com.analitics.managerialstaff.ui.view.navigations.managers.ManagersView;
 import com.analitics.managerialstaff.ui.view.navigations.managers.forms.ManagerAddEditForm;
 import org.springframework.beans.factory.annotation.Autowired;
