@@ -21,6 +21,7 @@ public class MainMenuView extends VerticalLayout {
     @Autowired private EmployeesMenuCommand employeesMenuCommand;
     @Autowired private ManagersMenuCommand managersMenuCommand;
     @Autowired private EducationMenuCommand educationMenuCommand;
+    @Autowired private ExperienceMenuCommand experienceMenuCommand;
     @Autowired private GenderMenuCommand genderMenuCommand;
 
     @PostConstruct
@@ -35,7 +36,7 @@ public class MainMenuView extends VerticalLayout {
 
         MenuBar.MenuItem reportItem = mainMenuBar.addItem("Отчетность", null, null);
         reportItem.addItem("Образование сотрудников", null, educationMenuCommand);
-        reportItem.addItem("Опыт работы", null, menuCommand);
+        reportItem.addItem("Опыт работы", null, experienceMenuCommand);
         reportItem.addItem("Гендерная принадлежность", null, genderMenuCommand);
         reportItem.addItem("Возраст сотрудников", null, menuCommand);
         reportItem.addItem("Полный отчет о сотрудниках", null, menuCommand);

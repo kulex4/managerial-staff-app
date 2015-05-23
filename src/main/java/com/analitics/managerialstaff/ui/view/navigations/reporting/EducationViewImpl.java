@@ -24,12 +24,13 @@ public class EducationViewImpl extends VerticalLayout implements EducationView {
     @PostConstruct
     private void init() {
         setSizeFull();
-        initPieChart();
     }
 
     @Override
     public void generateChart() {
         removeAllComponents();
+
+        initPieChart();
         initConfiguration();
         setPlotOptions();
         setDataSeries();

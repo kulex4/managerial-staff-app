@@ -24,12 +24,13 @@ public class GenderViewImpl extends VerticalLayout implements GenderView {
     @PostConstruct
     private void init() {
         setSizeFull();
-        initPieChart();
     }
 
     @Override
     public void generateChart() {
         removeAllComponents();
+
+        initPieChart();
         initConfiguration();
         setPlotOptions();
         setDataSeries();
