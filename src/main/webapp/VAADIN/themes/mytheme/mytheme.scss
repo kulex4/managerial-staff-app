@@ -1,4 +1,4 @@
-@import "../valo/valo";
+@import "../valo/valo.scss";
 @import "addons.scss";
 
 @mixin mytheme {
@@ -11,5 +11,10 @@
   .v-splitpanel-vsplitter-hide-splitter,
   .v-splitpanel-vsplitter-hide-splitter div {
     width: 0;
+  }
+
+  .boldheader .v-grid-cell  {
+    font-weight: bold;
+    text-align: center;
   }
 }

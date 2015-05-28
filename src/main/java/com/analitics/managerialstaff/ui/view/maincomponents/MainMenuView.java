@@ -24,6 +24,7 @@ public class MainMenuView extends VerticalLayout {
     @Autowired private ExperienceMenuCommand experienceMenuCommand;
     @Autowired private GenderMenuCommand genderMenuCommand;
     @Autowired private AverageAgeMenuCommand averageAgeMenuCommand;
+    @Autowired private EducationAverageMarkMenuCommand educationAverageMarkMenuCommand;
 
     @PostConstruct
     private void initMainMenu() {
@@ -43,7 +44,7 @@ public class MainMenuView extends VerticalLayout {
         reportItem.addItem("Полный отчет о сотрудниках", null, menuCommand);
 
         MenuBar.MenuItem coefficientItem = reportItem.addItem("Расчет коэффициента", null, null);
-        coefficientItem.addItem("Среднего балла", null, menuCommand);
+        coefficientItem.addItem("Среднего балла", null, educationAverageMarkMenuCommand);
         coefficientItem.addItem("Равномерности", null, menuCommand);
         coefficientItem.addItem("Профессиональной перспективы", null, menuCommand);
 

@@ -12,6 +12,7 @@ import com.analitics.managerialstaff.ui.presenter.navigations.reporting.AverageA
 import com.analitics.managerialstaff.ui.presenter.navigations.reporting.EducationPresenter;
 import com.analitics.managerialstaff.ui.presenter.navigations.reporting.ExperiencePresenter;
 import com.analitics.managerialstaff.ui.presenter.navigations.reporting.GenderPresenter;
+import com.analitics.managerialstaff.ui.presenter.navigations.reporting.analyzing.EducationAverageMarkPresenter;
 import com.analitics.managerialstaff.ui.view.maincomponents.MainMenuView;
 import com.analitics.managerialstaff.ui.view.navigations.HomeView;
 import com.vaadin.ui.UI;
@@ -40,6 +41,7 @@ public class MainMenuPresenter extends AbstractPresenter<MainMenuView> implement
     @Autowired private ExperiencePresenter experiencePresenter;
     @Autowired private GenderPresenter genderPresenter;
     @Autowired private AverageAgePresenter averageAgePresenter;
+    @Autowired private EducationAverageMarkPresenter educationAverageMarkPresenter;
 
     @Autowired
     public MainMenuPresenter(MainMenuView view, EventBus.UIEventBus eventBus) {
