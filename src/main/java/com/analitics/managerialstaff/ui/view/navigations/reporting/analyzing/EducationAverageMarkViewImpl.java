@@ -7,11 +7,12 @@ import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.data.util.GeneratedPropertyContainer;
 import com.vaadin.data.util.PropertyValueGenerator;
 import com.vaadin.navigator.ViewChangeListener;
-import com.vaadin.ui.ComboBox;
-import com.vaadin.ui.Grid;
-import com.vaadin.ui.VerticalLayout;
+import com.vaadin.shared.ui.MarginInfo;
+import com.vaadin.ui.*;
 import org.vaadin.spring.annotation.VaadinUIScope;
 import org.vaadin.spring.navigator.annotation.VaadinView;
+import org.vaadin.viritin.fields.MTextArea;
+import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
 import javax.annotation.PostConstruct;
@@ -28,6 +29,18 @@ public class EducationAverageMarkViewImpl extends VerticalLayout implements Educ
     private BeanItemContainer<EducationAverageMarkRow> beanItemContainer;
     private Grid mainGrid;
 
+    private TextArea specificationTextArea;
+    private Label factorGpaPreviousYear;
+    private Label factorGpaPreviousYearNumber;
+    private Label factorGpaCurrentYear;
+    private Label factorGpaCurrentYearNumber;
+    private Label growthRateOfEducationLevel;
+    private Label growthRateOfEducationLevelNumber;
+    private Label absoluteGrowthRateReserve;
+    private Label absoluteGrowthRateReserveNumber;
+    private Label relativeGrowthRateReserve;
+    private Label relativeGrowthRateReserveNumber;
+
     private static final int TOTAL_EMPLOYEES_CURRENT = 361;
     private static final int TOTAL_EMPLOYEES_PREVIOUS = 359;
 
@@ -36,6 +49,13 @@ public class EducationAverageMarkViewImpl extends VerticalLayout implements Educ
         setSizeFull();
         initComponents();
         constructLayout();
+        settingValueOfSpecificationTextArea();
+
+        generateFactorGpaPreviousYearLabel();
+        generateFactorGpaCurrentYearLabel();
+        generateGrowthRateOfEducationLevelLabel();
+        generateAbsoluteGrowthRateReserveLabel();
+        generateRelativeGrowthRateReserveLabel();
     }
 
     private void initComponents() {
@@ -47,14 +67,57 @@ public class EducationAverageMarkViewImpl extends VerticalLayout implements Educ
 
         beanItemContainer = new BeanItemContainer<>(EducationAverageMarkRow.class);
         mainGrid = new Grid("Образовательный уровень управленческого персонала");
-        mainGrid.setSizeFull();
+        mainGrid.setWidth(100, Unit.PERCENTAGE);
+        mainGrid.setHeight(250, Unit.PIXELS);
+
+        specificationTextArea = new MTextArea().withFullWidth().withRows(4);
+        specificationTextArea.setStyleName(MyTheme.TEXTAREA_BORDERLESS);
+
+        factorGpaPreviousYear = new Label();
+        factorGpaPreviousYearNumber = new Label();
+        factorGpaPreviousYearNumber.setStyleName(MyTheme.LABEL_COLORED);
+
+        factorGpaCurrentYear = new Label();
+        factorGpaCurrentYearNumber = new Label();
+        factorGpaCurrentYearNumber.setStyleName(MyTheme.LABEL_COLORED);
+
+        growthRateOfEducationLevel = new Label();
+        growthRateOfEducationLevelNumber = new Label();
+        growthRateOfEducationLevelNumber.setStyleName(MyTheme.LABEL_COLORED);
+
+        absoluteGrowthRateReserve = new Label();
+        absoluteGrowthRateReserveNumber = new Label();
+        absoluteGrowthRateReserveNumber.setStyleName(MyTheme.LABEL_COLORED);
+
+        relativeGrowthRateReserve = new Label();
+        relativeGrowthRateReserveNumber = new Label();
+        relativeGrowthRateReserveNumber.setStyleName(MyTheme.LABEL_COLORED);
     }
 
     private void constructLayout() {
+        MHorizontalLayout spacing = new MHorizontalLayout().withFullHeight().withFullWidth();
         MVerticalLayout rootLayout = new MVerticalLayout(
                 yearSelect,
-                mainGrid
-        ).withMargin(false).withFullHeight().withFullWidth().expand(mainGrid);
+                mainGrid,
+                specificationTextArea,
+                new MHorizontalLayout(
+                        new MVerticalLayout(
+                                factorGpaPreviousYear,
+                                factorGpaCurrentYear,
+                                growthRateOfEducationLevel,
+                                absoluteGrowthRateReserve,
+                                relativeGrowthRateReserve
+                        ).withMargin(false),
+                        new MVerticalLayout(
+                                factorGpaPreviousYearNumber,
+                                factorGpaCurrentYearNumber,
+                                growthRateOfEducationLevelNumber,
+                                absoluteGrowthRateReserveNumber,
+                                relativeGrowthRateReserveNumber
+                        ).withMargin(false)
+                ).withMargin(false),
+                spacing
+        ).withMargin(new MarginInfo(true, false, false, false)).withFullHeight().withFullWidth().expand(spacing);
         addComponent(rootLayout);
     }
 
@@ -156,6 +219,40 @@ public class EducationAverageMarkViewImpl extends VerticalLayout implements Educ
                 "growthRate"
         );
         groupingHeader.setStyleName(MyTheme.GRID_BOLD_HEADER);
+    }
+
+    private void settingValueOfSpecificationTextArea() {
+        String text = "Отмечая приорететность высшего экономического образования, его ранжирование по методу среднего бала следующее: \n"
+                + "          5 баллов - экономическое образование;\n"
+                + "          4 балла - техническое образование;\n"
+                + "          3 балла - гуманитарное образование;";
+        specificationTextArea.setValue(text);
+        specificationTextArea.setReadOnly(true);
+    }
+
+    private void generateFactorGpaPreviousYearLabel() {
+        factorGpaPreviousYear.setValue("Коэффициент среднего балла для 2012 года:");
+        factorGpaPreviousYearNumber.setValue("4,69");
+    }
+
+    private void generateFactorGpaCurrentYearLabel() {
+        factorGpaCurrentYear.setValue("Коэффициент среднего балла для 2013 года: ");
+        factorGpaCurrentYearNumber.setValue("4,71");
+    }
+
+    private void generateGrowthRateOfEducationLevelLabel() {
+        growthRateOfEducationLevel.setValue("Коэффициент роста образовательного уровня: ");
+        growthRateOfEducationLevelNumber.setValue("0,43%");
+    }
+
+    private void generateAbsoluteGrowthRateReserveLabel() {
+        absoluteGrowthRateReserve.setValue("Абсолютный резерв роста образовательного уровня, коэф.: ");
+        absoluteGrowthRateReserveNumber.setValue("0,29");
+    }
+
+    private void generateRelativeGrowthRateReserveLabel() {
+        relativeGrowthRateReserve.setValue("Относительный  резерв роста образовательного уровня: ");
+        relativeGrowthRateReserveNumber.setValue("6,16%");
     }
 
     @Override
