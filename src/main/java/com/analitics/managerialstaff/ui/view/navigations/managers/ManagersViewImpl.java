@@ -137,7 +137,7 @@ public class ManagersViewImpl extends VerticalLayout implements ManagersView {
 
     @Override
     public void emptyEmployeeNotification() {
-        notificationManager.showNotification("Выберете менеджера из таблицы", MyTheme.NOTIFICATION_SUCCESS);
+        notificationManager.showNotification("Выберете менеджера из таблицы", MyTheme.NOTIFICATION_WARNING);
     }
 
     @Override

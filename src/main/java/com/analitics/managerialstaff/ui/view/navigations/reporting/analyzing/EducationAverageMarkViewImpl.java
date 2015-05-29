@@ -67,6 +67,8 @@ public class EducationAverageMarkViewImpl extends VerticalLayout implements Educ
 
         beanItemContainer = new BeanItemContainer<>(EducationAverageMarkRow.class);
         mainGrid = new Grid("Образовательный уровень управленческого персонала");
+        mainGrid.setSelectionMode(Grid.SelectionMode.NONE);
+        mainGrid.setStyleName(MyTheme.TURN_OFF_SCROLLBAR);
         mainGrid.setWidth(100, Unit.PERCENTAGE);
         mainGrid.setHeight(250, Unit.PIXELS);
 

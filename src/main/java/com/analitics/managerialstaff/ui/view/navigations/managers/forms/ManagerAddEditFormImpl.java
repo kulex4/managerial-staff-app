@@ -8,6 +8,7 @@ import com.analitics.managerialstaff.ui.components.events.managers.ManagerSaveEv
 import com.vaadin.data.validator.IntegerRangeValidator;
 import com.vaadin.data.validator.NullValidator;
 import com.vaadin.data.validator.StringLengthValidator;
+import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.Window;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -104,6 +105,8 @@ public class ManagerAddEditFormImpl
                 ))
                 .withFullWidth();
         gender = new EnumSelect("Пол")
+                .withSelectType(ComboBox.class)
+                .withNullSelection(false)
                 .withValidator(new NullValidator("Выберете пол", false))
                 .withFullWidth();
         experience = new MTextField("Стаж")

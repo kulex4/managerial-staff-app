@@ -8,4 +8,5 @@ import com.vaadin.ui.themes.ValoTheme;
 public class MyTheme extends ValoTheme {
     public static final String HIDE_SPLITTER = "hide-splitter";
     public static final String GRID_BOLD_HEADER = "boldheader";
+    public static final String TURN_OFF_SCROLLBAR = "table-without-scrollbar";
 }

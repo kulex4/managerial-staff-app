@@ -135,7 +135,7 @@ public class EmployeesViewImpl extends VerticalLayout implements EmployeesView {
 
     @Override
     public void emptyEmployeeNotification() {
-        notificationManager.showNotification("Выберете сотрудника из таблицы", MyTheme.NOTIFICATION_SUCCESS);
+        notificationManager.showNotification("Выберете сотрудника из таблицы", MyTheme.NOTIFICATION_WARNING);
     }
 
     @Override

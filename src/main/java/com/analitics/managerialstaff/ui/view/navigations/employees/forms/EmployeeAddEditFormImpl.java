@@ -9,6 +9,7 @@ import com.analitics.managerialstaff.ui.view.navigations.employees.validators.Em
 import com.vaadin.data.validator.IntegerRangeValidator;
 import com.vaadin.data.validator.NullValidator;
 import com.vaadin.data.validator.StringLengthValidator;
+import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.Window;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -113,6 +114,8 @@ public class EmployeeAddEditFormImpl
                 ))
                 .withFullWidth();
         gender = new EnumSelect("Пол")
+                .withSelectType(ComboBox.class)
+                .withNullSelection(false)
                 .withValidator(new NullValidator("Выберете пол", false))
                 .withFullWidth();
         experience = new MTextField("Стаж")
