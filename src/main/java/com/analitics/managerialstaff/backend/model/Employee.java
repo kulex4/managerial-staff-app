@@ -28,7 +28,7 @@ public class Employee {
     public static final String DEPARTMENT = "department";
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "employee_id")
     private Long id;
 

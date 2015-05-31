@@ -16,7 +16,7 @@ public class Training {
     public static final String DATE_OF_TRAINING = "dateOfTraining";
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "training_id")
     private Long id;
 
