@@ -36,6 +36,9 @@ public class TrainingUniformityCoefViewImpl extends VerticalLayout implements Tr
     private void init() {
         setSizeFull();
         initComponents();
+        addGeneratedProperties();
+        configureColumnsCaptions();
+        generateHeaderRow();
         constructLayout();
     }
 
@@ -64,11 +67,7 @@ public class TrainingUniformityCoefViewImpl extends VerticalLayout implements Tr
         addComponent(rootLayout);
     }
 
-    @Override
-    public void insertData(List<TrainingUniformityCoefRow> rows) {
-        beanItemContainer.removeAllItems();
-        beanItemContainer.addAll(rows);
-
+    private void addGeneratedProperties() {
         GeneratedPropertyContainer generatedPropertyContainer = new GeneratedPropertyContainer(beanItemContainer);
         generatedPropertyContainer.addGeneratedProperty("goalEmployees", new PropertyValueGenerator<Float>() {
             @Override
@@ -134,8 +133,6 @@ public class TrainingUniformityCoefViewImpl extends VerticalLayout implements Tr
             }
         });
         mainGrid.setContainerDataSource(generatedPropertyContainer);
-        configureColumnsCaptions();
-        generateHeaderRow();
     }
 
     private void configureColumnsCaptions() {
@@ -163,7 +160,6 @@ public class TrainingUniformityCoefViewImpl extends VerticalLayout implements Tr
                 groupingHeader.getCell("densityCurrent"),
                 groupingHeader.getCell("densityGoal"));
         densityCells.setHtml("Удельный вес, %");
-        //groupingHeader.setStyleName(MyTheme.GRID_BOLD_HEADER);
         mainGrid.setColumnOrder(
                 "name",
                 "numberOfEmployees",
@@ -173,6 +169,12 @@ public class TrainingUniformityCoefViewImpl extends VerticalLayout implements Tr
                 "goalCoefficient",
                 "executionCondition"
         );
+    }
+
+    @Override
+    public void insertData(List<TrainingUniformityCoefRow> rows) {
+        beanItemContainer.removeAllItems();
+        beanItemContainer.addAll(rows);
     }
 
     @Override

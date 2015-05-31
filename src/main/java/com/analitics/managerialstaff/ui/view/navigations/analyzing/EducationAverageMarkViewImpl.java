@@ -48,6 +48,9 @@ public class EducationAverageMarkViewImpl extends VerticalLayout implements Educ
     private void init() {
         setSizeFull();
         initComponents();
+        addGeneratedProperties();
+        configureColumnsCaptions();
+        generateHeaderRow();
         constructLayout();
         settingValueOfSpecificationTextArea();
 
@@ -123,11 +126,7 @@ public class EducationAverageMarkViewImpl extends VerticalLayout implements Educ
         addComponent(rootLayout);
     }
 
-    @Override
-    public void insertData(List<EducationAverageMarkRow> averageMarkRows) {
-        beanItemContainer.removeAllItems();
-        beanItemContainer.addAll(averageMarkRows);
-
+    private void addGeneratedProperties() {
         GeneratedPropertyContainer generatedPropertyContainer = new GeneratedPropertyContainer(beanItemContainer);
         generatedPropertyContainer.addGeneratedProperty("percentPrevious", new PropertyValueGenerator<Float>() {
             @Override
@@ -184,8 +183,6 @@ public class EducationAverageMarkViewImpl extends VerticalLayout implements Educ
             }
         });
         mainGrid.setContainerDataSource(generatedPropertyContainer);
-        configureColumnsCaptions();
-        generateHeaderRow();
     }
 
     private void configureColumnsCaptions() {
@@ -221,6 +218,12 @@ public class EducationAverageMarkViewImpl extends VerticalLayout implements Educ
                 "growthRate"
         );
         groupingHeader.setStyleName(MyTheme.GRID_BOLD_HEADER);
+    }
+
+    @Override
+    public void insertData(List<EducationAverageMarkRow> averageMarkRows) {
+        beanItemContainer.removeAllItems();
+        beanItemContainer.addAll(averageMarkRows);
     }
 
     private void settingValueOfSpecificationTextArea() {
