@@ -1,11 +1,11 @@
 package com.analitics.managerialstaff.backend.model;
 
+import com.analitics.managerialstaff.backend.model.enums.Department;
 import com.analitics.managerialstaff.backend.model.enums.Gender;
 import com.analitics.managerialstaff.backend.model.enums.Grade;
 import lombok.Data;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
@@ -25,6 +25,7 @@ public class Employee {
     public static final String CERTIFICATIONS = "certifications";
     public static final String EDUCATIONS = "educations";
     public static final String TRAININGS = "trainings";
+    public static final String DEPARTMENT = "department";
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -52,15 +53,40 @@ public class Employee {
     private Grade grade;
 
     @Column
+    @Enumerated(EnumType.ORDINAL)
+    private Department department;
+
+    @Column
     private int experience;
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy="employee")
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "employee")
     private List<Certification> certifications;
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy="employee")
+    @OneToMany(fetch = FetchType.LAZY, orphanRemoval = true, cascade = CascadeType.ALL, mappedBy = "employee")
     private List<Education> educations;
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy="employee")
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "employee")
     private List<Training> trainings;
 
+    public void addEducation(Education education) {
+        //prevent endless loop
+        if (educations.contains(education)) {
+            return;
+        }
+        //add new account
+        educations.add(education);
+        //set myself into the twitter account
+        education.setEmployee(this);
+    }
+
+    public void removeEducation(Education education) {
+        //prevent endless loop
+        if (!educations.contains(education)) {
+            return;
+        }
+        //remove the account
+        educations.remove(education);
+        //remove myself from the twitter account
+        education.setEmployee(null);
+    }
 }

@@ -2,11 +2,14 @@ package com.analitics.managerialstaff.backend.service;
 
 import com.analitics.managerialstaff.backend.model.Employee;
 import com.analitics.managerialstaff.backend.model.enums.Grade;
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.domain.Specifications;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Iterator;
 
 /**
  * @author by nikolai.pashkevich
@@ -44,7 +47,9 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public Iterable<Employee> findSpecialists() {
-        return employeeRepository.findByGrade(Grade.SPECIALIST);
+        Iterable<Employee> employees = employeeRepository.findByGrade(Grade.SPECIALIST);
+        employees.forEach(employee -> employee.getEducations().size());
+        return employees;
     }
 
     @Override

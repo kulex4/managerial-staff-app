@@ -3,7 +3,6 @@ package com.analitics.managerialstaff.ui.view.navigations.managers.forms;
 import com.analitics.managerialstaff.backend.model.Employee;
 import com.analitics.managerialstaff.backend.model.enums.Grade;
 import com.analitics.managerialstaff.ui.common.forms.EntityFormImpl;
-import com.analitics.managerialstaff.ui.components.events.employees.EmployeeSaveEvent;
 import com.analitics.managerialstaff.ui.components.events.managers.ManagerSaveEvent;
 import com.vaadin.data.validator.IntegerRangeValidator;
 import com.vaadin.data.validator.NullValidator;
@@ -45,6 +44,7 @@ public class ManagerAddEditFormImpl
     private MTextField age;
     private MTextField position;
     private EnumSelect gender;
+    private EnumSelect department;
     private MTextField experience;
 
     @Autowired
@@ -109,6 +109,11 @@ public class ManagerAddEditFormImpl
                 .withNullSelection(false)
                 .withValidator(new NullValidator("Выберете пол", false))
                 .withFullWidth();
+        department = new EnumSelect("Отдел")
+                .withSelectType(ComboBox.class)
+                .withNullSelection(false)
+                .withValidator(new NullValidator("Выберете отдел", false))
+                .withFullWidth();
         experience = new MTextField("Стаж")
                 .withInputPrompt("Стаж")
                 .withValidator(new IntegerRangeValidator(
@@ -131,8 +136,9 @@ public class ManagerAddEditFormImpl
                 age,
                 position,
                 gender,
+                department,
                 experience
-        ).withMargin(true).withWidth("400px");
+        ).withMargin(true).withWidth("500px");
         return new MVerticalLayout(
                 formLayout,
                 getToolbar()

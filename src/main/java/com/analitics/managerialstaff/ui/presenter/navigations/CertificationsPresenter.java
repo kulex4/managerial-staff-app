@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.vaadin.spring.annotation.VaadinComponent;
 import org.vaadin.spring.annotation.VaadinUIScope;
 import org.vaadin.spring.events.EventBus;
+import org.vaadin.spring.events.EventScope;
 import org.vaadin.spring.events.annotation.EventBusListenerMethod;
 
 import java.io.Serializable;
@@ -27,7 +28,7 @@ public class CertificationsPresenter extends AbstractPresenter<CertificationsVie
         super(view, eventBus);
     }
 
-    @EventBusListenerMethod
+    @EventBusListenerMethod(scope = EventScope.UI)
     private void onCertificationsMenuItemSelected(CertificationsMenuCommand certificationsMenuCommand) {
         getView().setCertifications(certificationService.findCertifications());
     }

@@ -2,11 +2,13 @@ package com.analitics.managerialstaff.ui.view.navigations.employees;
 
 import com.analitics.managerialstaff.backend.model.Employee;
 import com.analitics.managerialstaff.ui.common.NotificationManager;
+import com.analitics.managerialstaff.ui.components.events.employees.EmployeeAddEducationEvent;
 import com.analitics.managerialstaff.ui.components.events.employees.EmployeeAddEvent;
 import com.analitics.managerialstaff.ui.components.events.employees.EmployeeDeleteEvent;
 import com.analitics.managerialstaff.ui.components.events.employees.EmployeeEditEvent;
 import com.analitics.managerialstaff.ui.theme.MyTheme;
 import com.vaadin.data.util.BeanItemContainer;
+import com.vaadin.event.SelectionEvent;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.*;
@@ -39,6 +41,7 @@ public class EmployeesViewImpl extends VerticalLayout implements EmployeesView {
     private Button addEmployeeButton;
     private Button deleteEmployeeButton;
     private Button editEmployeeButton;
+    private Button addEducationButton;
     private Grid employeesGrid;
     private BeanItemContainer<Employee> employeeContainer;
 
@@ -47,7 +50,6 @@ public class EmployeesViewImpl extends VerticalLayout implements EmployeesView {
         setSizeFull();
 
         initComponents();
-        initListeners();
         constructLayout();
     }
 
@@ -57,20 +59,25 @@ public class EmployeesViewImpl extends VerticalLayout implements EmployeesView {
     }
 
     private void initButtons() {
-        addEmployeeButton = new MButton("Добавить").withIcon(FontAwesome.PLUS);
-        editEmployeeButton = new MButton("Изменить").withIcon(FontAwesome.PENCIL);
-        deleteEmployeeButton = new MButton("Удалить").withIcon(FontAwesome.TRASH_O);
+        addEmployeeButton = new MButton("Добавить", this::addEmployee).withIcon(FontAwesome.PLUS);
+        editEmployeeButton = new MButton("Изменить", this::editEmployee).withIcon(FontAwesome.PENCIL);
+        deleteEmployeeButton = new MButton("Удалить", this::deleteEmployee).withIcon(FontAwesome.TRASH_O);
+        addEducationButton = new MButton("Добавить образование сотруднику", this::educationEvent).withIcon(FontAwesome.BOOK);
 
+        MHorizontalLayout spacing = new MHorizontalLayout().withFullWidth().withMargin(false);
         controlButtonsLayout = new MHorizontalLayout(
                 addEmployeeButton,
                 editEmployeeButton,
-                deleteEmployeeButton
-        ).withMargin(false);
+                deleteEmployeeButton,
+                spacing,
+                addEducationButton
+        ).withMargin(false).expand(spacing);
     }
 
     private void initGrid() {
         employeeContainer = new BeanItemContainer<>(Employee.class);
         employeesGrid = new Grid("Список всех сотрудников", employeeContainer);
+        employeesGrid.addSelectionListener(this::gridElementSelection);
         employeesGrid.setSelectionMode(Grid.SelectionMode.SINGLE);
         employeesGrid.setImmediate(true);
         employeesGrid.setWidth("99%");
@@ -80,6 +87,7 @@ public class EmployeesViewImpl extends VerticalLayout implements EmployeesView {
                 Employee.GENDER,
                 Employee.AGE,
                 Employee.EXPERIENCE,
+                Employee.DEPARTMENT,
                 Employee.POSITION
         );
         removeUnusedColumns();
@@ -105,18 +113,10 @@ public class EmployeesViewImpl extends VerticalLayout implements EmployeesView {
         ageColumn.setHeaderCaption("Возраст");
         Grid.Column experienceColumn = employeesGrid.getColumn(Employee.EXPERIENCE);
         experienceColumn.setHeaderCaption("Стаж");
+        Grid.Column departmentColumn = employeesGrid.getColumn(Employee.DEPARTMENT);
+        departmentColumn.setHeaderCaption("Отдел");
         Grid.Column positionColumn = employeesGrid.getColumn(Employee.POSITION);
         positionColumn.setHeaderCaption("Должность");
-    }
-
-    private void initListeners() {
-        addEmployeeButton.addClickListener(clickEvent -> eventBus.publish(EventScope.UI, this, new EmployeeAddEvent()));
-        editEmployeeButton.addClickListener(clickEvent -> constructEditEvent());
-        deleteEmployeeButton.addClickListener(clickEvent -> constructDeleteEvent());
-        employeesGrid.addSelectionListener(selectionEvent -> {
-            editEmployeeButton.setEnabled(true);
-            deleteEmployeeButton.setEnabled(true);
-        });
     }
 
     private void constructLayout() {
@@ -154,9 +154,17 @@ public class EmployeesViewImpl extends VerticalLayout implements EmployeesView {
     }
 
     @Override
-    public void enter(ViewChangeListener.ViewChangeEvent viewChangeEvent) {}
+    public void enter(ViewChangeListener.ViewChangeEvent viewChangeEvent) {
+        editEmployeeButton.setEnabled(false);
+        deleteEmployeeButton.setEnabled(false);
+        addEducationButton.setEnabled(false);
+    }
 
-    private void constructEditEvent() {
+    private void addEmployee(Button.ClickEvent event) {
+        eventBus.publish(EventScope.UI, this, new EmployeeAddEvent());
+    }
+
+    private void editEmployee(Button.ClickEvent event) {
         Employee selectedEmployee = (Employee) employeesGrid.getSelectedRow();
         if (selectedEmployee != null && employeeContainer.getItemIds().contains(selectedEmployee)) {
             eventBus.publish(EventScope.UI, this, new EmployeeEditEvent(selectedEmployee));
@@ -165,7 +173,7 @@ public class EmployeesViewImpl extends VerticalLayout implements EmployeesView {
         }
     }
 
-    private void constructDeleteEvent() {
+    private void deleteEmployee(Button.ClickEvent event) {
         // todo confirmation dialog
         Employee selectedEmployee = (Employee) employeesGrid.getSelectedRow();
         if (selectedEmployee != null && employeeContainer.getItemIds().contains(selectedEmployee)) {
@@ -173,5 +181,20 @@ public class EmployeesViewImpl extends VerticalLayout implements EmployeesView {
         } else {
             emptyEmployeeNotification();
         }
+    }
+
+    private void educationEvent(Button.ClickEvent event) {
+        Employee selectedEmployee = (Employee) employeesGrid.getSelectedRow();
+        if (selectedEmployee != null && employeeContainer.getItemIds().contains(selectedEmployee)) {
+            eventBus.publish(EventScope.UI, this, new EmployeeAddEducationEvent(selectedEmployee));
+        } else {
+            emptyEmployeeNotification();
+        }
+    }
+
+    private void gridElementSelection(SelectionEvent event) {
+        editEmployeeButton.setEnabled(true);
+        deleteEmployeeButton.setEnabled(true);
+        addEducationButton.setEnabled(true);
     }
 }

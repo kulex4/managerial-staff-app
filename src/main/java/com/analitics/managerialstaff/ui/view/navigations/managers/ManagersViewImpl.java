@@ -23,6 +23,8 @@ import org.vaadin.viritin.layouts.MVerticalLayout;
 
 import javax.annotation.PostConstruct;
 import java.util.Collection;
+import java.util.Optional;
+import java.util.Set;
 
 /**
  * @author by nikolai.pashkevich
@@ -41,6 +43,7 @@ public class ManagersViewImpl extends VerticalLayout implements ManagersView {
     private Button addManagerButton;
     private Button deleteManagerButton;
     private Button editManagerButton;
+    private Button addEducationButton;
     private Grid managersGrid;
     private BeanItemContainer<Employee> managersContainer;
 
@@ -62,12 +65,16 @@ public class ManagersViewImpl extends VerticalLayout implements ManagersView {
         addManagerButton = new MButton("Добавить").withIcon(FontAwesome.PLUS);
         editManagerButton = new MButton("Изменить").withIcon(FontAwesome.PENCIL);
         deleteManagerButton = new MButton("Удалить").withIcon(FontAwesome.TRASH_O);
+        addEducationButton = new MButton("Добавить образование сотруднику").withIcon(FontAwesome.BOOK);
 
+        MHorizontalLayout spacing = new MHorizontalLayout().withFullWidth().withMargin(false);
         controlButtonsLayout = new MHorizontalLayout(
                 addManagerButton,
                 editManagerButton,
-                deleteManagerButton
-        ).withMargin(false);
+                deleteManagerButton,
+                spacing,
+                addEducationButton
+        ).withMargin(false).expand(spacing);
     }
 
     private void initGrid() {
@@ -82,6 +89,7 @@ public class ManagersViewImpl extends VerticalLayout implements ManagersView {
                 Employee.GENDER,
                 Employee.AGE,
                 Employee.EXPERIENCE,
+                Employee.DEPARTMENT,
                 Employee.POSITION
         );
         removeUnusedColumns();
@@ -107,6 +115,8 @@ public class ManagersViewImpl extends VerticalLayout implements ManagersView {
         ageColumn.setHeaderCaption("Возраст");
         Grid.Column experienceColumn = managersGrid.getColumn(Employee.EXPERIENCE);
         experienceColumn.setHeaderCaption("Стаж");
+        Grid.Column departmentColumn = managersGrid.getColumn(Employee.DEPARTMENT);
+        departmentColumn.setHeaderCaption("Отдел");
         Grid.Column positionColumn = managersGrid.getColumn(Employee.POSITION);
         positionColumn.setHeaderCaption("Должность");
     }
@@ -118,6 +128,7 @@ public class ManagersViewImpl extends VerticalLayout implements ManagersView {
         managersGrid.addSelectionListener(selectionEvent -> {
             editManagerButton.setEnabled(true);
             deleteManagerButton.setEnabled(true);
+            addEducationButton.setEnabled(true);
         });
     }
 
@@ -156,7 +167,11 @@ public class ManagersViewImpl extends VerticalLayout implements ManagersView {
     }
 
     @Override
-    public void enter(ViewChangeListener.ViewChangeEvent viewChangeEvent) {}
+    public void enter(ViewChangeListener.ViewChangeEvent viewChangeEvent) {
+        editManagerButton.setEnabled(false);
+        deleteManagerButton.setEnabled(false);
+        addEducationButton.setEnabled(false);
+    }
 
     private void constructEditEvent() {
         Employee selectedManager = (Employee) managersGrid.getSelectedRow();

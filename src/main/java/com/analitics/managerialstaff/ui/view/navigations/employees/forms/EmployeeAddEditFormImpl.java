@@ -46,13 +46,8 @@ public class EmployeeAddEditFormImpl
     private MTextField age;
     private MTextField position;
     private EnumSelect gender;
+    private EnumSelect department;
     private MTextField experience;
-
-    @Autowired
-    private EmployeeSurnameValidator employeeSurnameValidator;
-
-    @Autowired
-    private EmployeeForenameValidator employeeForenameValidator;
 
     @Autowired
     public EmployeeAddEditFormImpl(EventBus.UIEventBus eventBus) {
@@ -81,7 +76,6 @@ public class EmployeeAddEditFormImpl
                         STRING_MAX_VALUE,
                         false
                 ))
-                //.withValidator(employeeSurnameValidator)
                 .withFullWidth();
         forename = new MTextField("Фамилия")
                 .withInputPrompt("Фамилия")
@@ -91,7 +85,6 @@ public class EmployeeAddEditFormImpl
                         STRING_MAX_VALUE,
                         false
                 ))
-                //.withValidator(employeeForenameValidator)
                 .withFullWidth();
         age = new MTextField("Возраст")
                 .withInputPrompt("Возраст")
@@ -118,6 +111,11 @@ public class EmployeeAddEditFormImpl
                 .withNullSelection(false)
                 .withValidator(new NullValidator("Выберете пол", false))
                 .withFullWidth();
+        department = new EnumSelect("Отдел")
+                .withSelectType(ComboBox.class)
+                .withNullSelection(false)
+                .withValidator(new NullValidator("Выберете отдел", false))
+                .withFullWidth();
         experience = new MTextField("Стаж")
                 .withInputPrompt("Стаж")
                 .withValidator(new IntegerRangeValidator(
@@ -140,8 +138,9 @@ public class EmployeeAddEditFormImpl
                 age,
                 position,
                 gender,
+                department,
                 experience
-        ).withMargin(true).withWidth("400px");
+        ).withMargin(true).withWidth("500px");
         return new MVerticalLayout(
                 formLayout,
                 getToolbar()

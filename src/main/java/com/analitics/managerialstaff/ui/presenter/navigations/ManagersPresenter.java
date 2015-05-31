@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.vaadin.spring.annotation.VaadinComponent;
 import org.vaadin.spring.annotation.VaadinUIScope;
 import org.vaadin.spring.events.EventBus;
+import org.vaadin.spring.events.EventScope;
 import org.vaadin.spring.events.annotation.EventBusListenerMethod;
 
 import java.io.Serializable;
@@ -36,31 +37,31 @@ public class ManagersPresenter extends AbstractPresenter<ManagersView> implement
         super(view, eventBus);
     }
 
-    @EventBusListenerMethod
+    @EventBusListenerMethod(scope = EventScope.UI)
     private void onManagersMenuItemSelected(ManagersMenuCommand managersMenuCommand) {
         getView().setEmployeesList(employeeService.findManagers());
     }
 
-    @EventBusListenerMethod
+    @EventBusListenerMethod(scope = EventScope.UI)
     private void onManagerAddEvent(ManagerAddEvent managerAddEvent) {
         managerAddEditForm.setFormEntity(new Employee());
         managerAddEditForm.openInModalWindow();
     }
 
-    @EventBusListenerMethod
+    @EventBusListenerMethod(scope = EventScope.UI)
     private void onManagerEditEvent(ManagerEditEvent managerEditEvent) {
         managerAddEditForm.setFormEntity(managerEditEvent.getSelectedManager());
         managerAddEditForm.openInModalWindow();
     }
 
-    @EventBusListenerMethod
+    @EventBusListenerMethod(scope = EventScope.UI)
     private void onManagerDeleteEvent(ManagerDeleteEvent managerDeleteEvent) {
         employeeService.remove(managerDeleteEvent.getSelectedManager());
         getView().deleteEmployeeSuccessNotification();
         getView().setEmployeesList(employeeService.findManagers());
     }
 
-    @EventBusListenerMethod
+    @EventBusListenerMethod(scope = EventScope.UI)
     private void onManagerSaveEvent(ManagerSaveEvent managerSaveEvent) {
         employeeService.saveOrUpdate(managerSaveEvent.getManager());
         if (managerSaveEvent.isNew()) {
