@@ -44,7 +44,7 @@ public class EmployeesPresenter extends AbstractPresenter<EmployeesView> impleme
 
     @EventBusListenerMethod(scope = EventScope.UI)
     private void onEmployeesMenuItemSelected(EmployeesMenuCommand employeesMenuCommand) {
-        getView().setEmployeesList(employeeService.findSpecialists());
+        getView().setEmployeesList(employeeService.findEmployees());
     }
 
     @EventBusListenerMethod(scope = EventScope.UI)

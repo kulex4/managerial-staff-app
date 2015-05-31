@@ -189,7 +189,7 @@ public class EmployeeAddEducationFormImpl extends EntityFormImpl<Employee> imple
         @Override
         protected Component createContent() {
             return new MFormLayout(
-                    //getToolbar(),
+                    getToolbar(),
                     status,
                     university,
                     speciality,

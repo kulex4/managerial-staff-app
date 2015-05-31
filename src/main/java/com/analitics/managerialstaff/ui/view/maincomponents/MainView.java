@@ -39,7 +39,7 @@ public class MainView extends VerticalLayout {
         ).withFullWidth().withFullHeight();
 
         rootContent.setExpandRatio(leftSide, 2);
-        rootContent.setExpandRatio(content, 8);
+        rootContent.setExpandRatio(content, 10);
         rootContent.setExpandRatio(rightSide, 2);
 
         addComponent(rootContent);

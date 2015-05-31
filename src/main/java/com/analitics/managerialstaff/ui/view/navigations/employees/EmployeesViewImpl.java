@@ -62,7 +62,7 @@ public class EmployeesViewImpl extends VerticalLayout implements EmployeesView {
         addEmployeeButton = new MButton("Добавить", this::addEmployee).withIcon(FontAwesome.PLUS);
         editEmployeeButton = new MButton("Изменить", this::editEmployee).withIcon(FontAwesome.PENCIL);
         deleteEmployeeButton = new MButton("Удалить", this::deleteEmployee).withIcon(FontAwesome.TRASH_O);
-        addEducationButton = new MButton("Добавить образование сотруднику", this::educationEvent).withIcon(FontAwesome.BOOK);
+        addEducationButton = new MButton("Образование сотрудника", this::educationEvent).withIcon(FontAwesome.BOOK);
 
         MHorizontalLayout spacing = new MHorizontalLayout().withFullWidth().withMargin(false);
         controlButtonsLayout = new MHorizontalLayout(
@@ -86,6 +86,7 @@ public class EmployeesViewImpl extends VerticalLayout implements EmployeesView {
                 Employee.FORENAME,
                 Employee.GENDER,
                 Employee.AGE,
+                Employee.GRADE,
                 Employee.EXPERIENCE,
                 Employee.DEPARTMENT,
                 Employee.POSITION
@@ -96,7 +97,6 @@ public class EmployeesViewImpl extends VerticalLayout implements EmployeesView {
 
     private void removeUnusedColumns() {
         employeesGrid.removeColumn("id");
-        employeesGrid.removeColumn(Employee.GRADE);
         employeesGrid.removeColumn(Employee.CERTIFICATIONS);
         employeesGrid.removeColumn(Employee.EDUCATIONS);
         employeesGrid.removeColumn(Employee.TRAININGS);
@@ -111,6 +111,8 @@ public class EmployeesViewImpl extends VerticalLayout implements EmployeesView {
         genderColumn.setHeaderCaption("Пол");
         Grid.Column ageColumn = employeesGrid.getColumn(Employee.AGE);
         ageColumn.setHeaderCaption("Возраст");
+        Grid.Column gradeColumn = employeesGrid.getColumn(Employee.GRADE);
+        gradeColumn.setHeaderCaption("Грейд");
         Grid.Column experienceColumn = employeesGrid.getColumn(Employee.EXPERIENCE);
         experienceColumn.setHeaderCaption("Стаж");
         Grid.Column departmentColumn = employeesGrid.getColumn(Employee.DEPARTMENT);
@@ -193,8 +195,8 @@ public class EmployeesViewImpl extends VerticalLayout implements EmployeesView {
     }
 
     private void gridElementSelection(SelectionEvent event) {
-        editEmployeeButton.setEnabled(true);
-        deleteEmployeeButton.setEnabled(true);
-        addEducationButton.setEnabled(true);
+        editEmployeeButton.setEnabled(!event.getSelected().isEmpty());
+        deleteEmployeeButton.setEnabled(!event.getSelected().isEmpty());
+        addEducationButton.setEnabled(!event.getSelected().isEmpty());
     }
 }
