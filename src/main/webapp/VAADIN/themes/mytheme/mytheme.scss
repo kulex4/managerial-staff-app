@@ -23,4 +23,10 @@ $v-font-family: 'Open Sans', sans-serif, 'Source Sans Pro';
     font-weight: bold;
     text-align: center;
   }
+
+  .wordwrap-table .v-table-cell-wrapper {
+    /* Do not specify any margins, paddings or borders here */
+    white-space: normal;
+    overflow: hidden;
+  }
 }

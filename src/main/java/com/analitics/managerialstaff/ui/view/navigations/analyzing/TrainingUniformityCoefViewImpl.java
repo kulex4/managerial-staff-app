@@ -9,10 +9,11 @@ import com.vaadin.data.util.PropertyValueGenerator;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.ComboBox;
-import com.vaadin.ui.Grid;
+import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
 import org.vaadin.spring.annotation.VaadinUIScope;
 import org.vaadin.spring.navigator.annotation.VaadinView;
+import org.vaadin.viritin.fields.MTable;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
@@ -28,7 +29,17 @@ public class TrainingUniformityCoefViewImpl extends VerticalLayout implements Tr
 
     private ComboBox yearSelect;
     private BeanItemContainer<TrainingUniformityCoefRow> beanItemContainer;
-    private Grid mainGrid;
+    private MTable<TrainingUniformityCoefRow> table;
+
+    private Label coeficientUniformityOfTrainingLabel;
+    private Label coeficientUniformityOfTrainingQuarter;
+    private Label coeficientUniformityOfTrainingValue;
+    private Label maxDensityLabel;
+    private Label maxDensityQuarter;
+    private Label maxDensityValue;
+    private Label minDensityLabel;
+    private Label minDensityQuarter;
+    private Label minDensityValue;
 
     private static final int TOTAL_EMPLOYEES_CURRENT = 312;
 
@@ -38,7 +49,6 @@ public class TrainingUniformityCoefViewImpl extends VerticalLayout implements Tr
         initComponents();
         addGeneratedProperties();
         configureColumnsCaptions();
-        generateHeaderRow();
         constructLayout();
     }
 
@@ -50,18 +60,55 @@ public class TrainingUniformityCoefViewImpl extends VerticalLayout implements Tr
         yearSelect.select("2015");
 
         beanItemContainer = new BeanItemContainer<>(TrainingUniformityCoefRow.class);
-        mainGrid = new Grid("Анализ равномерности повышения квалификации специалистов");
-        mainGrid.setSelectionMode(Grid.SelectionMode.NONE);
-        mainGrid.setStyleName(MyTheme.TURN_OFF_SCROLLBAR);
-        mainGrid.setWidth(100, Unit.PERCENTAGE);
-        mainGrid.setHeight(250, Unit.PIXELS);
+        table = new MTable<>(TrainingUniformityCoefRow.class);
+        table.setCaption("Анализ равномерности повышения квалификации специалистов");
+        table.setStyleName(MyTheme.TABLE_CELL_WRAPING);
+        table.setSelectable(false);
+        table.setWidth(100, Unit.PERCENTAGE);
+        table.setHeight(300, Unit.PIXELS);
+        table.setColumnReorderingAllowed(true);
+
+        coeficientUniformityOfTrainingLabel = new Label("Коэффициент равномерности повышения квалификации:");
+        coeficientUniformityOfTrainingQuarter = new Label("   ");
+        coeficientUniformityOfTrainingValue = new Label("0,8814");
+        coeficientUniformityOfTrainingValue.setStyleName(MyTheme.LABEL_COLORED);
+
+        maxDensityLabel = new Label("Наибольший удельный вес приходится на:");
+        maxDensityQuarter = new Label("2 квартал");
+        maxDensityValue = new Label("36,23 %");
+        maxDensityValue.setStyleName(MyTheme.LABEL_COLORED);
+
+        minDensityLabel = new Label("Наименший удельный вес приходится на:");
+        minDensityQuarter = new Label("1 квартал");
+        minDensityValue = new Label("17,32 %");
+        minDensityValue.setStyleName(MyTheme.LABEL_COLORED);
     }
 
     private void constructLayout() {
         MHorizontalLayout spacing = new MHorizontalLayout().withFullHeight().withFullWidth();
         MVerticalLayout rootLayout = new MVerticalLayout(
                 yearSelect,
-                mainGrid,
+                table,
+                new MHorizontalLayout().withMargin(false).withWidth("50px"),
+                new MHorizontalLayout(
+                        new MVerticalLayout(
+                                coeficientUniformityOfTrainingLabel,
+                                maxDensityLabel,
+                                minDensityLabel
+                        ).withMargin(false),
+                        new MVerticalLayout().withMargin(false).withWidth("20px"),
+                        new MVerticalLayout(
+                                coeficientUniformityOfTrainingQuarter,
+                                maxDensityQuarter,
+                                minDensityQuarter
+                        ).withMargin(false),
+                        new MVerticalLayout().withMargin(false).withWidth("20px"),
+                        new MVerticalLayout(
+                                coeficientUniformityOfTrainingValue,
+                                maxDensityValue,
+                                minDensityValue
+                        ).withMargin(false)
+                ).withMargin(false),
                 spacing
         ).withMargin(new MarginInfo(true, false, false, false)).withFullHeight().withFullWidth().expand(spacing);
         addComponent(rootLayout);
@@ -132,43 +179,17 @@ public class TrainingUniformityCoefViewImpl extends VerticalLayout implements Tr
                 return Float.class;
             }
         });
-        mainGrid.setContainerDataSource(generatedPropertyContainer);
+        table.setContainerDataSource(generatedPropertyContainer);
     }
 
     private void configureColumnsCaptions() {
-        Grid.HeaderRow mainHeader = mainGrid.getDefaultHeaderRow();
-        mainHeader.getCell("name").setText("Квартал");
-        mainHeader.getCell("numberOfEmployees").setText("фактическая");
-        mainHeader.getCell("goalEmployees").setText("при условии\n равномерного погашения");
-        mainHeader.getCell("densityCurrent").setText("фактическая");
-        mainHeader.getCell("densityGoal").setText("при условии равномерного погашения");
-        mainHeader.getCell("goalCoefficient").setText("Выполнение условия равномерности, коэф.");
-        mainHeader.getCell("executionCondition").setText("Численность сотрудников повысивших квалификацию");
-        mainHeader.setStyleName(MyTheme.GRID_BOLD_HEADER);
-
-        Grid.Column mainColumn = mainGrid.getColumn("goalEmployees");
-        mainColumn.setMaximumWidth(10);
-    }
-
-    private void generateHeaderRow() {
-        Grid.HeaderRow groupingHeader = mainGrid.prependHeaderRow();
-        Grid.HeaderCell numberOfEmployeesCells = groupingHeader.join(
-                groupingHeader.getCell("numberOfEmployees"),
-                groupingHeader.getCell("goalEmployees"));
-        numberOfEmployeesCells.setHtml("Численность сотрудников, повысивших квалификацию");
-        Grid.HeaderCell densityCells = groupingHeader.join(
-                groupingHeader.getCell("densityCurrent"),
-                groupingHeader.getCell("densityGoal"));
-        densityCells.setHtml("Удельный вес, %");
-        mainGrid.setColumnOrder(
-                "name",
-                "numberOfEmployees",
-                "goalEmployees",
-                "densityCurrent",
-                "densityGoal",
-                "goalCoefficient",
-                "executionCondition"
-        );
+        table.setColumnHeader("name", "Квартал");
+        table.setColumnHeader("numberOfEmployees", "Численность сотрудников, повысивших квалификацию фактическая");
+        table.setColumnHeader("goalEmployees", "Численность сотрудников, повысивших квалификацию при условии равномерного погашения");
+        table.setColumnHeader("densityCurrent", "Удельный вес, фактический (%)");
+        table.setColumnHeader("densityGoal", "Удельный вес, при условии равномерного погашения (%)");
+        table.setColumnHeader("goalCoefficient", "Выполнение условия равномерности, коэф.");
+        table.setColumnHeader("executionCondition", "Численность сотрудников, повысивших квалификацию, за квартал, зачтенных в выполнение условий равномерности, человек");
     }
 
     @Override

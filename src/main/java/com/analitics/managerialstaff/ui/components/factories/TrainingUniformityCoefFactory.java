@@ -16,7 +16,7 @@ import java.util.List;
 public class TrainingUniformityCoefFactory implements Serializable {
 
     public List<TrainingUniformityCoefRow> generateTableData() {
-        List<TrainingUniformityCoefRow> result = new ArrayList<>(3);
+        List<TrainingUniformityCoefRow> result = new ArrayList<>(4);
 
         TrainingUniformityCoefRow firstItem = new TrainingUniformityCoefRow();
         firstItem.setName("1");
@@ -37,6 +37,11 @@ public class TrainingUniformityCoefFactory implements Serializable {
         fourthItem.setName("4");
         fourthItem.setNumberOfEmployees(80);
         result.add(fourthItem);
+
+        TrainingUniformityCoefRow totalyItem = new TrainingUniformityCoefRow();
+        totalyItem.setName("Всего за год");
+        totalyItem.setNumberOfEmployees(312);
+        result.add(totalyItem);
 
         return result;
     }
