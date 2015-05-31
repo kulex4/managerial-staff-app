@@ -9,6 +9,7 @@ import com.vaadin.data.Property;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.shared.ui.MarginInfo;
+import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.vaadin.spring.annotation.VaadinUIScope;
@@ -36,7 +37,16 @@ public class ProfessionalProspectsViewImpl extends VerticalLayout implements Pro
     public static final String EMPTY_LABEL = "---";
     public static final String SURNAME_LABEL = "Фамилия";
     public static final String FORENAME_LABEL = "Имя";
-    public static final String RESULT_LABEL = "Результат";
+
+    public static final String RESULT_TEXT_LESS_THAN_THREE = "<b>0 < K < 3</b> " +
+            "Сотрудник имеет не высокий результат профессиональной перспективности " +
+            "в силу возраста и небольшого опыта работы. Его нельзя повысить в должности в ближайшее время.";
+    public static final String RESULT_TEXT_LESS_THAN_FOUR = "<b>3 <= K < 4.5</b> " +
+            "Сотрудник имеет высокий результат профессиональной перспективности " +
+            "и может быть рассмотрен вопрос о его повышении в должности в ближайший год.";
+    public static final String RESULT_TEXT_MORE_THAN_FOUR = "<b>K > 4.5</b> " +
+            "Сотрудник имеет очень высокий результат профессиональной перспективности " +
+            "и может быть повышен в должности в ближайшее время.";
 
     private ComboBox gradeSelect;
     private ComboBox departmentSelect;
@@ -134,11 +144,12 @@ public class ProfessionalProspectsViewImpl extends VerticalLayout implements Pro
         age = new Label(EMPTY_LABEL);
         age.setStyleName(MyTheme.LABEL_COLORED);
 
-        resultLabel = new Label("Результат:");
+        resultLabel = new Label("Результат (K):");
         result = new Label(EMPTY_LABEL);
         result.setStyleName(MyTheme.LABEL_COLORED);
 
         conclusion = new Label(EMPTY_LABEL);
+        conclusion.setContentMode(ContentMode.HTML);
     }
 
     private void constructLayout() {
@@ -179,7 +190,7 @@ public class ProfessionalProspectsViewImpl extends VerticalLayout implements Pro
                         new MHorizontalLayout().withMargin(false).withHeight("20px"),
                         conclusion
                 ).withMargin(false).alignAll(Alignment.TOP_LEFT)
-        ).withStyleName(MyTheme.LAYOUT_CARD).withFullHeight().withFullWidth();
+        ).withStyleName(MyTheme.LAYOUT_CARD).withFullWidth();
         addComponent(resultLayout);
         setExpandRatio(resultLayout, 1);
     }
@@ -199,13 +210,17 @@ public class ProfessionalProspectsViewImpl extends VerticalLayout implements Pro
     private void selectedEmployee(Property.ValueChangeEvent event) {
         Employee selectedEmployee = (Employee) event.getProperty().getValue();
         if (!emptyEmployee.equals(selectedEmployee)) {
+            float resultIndex = calculateResultForEmployee(selectedEmployee);
             surname.setValue(selectedEmployee.getSurname());
             forename.setValue(selectedEmployee.getForename());
             educationLevel.setValue(String.valueOf(calculateEducationLevel(selectedEmployee)));
             experience.setValue(String.valueOf(selectedEmployee.getExperience()));
             age.setValue(String.valueOf(selectedEmployee.getAge()));
-            result.setValue(calculateResultForEmployee(selectedEmployee));
-            conclusion.setStyleName(MyTheme.LABEL_SUCCESS);
+            result.setValue(String.valueOf(resultIndex));
+            conclusion.setValue(resultIndex > 4.5F ? RESULT_TEXT_MORE_THAN_FOUR :
+                    resultIndex > 3F ? RESULT_TEXT_LESS_THAN_FOUR :
+                            RESULT_TEXT_LESS_THAN_THREE);
+            conclusion.setStyleName(resultIndex > 3F ? MyTheme.LABEL_SUCCESS : MyTheme.LABEL_FAILURE);
         } else {
             surname.setValue(SURNAME_LABEL);
             forename.setValue(FORENAME_LABEL);
@@ -214,14 +229,13 @@ public class ProfessionalProspectsViewImpl extends VerticalLayout implements Pro
             age.setValue(EMPTY_LABEL);
             result.setValue(EMPTY_LABEL);
             conclusion.setStyleName(MyTheme.LABEL_FAILURE);
-            conclusion.setValue("Результат не известен");
+            conclusion.setValue("Результат (K) не известен");
         }
     }
 
-    private String calculateResultForEmployee(Employee employee) {
-        float result = calculateEducationLevel(employee)
+    private float calculateResultForEmployee(Employee employee) {
+        return calculateEducationLevel(employee)
                 * (1 + (employee.getExperience() / 4) + (employee.getAge() / 18));
-        return String.valueOf(result);
     }
 
     private float calculateEducationLevel(Employee employee) {
