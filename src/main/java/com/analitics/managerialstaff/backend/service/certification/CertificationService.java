@@ -1,4 +1,4 @@
-package com.analitics.managerialstaff.backend.service;
+package com.analitics.managerialstaff.backend.service.certification;
 
 import com.analitics.managerialstaff.backend.model.Certification;
 

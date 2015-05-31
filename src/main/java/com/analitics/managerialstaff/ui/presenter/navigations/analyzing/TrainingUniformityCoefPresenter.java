@@ -1,10 +1,10 @@
-package com.analitics.managerialstaff.ui.presenter.navigations.reporting.analyzing;
+package com.analitics.managerialstaff.ui.presenter.navigations.analyzing;
 
 import com.analitics.managerialstaff.ui.common.AbstractPresenter;
 import com.analitics.managerialstaff.ui.components.commands.TrainingUniformityCoefMenuCommand;
 import com.analitics.managerialstaff.ui.components.factories.TrainingUniformityCoefFactory;
-import com.analitics.managerialstaff.ui.view.navigations.reporting.analyzing.TrainingUniformityCoefView;
-import com.analitics.managerialstaff.ui.view.navigations.reporting.analyzing.dto.TrainingUniformityCoefRow;
+import com.analitics.managerialstaff.ui.view.navigations.analyzing.TrainingUniformityCoefView;
+import com.analitics.managerialstaff.ui.view.navigations.analyzing.dto.TrainingUniformityCoefRow;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.vaadin.spring.annotation.VaadinComponent;
 import org.vaadin.spring.annotation.VaadinUIScope;

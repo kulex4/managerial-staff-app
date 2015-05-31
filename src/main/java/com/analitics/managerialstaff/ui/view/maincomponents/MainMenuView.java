@@ -19,13 +19,13 @@ public class MainMenuView extends VerticalLayout {
     @Autowired private DepartmentsMenuCommand departmentsMenuCommand;
     @Autowired private CertificationsMenuCommand certificationsMenuCommand;
     @Autowired private EmployeesMenuCommand employeesMenuCommand;
-    @Autowired private ManagersMenuCommand managersMenuCommand;
     @Autowired private EducationMenuCommand educationMenuCommand;
     @Autowired private ExperienceMenuCommand experienceMenuCommand;
     @Autowired private GenderMenuCommand genderMenuCommand;
     @Autowired private AverageAgeMenuCommand averageAgeMenuCommand;
     @Autowired private EducationAverageMarkMenuCommand educationAverageMarkMenuCommand;
     @Autowired private TrainingUniformityCoefMenuCommand trainingUniformityCoefMenuCommand;
+    @Autowired private ProfessionalProspectsMenuCommand professionalProspectsMenuCommand;
 
     @PostConstruct
     private void initMainMenu() {
@@ -35,7 +35,6 @@ public class MainMenuView extends VerticalLayout {
         mainMenuBar.addItem("Департаменты", null, departmentsMenuCommand);
         mainMenuBar.addItem("Аттестация", null, certificationsMenuCommand);
         mainMenuBar.addItem("Сотрудники", null, employeesMenuCommand);
-        mainMenuBar.addItem("Руководители", null, managersMenuCommand);
 
         MenuBar.MenuItem reportItem = mainMenuBar.addItem("Отчетность", null, null);
         reportItem.addItem("Образование сотрудников", null, educationMenuCommand);
@@ -44,10 +43,10 @@ public class MainMenuView extends VerticalLayout {
         reportItem.addItem("Возраст сотрудников", null, averageAgeMenuCommand);
         reportItem.addItem("Полный отчет о сотрудниках", null, menuCommand);
 
-        MenuBar.MenuItem coefficientItem = reportItem.addItem("Расчет коэффициента", null, null);
+        MenuBar.MenuItem coefficientItem = mainMenuBar.addItem("Расчет коэффициента", null, null);
         coefficientItem.addItem("Среднего балла", null, educationAverageMarkMenuCommand);
         coefficientItem.addItem("Равномерности", null, trainingUniformityCoefMenuCommand);
-        coefficientItem.addItem("Профессиональной перспективы", null, menuCommand);
+        coefficientItem.addItem("Профессиональной перспективы", null, professionalProspectsMenuCommand);
 
         addComponent(mainMenuBar);
         setComponentAlignment(mainMenuBar, Alignment.MIDDLE_CENTER);

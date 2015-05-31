@@ -1,4 +1,4 @@
-package com.analitics.managerialstaff.ui.view.navigations.reporting.analyzing.dto;
+package com.analitics.managerialstaff.ui.view.navigations.analyzing.dto;
 
 import lombok.Getter;
 import lombok.Setter;

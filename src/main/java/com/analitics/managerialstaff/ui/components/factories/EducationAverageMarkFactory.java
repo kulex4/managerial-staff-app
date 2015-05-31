@@ -1,7 +1,7 @@
 package com.analitics.managerialstaff.ui.components.factories;
 
 import com.analitics.managerialstaff.backend.model.enums.EducationType;
-import com.analitics.managerialstaff.ui.view.navigations.reporting.analyzing.dto.EducationAverageMarkRow;
+import com.analitics.managerialstaff.ui.view.navigations.analyzing.dto.EducationAverageMarkRow;
 import org.vaadin.spring.annotation.VaadinComponent;
 import org.vaadin.spring.annotation.VaadinUIScope;
 

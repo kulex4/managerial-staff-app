@@ -1,4 +1,4 @@
-package com.analitics.managerialstaff.backend.service;
+package com.analitics.managerialstaff.backend.service.education;
 
 import com.analitics.managerialstaff.backend.model.Education;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;

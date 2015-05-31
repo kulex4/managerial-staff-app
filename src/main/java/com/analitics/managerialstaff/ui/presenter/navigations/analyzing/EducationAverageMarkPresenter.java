@@ -1,10 +1,10 @@
-package com.analitics.managerialstaff.ui.presenter.navigations.reporting.analyzing;
+package com.analitics.managerialstaff.ui.presenter.navigations.analyzing;
 
 import com.analitics.managerialstaff.ui.common.AbstractPresenter;
 import com.analitics.managerialstaff.ui.components.commands.EducationAverageMarkMenuCommand;
 import com.analitics.managerialstaff.ui.components.factories.EducationAverageMarkFactory;
-import com.analitics.managerialstaff.ui.view.navigations.reporting.analyzing.EducationAverageMarkView;
-import com.analitics.managerialstaff.ui.view.navigations.reporting.analyzing.dto.EducationAverageMarkRow;
+import com.analitics.managerialstaff.ui.view.navigations.analyzing.EducationAverageMarkView;
+import com.analitics.managerialstaff.ui.view.navigations.analyzing.dto.EducationAverageMarkRow;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.vaadin.spring.annotation.VaadinComponent;
 import org.vaadin.spring.annotation.VaadinUIScope;

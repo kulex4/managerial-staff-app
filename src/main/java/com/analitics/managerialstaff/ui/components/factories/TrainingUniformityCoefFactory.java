@@ -1,6 +1,6 @@
 package com.analitics.managerialstaff.ui.components.factories;
 
-import com.analitics.managerialstaff.ui.view.navigations.reporting.analyzing.dto.TrainingUniformityCoefRow;
+import com.analitics.managerialstaff.ui.view.navigations.analyzing.dto.TrainingUniformityCoefRow;
 import org.vaadin.spring.annotation.VaadinComponent;
 import org.vaadin.spring.annotation.VaadinUIScope;
 

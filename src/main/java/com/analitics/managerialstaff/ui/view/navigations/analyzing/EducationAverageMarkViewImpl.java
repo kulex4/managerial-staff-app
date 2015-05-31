@@ -1,7 +1,7 @@
-package com.analitics.managerialstaff.ui.view.navigations.reporting.analyzing;
+package com.analitics.managerialstaff.ui.view.navigations.analyzing;
 
 import com.analitics.managerialstaff.ui.theme.MyTheme;
-import com.analitics.managerialstaff.ui.view.navigations.reporting.analyzing.dto.EducationAverageMarkRow;
+import com.analitics.managerialstaff.ui.view.navigations.analyzing.dto.EducationAverageMarkRow;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.data.util.GeneratedPropertyContainer;

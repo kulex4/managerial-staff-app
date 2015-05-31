@@ -7,13 +7,13 @@ import com.analitics.managerialstaff.ui.components.events.NavigationRequest;
 import com.analitics.managerialstaff.ui.presenter.navigations.CertificationsPresenter;
 import com.analitics.managerialstaff.ui.presenter.navigations.EmployeesPresenter;
 import com.analitics.managerialstaff.ui.presenter.navigations.HomePresenter;
-import com.analitics.managerialstaff.ui.presenter.navigations.ManagersPresenter;
+import com.analitics.managerialstaff.ui.presenter.navigations.analyzing.ProfessionalProspectsPresenter;
 import com.analitics.managerialstaff.ui.presenter.navigations.reporting.AverageAgePresenter;
 import com.analitics.managerialstaff.ui.presenter.navigations.reporting.EducationPresenter;
 import com.analitics.managerialstaff.ui.presenter.navigations.reporting.ExperiencePresenter;
 import com.analitics.managerialstaff.ui.presenter.navigations.reporting.GenderPresenter;
-import com.analitics.managerialstaff.ui.presenter.navigations.reporting.analyzing.EducationAverageMarkPresenter;
-import com.analitics.managerialstaff.ui.presenter.navigations.reporting.analyzing.TrainingUniformityCoefPresenter;
+import com.analitics.managerialstaff.ui.presenter.navigations.analyzing.EducationAverageMarkPresenter;
+import com.analitics.managerialstaff.ui.presenter.navigations.analyzing.TrainingUniformityCoefPresenter;
 import com.analitics.managerialstaff.ui.view.maincomponents.MainMenuView;
 import com.analitics.managerialstaff.ui.view.navigations.HomeView;
 import com.vaadin.ui.UI;
@@ -37,13 +37,13 @@ public class MainMenuPresenter extends AbstractPresenter<MainMenuView> implement
     @Autowired private HomePresenter homePresenter;
     @Autowired private CertificationsPresenter certificationsPresenter;
     @Autowired private EmployeesPresenter employeesPresenter;
-    @Autowired private ManagersPresenter managersPresenter;
     @Autowired private EducationPresenter educationPresenter;
     @Autowired private ExperiencePresenter experiencePresenter;
     @Autowired private GenderPresenter genderPresenter;
     @Autowired private AverageAgePresenter averageAgePresenter;
     @Autowired private EducationAverageMarkPresenter educationAverageMarkPresenter;
     @Autowired private TrainingUniformityCoefPresenter trainingUniformityCoefPresenter;
+    @Autowired private ProfessionalProspectsPresenter professionalProspectsPresenter;
 
     @Autowired
     public MainMenuPresenter(MainMenuView view, EventBus.UIEventBus eventBus) {

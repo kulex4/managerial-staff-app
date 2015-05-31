@@ -9,7 +9,7 @@ public enum Grade {
 
     private final String name;
 
-    private Grade(String s) {
+    Grade(String s) {
         name = s;
     }
 

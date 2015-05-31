@@ -1,6 +1,6 @@
 package com.analitics.managerialstaff.ui.presenter.navigations;
 
-import com.analitics.managerialstaff.backend.service.CertificationService;
+import com.analitics.managerialstaff.backend.service.certification.CertificationService;
 import com.analitics.managerialstaff.ui.common.AbstractPresenter;
 import com.analitics.managerialstaff.ui.view.navigations.certification.CertificationsView;
 import com.analitics.managerialstaff.ui.components.commands.CertificationsMenuCommand;

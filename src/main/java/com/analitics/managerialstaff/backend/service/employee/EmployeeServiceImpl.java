@@ -1,10 +1,13 @@
-package com.analitics.managerialstaff.backend.service;
+package com.analitics.managerialstaff.backend.service.employee;
 
 import com.analitics.managerialstaff.backend.model.Employee;
+import com.analitics.managerialstaff.backend.model.enums.Department;
 import com.analitics.managerialstaff.backend.model.enums.Grade;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Collections;
 
 /**
  * @author by nikolai.pashkevich
@@ -38,24 +41,22 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public Iterable<Employee> findByGrade(Grade grade) {
-        Iterable<Employee> employees = employeeRepository.findByGrade(grade);
-        employees.forEach(employee -> employee.getEducations().size());
-        return employees;
-    }
-
-    @Override
-    public Iterable<Employee> findSpecialists() {
-        Iterable<Employee> employees = employeeRepository.findByGrade(Grade.SPECIALIST);
-        employees.forEach(employee -> employee.getEducations().size());
-        return employees;
-    }
-
-    @Override
-    public Iterable<Employee> findManagers() {
-        Iterable<Employee> employees = employeeRepository.findByGrade(Grade.MANAGER);
-        employees.forEach(employee -> employee.getEducations().size());
-        return employees;
+    public Iterable<Employee> findByDepartmentAndGrade(Department department, Grade grade) {
+        if (department != null && grade != null) {
+            Iterable<Employee> employees = employeeRepository.findByDepartmentAndGrade(department, grade);
+            employees.forEach(employee -> employee.getEducations().size());
+            return employees;
+        } else  if (department != null) {
+            Iterable<Employee> employees = employeeRepository.findByDepartment(department);
+            employees.forEach(employee -> employee.getEducations().size());
+            return employees;
+        } else if (grade != null) {
+            Iterable<Employee> employees = employeeRepository.findByGrade(grade);
+            employees.forEach(employee -> employee.getEducations().size());
+            return employees;
+        } else {
+            return Collections.emptyList();
+        }
     }
 
     @Override

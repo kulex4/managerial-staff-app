@@ -10,7 +10,7 @@ public enum EducationType {
 
     private final String name;
 
-    private EducationType(String s) {
+    EducationType(String s) {
         name = s;
     }
 

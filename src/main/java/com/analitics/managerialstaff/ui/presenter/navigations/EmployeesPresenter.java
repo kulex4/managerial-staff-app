@@ -1,8 +1,8 @@
 package com.analitics.managerialstaff.ui.presenter.navigations;
 
 import com.analitics.managerialstaff.backend.model.Employee;
-import com.analitics.managerialstaff.backend.service.EducationService;
-import com.analitics.managerialstaff.backend.service.EmployeeService;
+import com.analitics.managerialstaff.backend.service.education.EducationService;
+import com.analitics.managerialstaff.backend.service.employee.EmployeeService;
 import com.analitics.managerialstaff.ui.common.AbstractPresenter;
 import com.analitics.managerialstaff.ui.components.events.employees.*;
 import com.analitics.managerialstaff.ui.view.navigations.employees.EmployeesView;
@@ -70,7 +70,7 @@ public class EmployeesPresenter extends AbstractPresenter<EmployeesView> impleme
     private void onEmployeeDeleteEvent(EmployeeDeleteEvent event) {
         employeeService.remove(event.getEmployee());
         getView().deleteEmployeeSuccessNotification();
-        getView().setEmployeesList(employeeService.findSpecialists());
+        getView().setEmployeesList(employeeService.findEmployees());
     }
 
     @EventBusListenerMethod(scope = EventScope.UI)
@@ -81,7 +81,7 @@ public class EmployeesPresenter extends AbstractPresenter<EmployeesView> impleme
         } else {
             getView().editEmployeeSuccessNotification();
         }
-        getView().setEmployeesList(employeeService.findSpecialists());
+        getView().setEmployeesList(employeeService.findEmployees());
     }
 
     @EventBusListenerMethod(scope = EventScope.UI)

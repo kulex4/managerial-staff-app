@@ -1,6 +1,6 @@
 package com.analitics.managerialstaff.ui.view.navigations.employees.validators;
 
-import com.analitics.managerialstaff.backend.service.EmployeeService;
+import com.analitics.managerialstaff.backend.service.employee.EmployeeService;
 import com.vaadin.data.Validator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.vaadin.spring.annotation.VaadinComponent;

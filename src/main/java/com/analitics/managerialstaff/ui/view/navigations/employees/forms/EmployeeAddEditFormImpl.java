@@ -45,6 +45,7 @@ public class EmployeeAddEditFormImpl
     private MTextField forename;
     private MTextField age;
     private MTextField position;
+    private EnumSelect grade;
     private EnumSelect gender;
     private EnumSelect department;
     private MTextField experience;
@@ -106,6 +107,11 @@ public class EmployeeAddEditFormImpl
                         false
                 ))
                 .withFullWidth();
+        grade = new EnumSelect("Грэйд")
+                .withSelectType(ComboBox.class)
+                .withNullSelection(false)
+                .withValidator(new NullValidator("Выберете грэйд", false))
+                .withFullWidth();
         gender = new EnumSelect("Пол")
                 .withSelectType(ComboBox.class)
                 .withNullSelection(false)
@@ -137,6 +143,7 @@ public class EmployeeAddEditFormImpl
                 forename,
                 age,
                 position,
+                grade,
                 gender,
                 department,
                 experience
@@ -171,7 +178,6 @@ public class EmployeeAddEditFormImpl
 
     @Override
     public void onSave(Employee employee) {
-        employee.setGrade(Grade.SPECIALIST);
         if (isValid()) {
             eventBus.publish(EventScope.UI, this, new EmployeeSaveEvent(employee, employee.getId() == null));
             getPopup().close();
