@@ -1,6 +1,7 @@
 package com.analitics.managerialstaff.backend.model;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 
@@ -8,6 +9,7 @@ import javax.persistence.*;
  * @author by nikolai.pashkevich
  */
 @Data
+@EqualsAndHashCode(exclude = {"employee"})
 @Entity
 public class Certification {
 

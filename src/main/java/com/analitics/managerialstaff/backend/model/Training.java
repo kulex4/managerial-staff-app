@@ -1,6 +1,7 @@
 package com.analitics.managerialstaff.backend.model;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -9,6 +10,7 @@ import java.util.Date;
  * @author by nikolai.pashkevich
  */
 @Data
+@EqualsAndHashCode(exclude = {"employee"})
 @Entity
 public class Training {
 
