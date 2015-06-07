@@ -7,8 +7,6 @@ import com.analitics.managerialstaff.ui.components.events.employees.EmployeeAddE
 import com.analitics.managerialstaff.ui.components.events.employees.EmployeeDeleteEvent;
 import com.analitics.managerialstaff.ui.components.events.employees.EmployeeEditEvent;
 import com.analitics.managerialstaff.ui.theme.MyTheme;
-import com.vaadin.data.util.BeanItemContainer;
-import com.vaadin.event.SelectionEvent;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.*;
@@ -18,6 +16,8 @@ import org.vaadin.spring.events.EventBus;
 import org.vaadin.spring.events.EventScope;
 import org.vaadin.spring.navigator.annotation.VaadinView;
 import org.vaadin.viritin.button.MButton;
+import org.vaadin.viritin.fields.MTable;
+import org.vaadin.viritin.fields.MValueChangeEvent;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
@@ -42,8 +42,7 @@ public class EmployeesViewImpl extends VerticalLayout implements EmployeesView {
     private Button deleteEmployeeButton;
     private Button editEmployeeButton;
     private Button addEducationButton;
-    private Grid employeesGrid;
-    private BeanItemContainer<Employee> employeeContainer;
+    private MTable<Employee> employeesTable;
 
     @PostConstruct
     private void init() {
@@ -55,7 +54,7 @@ public class EmployeesViewImpl extends VerticalLayout implements EmployeesView {
 
     private void initComponents() {
         initButtons();
-        initGrid();
+        initTable();
     }
 
     private void initButtons() {
@@ -74,14 +73,18 @@ public class EmployeesViewImpl extends VerticalLayout implements EmployeesView {
         ).withMargin(false).expand(spacing);
     }
 
-    private void initGrid() {
-        employeeContainer = new BeanItemContainer<>(Employee.class);
-        employeesGrid = new Grid("Список всех сотрудников", employeeContainer);
-        employeesGrid.addSelectionListener(this::gridElementSelection);
-        employeesGrid.setSelectionMode(Grid.SelectionMode.SINGLE);
-        employeesGrid.setImmediate(true);
-        employeesGrid.setWidth("99%");
-        employeesGrid.setColumnOrder(
+    private void initTable() {
+        employeesTable = new MTable<>(Employee.class);
+        employeesTable.withCaption("Список всех сотрудников");
+        employeesTable.addMValueChangeListener(this::tableElementSelection);
+        employeesTable.setImmediate(true);
+        employeesTable.setWidth(100, Unit.PERCENTAGE);
+
+        setupTableColumns();
+    }
+
+    private void setupTableColumns() {
+        employeesTable.withProperties(
                 Employee.SURNAME,
                 Employee.FORENAME,
                 Employee.GENDER,
@@ -91,48 +94,30 @@ public class EmployeesViewImpl extends VerticalLayout implements EmployeesView {
                 Employee.DEPARTMENT,
                 Employee.POSITION
         );
-        removeUnusedColumns();
-        setColumnsCaption();
-    }
-
-    private void removeUnusedColumns() {
-        employeesGrid.removeColumn("id");
-        employeesGrid.removeColumn(Employee.CERTIFICATIONS);
-        employeesGrid.removeColumn(Employee.EDUCATIONS);
-        employeesGrid.removeColumn(Employee.TRAININGS);
-    }
-
-    private void setColumnsCaption() {
-        Grid.Column surnameColumn = employeesGrid.getColumn(Employee.SURNAME);
-        surnameColumn.setHeaderCaption("Имя");
-        Grid.Column forenameColumn = employeesGrid.getColumn(Employee.FORENAME);
-        forenameColumn.setHeaderCaption("Фамилия");
-        Grid.Column genderColumn = employeesGrid.getColumn(Employee.GENDER);
-        genderColumn.setHeaderCaption("Пол");
-        Grid.Column ageColumn = employeesGrid.getColumn(Employee.AGE);
-        ageColumn.setHeaderCaption("Возраст");
-        Grid.Column gradeColumn = employeesGrid.getColumn(Employee.GRADE);
-        gradeColumn.setHeaderCaption("Грейд");
-        Grid.Column experienceColumn = employeesGrid.getColumn(Employee.EXPERIENCE);
-        experienceColumn.setHeaderCaption("Стаж");
-        Grid.Column departmentColumn = employeesGrid.getColumn(Employee.DEPARTMENT);
-        departmentColumn.setHeaderCaption("Отдел");
-        Grid.Column positionColumn = employeesGrid.getColumn(Employee.POSITION);
-        positionColumn.setHeaderCaption("Должность");
+        employeesTable.withColumnHeaders(
+                "Имя",
+                "Фамилия",
+                "Пол",
+                "Возраст",
+                "Грейд",
+                "Стаж",
+                "Отдел",
+                "Должность"
+        );
     }
 
     private void constructLayout() {
         MVerticalLayout homeContent = new MVerticalLayout(
                 controlButtonsLayout,
-                employeesGrid
-        ).withFullHeight().withFullWidth().withMargin(true).expand(employeesGrid);
+                employeesTable
+        ).withFullHeight().withFullWidth().withMargin(true).expand(employeesTable);
         addComponent(homeContent);
     }
 
     @Override
     public void setEmployeesList(Iterable<Employee> employees) {
-        employeeContainer.removeAllItems();
-        employeeContainer.addAll((Collection<? extends Employee>) employees);
+        employeesTable.removeAllItems();
+        employeesTable.addBeans((Collection<Employee>) employees);
     }
 
     @Override
@@ -167,8 +152,8 @@ public class EmployeesViewImpl extends VerticalLayout implements EmployeesView {
     }
 
     private void editEmployee(Button.ClickEvent event) {
-        Employee selectedEmployee = (Employee) employeesGrid.getSelectedRow();
-        if (selectedEmployee != null && employeeContainer.getItemIds().contains(selectedEmployee)) {
+        Employee selectedEmployee = employeesTable.getValue();
+        if (selectedEmployee != null && employeesTable.getItemIds().contains(selectedEmployee)) {
             eventBus.publish(EventScope.UI, this, new EmployeeEditEvent(selectedEmployee));
         } else {
             emptyEmployeeNotification();
@@ -177,8 +162,8 @@ public class EmployeesViewImpl extends VerticalLayout implements EmployeesView {
 
     private void deleteEmployee(Button.ClickEvent event) {
         // todo confirmation dialog
-        Employee selectedEmployee = (Employee) employeesGrid.getSelectedRow();
-        if (selectedEmployee != null && employeeContainer.getItemIds().contains(selectedEmployee)) {
+        Employee selectedEmployee = employeesTable.getValue();
+        if (selectedEmployee != null && employeesTable.getItemIds().contains(selectedEmployee)) {
             eventBus.publish(EventScope.UI, this, new EmployeeDeleteEvent(selectedEmployee));
         } else {
             emptyEmployeeNotification();
@@ -186,17 +171,17 @@ public class EmployeesViewImpl extends VerticalLayout implements EmployeesView {
     }
 
     private void educationEvent(Button.ClickEvent event) {
-        Employee selectedEmployee = (Employee) employeesGrid.getSelectedRow();
-        if (selectedEmployee != null && employeeContainer.getItemIds().contains(selectedEmployee)) {
+        Employee selectedEmployee = employeesTable.getValue();
+        if (selectedEmployee != null && employeesTable.getItemIds().contains(selectedEmployee)) {
             eventBus.publish(EventScope.UI, this, new EmployeeAddEducationEvent(selectedEmployee));
         } else {
             emptyEmployeeNotification();
         }
     }
 
-    private void gridElementSelection(SelectionEvent event) {
-        editEmployeeButton.setEnabled(!event.getSelected().isEmpty());
-        deleteEmployeeButton.setEnabled(!event.getSelected().isEmpty());
-        addEducationButton.setEnabled(!event.getSelected().isEmpty());
+    private void tableElementSelection(MValueChangeEvent event) {
+        editEmployeeButton.setEnabled(event.getValue() != null);
+        deleteEmployeeButton.setEnabled(event.getValue() != null);
+        addEducationButton.setEnabled(event.getValue() != null);
     }
 }

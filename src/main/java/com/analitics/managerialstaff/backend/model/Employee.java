@@ -4,6 +4,7 @@ import com.analitics.managerialstaff.backend.model.enums.Department;
 import com.analitics.managerialstaff.backend.model.enums.Gender;
 import com.analitics.managerialstaff.backend.model.enums.Grade;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 import javax.persistence.*;
 import java.util.List;
@@ -12,6 +13,7 @@ import java.util.List;
  * @author by nikolai.pashkevich
  */
 @Data
+@EqualsAndHashCode(exclude = {"certifications", "educations", "trainings"})
 @Entity
 public class Employee {
 
