@@ -44,8 +44,8 @@ public class AverageAgeViewImpl extends VerticalLayout implements AverageAgeView
 
     private void initPieChart() {
         stackedColumnChart = new Chart(ChartType.BAR);
-        stackedColumnChart.setWidth(900, Unit.PIXELS);
-        stackedColumnChart.setHeight(600, Unit.PIXELS);
+        stackedColumnChart.setWidth(100, Unit.PERCENTAGE);
+        stackedColumnChart.setHeight(100, Unit.PERCENTAGE);
     }
 
     private void initConfiguration() {

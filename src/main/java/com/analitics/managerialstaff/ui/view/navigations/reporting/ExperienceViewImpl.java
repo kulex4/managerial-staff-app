@@ -43,8 +43,8 @@ public class ExperienceViewImpl extends VerticalLayout implements ExperienceView
 
     private void initColumnChart() {
         columnChart = new Chart(ChartType.COLUMN);
-        columnChart.setWidth(900, Unit.PIXELS);
-        columnChart.setHeight(600, Unit.PIXELS);
+        columnChart.setWidth(100, Unit.PERCENTAGE);
+        columnChart.setHeight(100, Unit.PERCENTAGE);
     }
 
     private void initConfiguration() {

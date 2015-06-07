@@ -41,8 +41,8 @@ public class GenderViewImpl extends VerticalLayout implements GenderView {
 
     private void initPieChart() {
         pieChart = new Chart(ChartType.PIE);
-        pieChart.setWidth(600, Unit.PIXELS);
-        pieChart.setHeight(600, Unit.PIXELS);
+        pieChart.setWidth(100, Unit.PERCENTAGE);
+        pieChart.setHeight(100, Unit.PERCENTAGE);
     }
 
     private void initConfiguration() {
