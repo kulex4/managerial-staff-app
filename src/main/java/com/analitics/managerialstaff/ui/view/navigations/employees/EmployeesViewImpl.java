@@ -85,8 +85,8 @@ public class EmployeesViewImpl extends VerticalLayout implements EmployeesView {
 
     private void setupTableColumns() {
         employeesTable.withProperties(
-                Employee.SURNAME,
                 Employee.FORENAME,
+                Employee.SURNAME,
                 Employee.GENDER,
                 Employee.AGE,
                 Employee.GRADE,
@@ -95,8 +95,8 @@ public class EmployeesViewImpl extends VerticalLayout implements EmployeesView {
                 Employee.POSITION
         );
         employeesTable.withColumnHeaders(
-                "Имя",
                 "Фамилия",
+                "Имя",
                 "Пол",
                 "Возраст",
                 "Грейд",

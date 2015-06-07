@@ -69,19 +69,19 @@ public class EmployeeAddEditFormImpl
     }
 
     private void initTextFields() {
-        surname = new MTextField("Имя")
-                .withInputPrompt("Имя")
+        forename = new MTextField("Фамилия")
+                .withInputPrompt("Фамилия")
                 .withValidator(new StringLengthValidator(
-                        "Имя не может быть пустым",
+                        "Фамилия не может быть пустой",
                         STRING_MIN_VALUE,
                         STRING_MAX_VALUE,
                         false
                 ))
                 .withFullWidth();
-        forename = new MTextField("Фамилия")
-                .withInputPrompt("Фамилия")
+        surname = new MTextField("Имя")
+                .withInputPrompt("Имя")
                 .withValidator(new StringLengthValidator(
-                        "Фамилия не может быть пустой",
+                        "Имя не может быть пустым",
                         STRING_MIN_VALUE,
                         STRING_MAX_VALUE,
                         false
@@ -139,8 +139,8 @@ public class EmployeeAddEditFormImpl
     @Override
     protected Component createContent() {
         MFormLayout formLayout = new MFormLayout(
-                surname,
                 forename,
+                surname,
                 age,
                 position,
                 grade,

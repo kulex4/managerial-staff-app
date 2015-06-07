@@ -14,6 +14,9 @@ import javax.persistence.*;
 public class Certification {
 
     public static final String EMPLOYEE = "employee";
+    public static final String EMPLOYEE_FORENAME = "employee.forename";
+    public static final String EMPLOYEE_SURNAME = "employee.surname";
+    public static final String EMPLOYEE_POSITION = "employee.position";
     public static final String RESPONSIBILITY = "responsibility";
     public static final String COMPETENCE = "competence";
     public static final String COMMUNICABILITY = "communicability";
