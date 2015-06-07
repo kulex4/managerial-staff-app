@@ -62,7 +62,7 @@ public class GenderViewImpl extends VerticalLayout implements GenderView {
     }
 
     private void setDataSeries() {
-        final DataSeries series = new DataSeries();
+        final DataSeries series = new DataSeries("Пол, %");
         series.add(new DataSeriesItem("Женщины", 68));
         DataSeriesItem slicedItem = new DataSeriesItem("Мужчины", 32);
         slicedItem.setSliced(true);

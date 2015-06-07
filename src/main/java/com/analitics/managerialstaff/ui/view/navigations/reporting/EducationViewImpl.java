@@ -63,7 +63,7 @@ public class EducationViewImpl extends VerticalLayout implements EducationView {
     }
 
     private void setDataSeries() {
-        final DataSeries series = new DataSeries();
+        final DataSeries series = new DataSeries("Образование, %");
         series.add(new DataSeriesItem("Среднетехническое", calculatePercentage(2, 431)));
         series.add(new DataSeriesItem("Неоконченное высшее", calculatePercentage(8, 431)));
         series.add(new DataSeriesItem("Второе высшее", calculatePercentage(56, 431)));

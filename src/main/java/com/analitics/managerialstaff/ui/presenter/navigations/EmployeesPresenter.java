@@ -61,7 +61,6 @@ public class EmployeesPresenter extends AbstractPresenter<EmployeesView> impleme
 
     @EventBusListenerMethod(scope = EventScope.UI)
     private void onEmployeeAddEducationEvent(EmployeeAddEducationEvent event) {
-        //employeeService.lazyInitEducations(event.getEmployee());
         employeeAddEducationForm.setFormEntity(event.getEmployee());
         employeeAddEducationForm.openInModalWindow();
     }

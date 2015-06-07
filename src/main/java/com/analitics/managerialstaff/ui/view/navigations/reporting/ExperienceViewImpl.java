@@ -66,7 +66,7 @@ public class ExperienceViewImpl extends VerticalLayout implements ExperienceView
 
         YAxis yAxis = new YAxis();
         yAxis.setMin(0);
-        yAxis.setTitle(new Title("Средний возраст, лет"));
+        yAxis.setTitle(new Title("Средний стаж, лет"));
         columnChartConfiguration.addyAxis(yAxis);
     }
 
@@ -77,7 +77,7 @@ public class ExperienceViewImpl extends VerticalLayout implements ExperienceView
     }
 
     private void setDataSeries() {
-        ListSeries serie = new ListSeries("Средний возраст", 10.8, 11.3, 13.9, 9.17, 5.6, 11.7);
+        ListSeries serie = new ListSeries("Средний стаж", 10.8, 11.3, 13.9, 9.17, 5.6, 11.7);
         Labels dataLabels = new Labels();
         dataLabels.setEnabled(true);
         dataLabels.setRotation(-90);
