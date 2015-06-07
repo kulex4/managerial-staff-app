@@ -4,10 +4,7 @@ import com.analitics.managerialstaff.backend.model.Certification;
 import com.analitics.managerialstaff.backend.service.certification.CertificationService;
 import com.analitics.managerialstaff.backend.service.employee.EmployeeService;
 import com.analitics.managerialstaff.ui.common.AbstractPresenter;
-import com.analitics.managerialstaff.ui.components.events.certifications.CertificationAddEvent;
-import com.analitics.managerialstaff.ui.components.events.certifications.CertificationDeleteEvent;
-import com.analitics.managerialstaff.ui.components.events.certifications.CertificationEditEvent;
-import com.analitics.managerialstaff.ui.components.events.certifications.CertificationSaveEvent;
+import com.analitics.managerialstaff.ui.components.events.certifications.*;
 import com.analitics.managerialstaff.ui.view.navigations.certification.CertificationsView;
 import com.analitics.managerialstaff.ui.components.commands.CertificationsMenuCommand;
 import com.analitics.managerialstaff.ui.view.navigations.certification.dto.CertificationDTO;
@@ -21,7 +18,6 @@ import org.vaadin.spring.events.annotation.EventBusListenerMethod;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -48,6 +44,12 @@ public class CertificationsPresenter extends AbstractPresenter<CertificationsVie
     @EventBusListenerMethod(scope = EventScope.UI)
     private void onCertificationsMenuItemSelected(CertificationsMenuCommand certificationsMenuCommand) {
         getView().setCertifications(convertCertificationsToDTOs(certificationService.findCertifications()));
+    }
+
+    @EventBusListenerMethod(scope = EventScope.UI)
+    private void onSearchParametersChangedEvent(SearchParametersChangedEvent event) {
+        Iterable<Certification> certifications = certificationService.findByYearAndQuarter(event.getYear(), event.getQuarter());
+        getView().setCertifications(convertCertificationsToDTOs(certifications));
     }
 
     @EventBusListenerMethod(scope = EventScope.UI)

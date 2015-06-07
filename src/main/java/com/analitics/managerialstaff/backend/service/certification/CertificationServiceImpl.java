@@ -1,9 +1,13 @@
 package com.analitics.managerialstaff.backend.service.certification;
 
 import com.analitics.managerialstaff.backend.model.Certification;
+import com.analitics.managerialstaff.backend.model.enums.CertificationYear;
+import com.analitics.managerialstaff.backend.model.enums.Quarter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Collections;
 
 /**
  * @author by nikolai.pashkevich
@@ -41,5 +45,24 @@ public class CertificationServiceImpl implements CertificationService {
         Certification certification = certificationRepository.findOne(id);
         certification.getEmployee().getCertifications().size();
         return certification;
+    }
+
+    @Override
+    public Iterable<Certification> findByYearAndQuarter(CertificationYear year, Quarter quarter) {
+        if (year != null && quarter != null) {
+            Iterable<Certification> certifications = certificationRepository.findByYearAndQuarter(year, quarter);
+            certifications.forEach(certification -> certification.getEmployee().getEducations().size());
+            return certifications;
+        } else  if (year != null) {
+            Iterable<Certification> certifications = certificationRepository.findByYear(year);
+            certifications.forEach(certification -> certification.getEmployee().getEducations().size());
+            return certifications;
+        } else if (quarter != null) {
+            Iterable<Certification> certifications = certificationRepository.findByQuarter(quarter);
+            certifications.forEach(certification -> certification.getEmployee().getEducations().size());
+            return certifications;
+        } else {
+            return Collections.emptyList();
+        }
     }
 }

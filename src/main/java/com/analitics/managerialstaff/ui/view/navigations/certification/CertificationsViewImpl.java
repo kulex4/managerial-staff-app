@@ -1,15 +1,15 @@
 package com.analitics.managerialstaff.ui.view.navigations.certification;
 
-import com.analitics.managerialstaff.backend.model.Certification;
-import com.analitics.managerialstaff.backend.model.Employee;
 import com.analitics.managerialstaff.backend.model.enums.CertificationYear;
 import com.analitics.managerialstaff.backend.model.enums.Quarter;
 import com.analitics.managerialstaff.ui.common.NotificationManager;
 import com.analitics.managerialstaff.ui.components.events.certifications.CertificationAddEvent;
 import com.analitics.managerialstaff.ui.components.events.certifications.CertificationDeleteEvent;
 import com.analitics.managerialstaff.ui.components.events.certifications.CertificationEditEvent;
+import com.analitics.managerialstaff.ui.components.events.certifications.SearchParametersChangedEvent;
 import com.analitics.managerialstaff.ui.theme.MyTheme;
 import com.analitics.managerialstaff.ui.view.navigations.certification.dto.CertificationDTO;
+import com.vaadin.data.Property;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.*;
@@ -64,6 +64,7 @@ public class CertificationsViewImpl extends VerticalLayout implements Certificat
 
     private void initSelectComponents() {
         yearSelect = new ComboBox("Год");
+        yearSelect.addValueChangeListener(this::yearSelection);
         yearSelect.setNullSelectionAllowed(false);
         yearSelect.setWidth(100, Unit.PIXELS);
         yearSelect.addItems(
@@ -72,9 +73,9 @@ public class CertificationsViewImpl extends VerticalLayout implements Certificat
                 CertificationYear.YEAR_2013,
                 CertificationYear.YEAR_2012
         );
-        yearSelect.select(CertificationYear.YEAR_2015);
 
         quarterSelect = new ComboBox("Квартал");
+        quarterSelect.addValueChangeListener(this::quarterSelection);
         quarterSelect.setNullSelectionAllowed(false);
         quarterSelect.setWidth(80, Unit.PIXELS);
         quarterSelect.addItems(
@@ -83,7 +84,6 @@ public class CertificationsViewImpl extends VerticalLayout implements Certificat
                 Quarter.THIRD,
                 Quarter.FOURTH
         );
-        quarterSelect.select(Quarter.FIRST);
     }
 
     private void initButtons() {
@@ -202,5 +202,21 @@ public class CertificationsViewImpl extends VerticalLayout implements Certificat
     private void tableElementSelection(MValueChangeEvent event) {
         editCertificationButton.setEnabled(event.getValue() != null);
         deleteCertificationButton.setEnabled(event.getValue() != null);
+    }
+
+    private void yearSelection(Property.ValueChangeEvent event) {
+        SearchParametersChangedEvent changedEvent = new SearchParametersChangedEvent(
+                (CertificationYear) yearSelect.getValue(),
+                (Quarter) quarterSelect.getValue()
+        );
+        eventBus.publish(EventScope.UI, this, changedEvent);
+    }
+
+    private void quarterSelection(Property.ValueChangeEvent event) {
+        SearchParametersChangedEvent changedEvent = new SearchParametersChangedEvent(
+                (CertificationYear) yearSelect.getValue(),
+                (Quarter) quarterSelect.getValue()
+        );
+        eventBus.publish(EventScope.UI, this, changedEvent);
     }
 }
