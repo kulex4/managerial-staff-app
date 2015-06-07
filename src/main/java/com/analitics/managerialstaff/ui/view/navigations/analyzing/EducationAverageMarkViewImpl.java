@@ -71,7 +71,6 @@ public class EducationAverageMarkViewImpl extends VerticalLayout implements Educ
         beanItemContainer = new BeanItemContainer<>(EducationAverageMarkRow.class);
         mainGrid = new Grid("Образовательный уровень управленческого персонала");
         mainGrid.setSelectionMode(Grid.SelectionMode.NONE);
-        mainGrid.setStyleName(MyTheme.TURN_OFF_SCROLLBAR);
         mainGrid.setWidth(100, Unit.PERCENTAGE);
         mainGrid.setHeight(250, Unit.PIXELS);
 
@@ -194,8 +193,6 @@ public class EducationAverageMarkViewImpl extends VerticalLayout implements Educ
         mainHeader.getCell("percentCurrent").setText("%");
         mainHeader.getCell("numberOfDeviation").setText("Абсолютное отклонение");
         mainHeader.getCell("growthRate").setText("Темп роста, %");
-        mainHeader.setStyleName(MyTheme.GRID_BOLD_HEADER);
-
     }
 
     private void generateHeaderRow() {
@@ -217,7 +214,6 @@ public class EducationAverageMarkViewImpl extends VerticalLayout implements Educ
                 "numberOfDeviation",
                 "growthRate"
         );
-        groupingHeader.setStyleName(MyTheme.GRID_BOLD_HEADER);
     }
 
     @Override

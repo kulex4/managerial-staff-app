@@ -9,4 +9,8 @@ import com.vaadin.navigator.View;
 public interface CertificationsView extends View {
     String NAME = "certification";
     void setCertifications(Iterable<Certification> certifications);
+    void emptyCertificationNotification();
+    void saveCertificationSuccessNotification();
+    void editCertificationSuccessNotification();
+    void deleteCertificationSuccessNotification();
 }

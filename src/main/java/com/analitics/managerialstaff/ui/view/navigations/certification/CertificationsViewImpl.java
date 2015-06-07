@@ -1,17 +1,25 @@
 package com.analitics.managerialstaff.ui.view.navigations.certification;
 
 import com.analitics.managerialstaff.backend.model.Certification;
-import com.analitics.managerialstaff.backend.model.enums.Grade;
+import com.analitics.managerialstaff.backend.model.Employee;
+import com.analitics.managerialstaff.backend.model.enums.CertificationYear;
 import com.analitics.managerialstaff.backend.model.enums.Quarter;
-import com.vaadin.data.util.BeanItemContainer;
+import com.analitics.managerialstaff.ui.common.NotificationManager;
+import com.analitics.managerialstaff.ui.components.events.certifications.CertificationAddEvent;
+import com.analitics.managerialstaff.ui.components.events.certifications.CertificationDeleteEvent;
+import com.analitics.managerialstaff.ui.components.events.certifications.CertificationEditEvent;
+import com.analitics.managerialstaff.ui.theme.MyTheme;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.vaadin.spring.annotation.VaadinUIScope;
 import org.vaadin.spring.events.EventBus;
+import org.vaadin.spring.events.EventScope;
 import org.vaadin.spring.navigator.annotation.VaadinView;
 import org.vaadin.viritin.button.MButton;
+import org.vaadin.viritin.fields.MTable;
+import org.vaadin.viritin.fields.MValueChangeEvent;
 import org.vaadin.viritin.layouts.MHorizontalLayout;
 import org.vaadin.viritin.layouts.MVerticalLayout;
 
@@ -28,15 +36,16 @@ public class CertificationsViewImpl extends VerticalLayout implements Certificat
     @Autowired
     private EventBus.UIEventBus eventBus;
 
+    @Autowired
+    private NotificationManager notificationManager;
+
     private ComboBox yearSelect;
     private ComboBox quarterSelect;
-    private ComboBox gradeSelect;
     private MHorizontalLayout controlButtonsLayout;
     private Button addCertificationButton;
     private Button deleteCertificationButton;
     private Button editCertificationButton;
-    private Table certificationTable;
-    private BeanItemContainer<Certification> certificationContainer;
+    private MTable<Certification> certificationTable;
 
     @PostConstruct
     private void init() {
@@ -57,12 +66,12 @@ public class CertificationsViewImpl extends VerticalLayout implements Certificat
         yearSelect.setNullSelectionAllowed(false);
         yearSelect.setWidth(100, Unit.PIXELS);
         yearSelect.addItems(
-                "2015",
-                "2014",
-                "2013",
-                "2012"
+                CertificationYear.YEAR_2015,
+                CertificationYear.YEAR_2014,
+                CertificationYear.YEAR_2013,
+                CertificationYear.YEAR_2012
         );
-        yearSelect.select("2015");
+        yearSelect.select(CertificationYear.YEAR_2015);
 
         quarterSelect = new ComboBox("Квартал");
         quarterSelect.setNullSelectionAllowed(false);
@@ -74,21 +83,12 @@ public class CertificationsViewImpl extends VerticalLayout implements Certificat
                 Quarter.FOURTH
         );
         quarterSelect.select(Quarter.FIRST);
-
-        gradeSelect = new ComboBox("Грейд");
-        gradeSelect.setNullSelectionAllowed(false);
-        gradeSelect.setWidth(250, Unit.PIXELS);
-        gradeSelect.addItems(
-                Grade.SPECIALIST,
-                Grade.MANAGER
-        );
-        gradeSelect.setValue(Grade.SPECIALIST);
     }
 
     private void initButtons() {
-        addCertificationButton = new MButton("Добавить").withIcon(FontAwesome.PLUS);
-        editCertificationButton = new MButton("Изменить").withIcon(FontAwesome.PENCIL);
-        deleteCertificationButton = new MButton("Удалить").withIcon(FontAwesome.TRASH_O);
+        addCertificationButton = new MButton("Добавить", this::addCertification).withIcon(FontAwesome.PLUS);
+        editCertificationButton = new MButton("Изменить", this::editEmployee).withIcon(FontAwesome.PENCIL);
+        deleteCertificationButton = new MButton("Удалить", this::deleteCertification).withIcon(FontAwesome.TRASH_O);
 
         controlButtonsLayout = new MHorizontalLayout(
                 addCertificationButton,
@@ -98,31 +98,45 @@ public class CertificationsViewImpl extends VerticalLayout implements Certificat
     }
 
     private void initTable() {
-        certificationContainer = new BeanItemContainer<>(Certification.class);
-        certificationTable = new Table("Аттестация сотрудников", certificationContainer);
+        certificationTable = new MTable<>(Certification.class);
+        certificationTable.withCaption("Аттестация сотрудников");
+        certificationTable.addMValueChangeListener(this::tableElementSelection);
         certificationTable.setImmediate(true);
         certificationTable.setWidth(100, Unit.PERCENTAGE);
         setupTableColumns();
     }
 
     private void setupTableColumns() {
-        certificationContainer.addNestedContainerBean(Certification.EMPLOYEE);
+        certificationTable.addGeneratedColumn(Certification.EMPLOYEE, (source, itemId, columnId) ->
+                ((Employee) source.getItem(itemId).getItemProperty(columnId).getValue()).getSurname() + " "
+                        + ((Employee) source.getItem(itemId).getItemProperty(columnId).getValue()).getForename());
+        //certificationTable.addGeneratedColumn("employee.department");
 
-        certificationTable.setColumnHeader(Certification.EMPLOYEE_SURNAME, "Фамилия");
-        certificationTable.setColumnHeader(Certification.EMPLOYEE_FORENAME, "Имя");
-        certificationTable.setColumnHeader(Certification.EMPLOYEE_POSITION, "Должность");
-        certificationTable.setColumnHeader(Certification.RESPONSIBILITY, "Ответственность");
-        certificationTable.setColumnHeader(Certification.COMPETENCE, "Компетентность");
-        certificationTable.setColumnHeader(Certification.COMMUNICABILITY, "Коммуникабельность");
-        certificationTable.setColumnHeader(Certification.TEST_RESULT, "Результаты теста");
+        certificationTable.withProperties(
+                Certification.EMPLOYEE,
+                Certification.YEAR,
+                Certification.QUARTER,
+                Certification.RESPONSIBILITY,
+                Certification.COMPETENCE,
+                Certification.COMMUNICABILITY,
+                Certification.TEST_RESULT
+        );
+        certificationTable.withColumnHeaders(
+                "Фамилия Имя",
+                "Год аттестации",
+                "Квартал аттестации",
+                "Ответственность",
+                "Компетентность",
+                "Коммуникабельность",
+                "Результаты теста"
+        );
     }
 
     private void constructLayout() {
         MVerticalLayout resultLayout = new MVerticalLayout(
                 new MHorizontalLayout(
                         yearSelect,
-                        quarterSelect,
-                        gradeSelect
+                        quarterSelect
                 ).withMargin(false),
                 controlButtonsLayout,
                 certificationTable
@@ -132,10 +146,61 @@ public class CertificationsViewImpl extends VerticalLayout implements Certificat
 
     @Override
     public void setCertifications(Iterable<Certification> certifications) {
-        certificationContainer.removeAllItems();
-        certificationContainer.addAll((Collection<? extends Certification>) certifications);
+        certificationTable.removeAllItems();
+        certificationTable.addBeans((Collection<Certification>) certifications);
     }
 
     @Override
-    public void enter(ViewChangeListener.ViewChangeEvent viewChangeEvent) {}
+    public void emptyCertificationNotification() {
+        notificationManager.showNotification("Выберете аттестацию из таблицы", MyTheme.NOTIFICATION_WARNING);
+    }
+
+    @Override
+    public void saveCertificationSuccessNotification() {
+        notificationManager.showNotification("Новая аттестация успешно создана", MyTheme.NOTIFICATION_SUCCESS);
+    }
+
+    @Override
+    public void editCertificationSuccessNotification() {
+        notificationManager.showNotification("Данные аттестации успешно изменены", MyTheme.NOTIFICATION_SUCCESS);
+    }
+
+    @Override
+    public void deleteCertificationSuccessNotification() {
+        notificationManager.showNotification("Аттестация успешно удалена", MyTheme.NOTIFICATION_SUCCESS);
+    }
+
+    @Override
+    public void enter(ViewChangeListener.ViewChangeEvent viewChangeEvent) {
+        editCertificationButton.setEnabled(false);
+        deleteCertificationButton.setEnabled(false);
+    }
+
+    private void addCertification(Button.ClickEvent event) {
+        eventBus.publish(EventScope.UI, this, new CertificationAddEvent());
+    }
+
+    private void editEmployee(Button.ClickEvent event) {
+        Certification selectedCertification = certificationTable.getValue();
+        if (selectedCertification != null && certificationTable.getItemIds().contains(selectedCertification)) {
+            eventBus.publish(EventScope.UI, this, new CertificationEditEvent(selectedCertification));
+        } else {
+            emptyCertificationNotification();
+        }
+    }
+
+    private void deleteCertification(Button.ClickEvent event) {
+        // todo confirmation dialog
+        Certification selectedCertification = certificationTable.getValue();
+        if (selectedCertification != null && certificationTable.getItemIds().contains(selectedCertification)) {
+            eventBus.publish(EventScope.UI, this, new CertificationDeleteEvent(selectedCertification));
+        } else {
+            emptyCertificationNotification();
+        }
+    }
+
+    private void tableElementSelection(MValueChangeEvent event) {
+        editCertificationButton.setEnabled(event.getValue() != null);
+        deleteCertificationButton.setEnabled(event.getValue() != null);
+    }
 }

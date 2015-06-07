@@ -5,6 +5,7 @@ import com.analitics.managerialstaff.backend.model.enums.Gender;
 import com.analitics.managerialstaff.backend.model.enums.Grade;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.List;
@@ -14,6 +15,7 @@ import java.util.List;
  */
 @Data
 @EqualsAndHashCode(exclude = {"certifications", "educations", "trainings"})
+@ToString(exclude = {"certifications", "educations", "trainings"})
 @Entity
 public class Employee {
 
@@ -90,5 +92,27 @@ public class Employee {
         educations.remove(education);
         //remove myself from the twitter account
         education.setEmployee(null);
+    }
+
+    public void addCertification(Certification certification) {
+        //prevent endless loop
+        if (certifications.contains(certification)) {
+            return;
+        }
+        //add new account
+        certifications.add(certification);
+        //set myself into the twitter account
+        certification.setEmployee(this);
+    }
+
+    public void removeCertification(Certification certification) {
+        //prevent endless loop
+        if (!certifications.contains(certification)) {
+            return;
+        }
+        //remove the account
+        certifications.remove(certification);
+        //remove myself from the twitter account
+        certification.setEmployee(null);
     }
 }

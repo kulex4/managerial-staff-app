@@ -31,6 +31,8 @@ public class CertificationServiceImpl implements CertificationService {
 
     @Override
     public Iterable<Certification> findCertifications() {
-        return certificationRepository.findAll();
+        Iterable<Certification> certifications = certificationRepository.findAll();
+        certifications.forEach(certification -> certification.getEmployee().getEducations().size());
+        return certifications;
     }
 }

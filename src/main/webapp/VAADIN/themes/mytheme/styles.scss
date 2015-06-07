@@ -1,0 +1,7 @@
+@import "mytheme.scss";
+
+@include v-font(Larsseit-Regular, '../../../../mytheme/fonts/Larsseit-Regular/Larsseit-Regular');
+
+.mytheme {
+  @include mytheme;
+}

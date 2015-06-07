@@ -62,7 +62,6 @@ public class TrainingUniformityCoefViewImpl extends VerticalLayout implements Tr
         beanItemContainer = new BeanItemContainer<>(TrainingUniformityCoefRow.class);
         table = new MTable<>(TrainingUniformityCoefRow.class);
         table.setCaption("Анализ равномерности повышения квалификации специалистов");
-        table.setStyleName(MyTheme.TABLE_CELL_WRAPING);
         table.setSelectable(false);
         table.setWidth(100, Unit.PERCENTAGE);
         table.setHeight(300, Unit.PIXELS);

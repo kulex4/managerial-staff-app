@@ -1,11 +1,7 @@
 @import "../valo/valo.scss";
 @import "addons.scss";
-/* Parameters for Valo */
 
-$v-app-background-color: #ffffff;
-$v-font-family: 'Open Sans', sans-serif, 'Source Sans Pro';
-// $v-font-color: black;
-
+$v-font-family: 'Larsseit-Regular';
 
 @mixin mytheme {
   @include valo;
@@ -19,12 +15,7 @@ $v-font-family: 'Open Sans', sans-serif, 'Source Sans Pro';
     width: 0;
   }
 
-  .boldheader .v-grid-cell  {
-    font-weight: bold;
-    text-align: center;
-  }
-
-  .wordwrap-table .v-table-cell-wrapper {
+  .v-table-header-wrap {
     /* Do not specify any margins, paddings or borders here */
     white-space: normal;
     overflow: hidden;

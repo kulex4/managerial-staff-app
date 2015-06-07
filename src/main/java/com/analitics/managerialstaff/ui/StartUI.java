@@ -21,7 +21,7 @@ import org.vaadin.spring.navigator.SpringViewProvider;
  * @author by nikolai.pashkevich
  */
 @Title("Managerial Staff Application")
-@Theme("valo")
+@Theme("mytheme")
 @Widgetset("common.MyAppWidgetset")
 @VaadinUI
 @VaadinUIScope
