@@ -9,4 +9,5 @@ public interface CertificationService {
     void saveOrUpdate(Certification certification);
     void remove(Certification certification);
     Iterable<Certification> findCertifications();
+    Certification findById(Long id);
 }

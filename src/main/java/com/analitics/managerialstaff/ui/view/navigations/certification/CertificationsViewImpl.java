@@ -9,6 +9,7 @@ import com.analitics.managerialstaff.ui.components.events.certifications.Certifi
 import com.analitics.managerialstaff.ui.components.events.certifications.CertificationDeleteEvent;
 import com.analitics.managerialstaff.ui.components.events.certifications.CertificationEditEvent;
 import com.analitics.managerialstaff.ui.theme.MyTheme;
+import com.analitics.managerialstaff.ui.view.navigations.certification.dto.CertificationDTO;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.*;
@@ -45,7 +46,7 @@ public class CertificationsViewImpl extends VerticalLayout implements Certificat
     private Button addCertificationButton;
     private Button deleteCertificationButton;
     private Button editCertificationButton;
-    private MTable<Certification> certificationTable;
+    private MTable<CertificationDTO> certificationTable;
 
     @PostConstruct
     private void init() {
@@ -98,7 +99,7 @@ public class CertificationsViewImpl extends VerticalLayout implements Certificat
     }
 
     private void initTable() {
-        certificationTable = new MTable<>(Certification.class);
+        certificationTable = new MTable<>(CertificationDTO.class);
         certificationTable.withCaption("Аттестация сотрудников");
         certificationTable.addMValueChangeListener(this::tableElementSelection);
         certificationTable.setImmediate(true);
@@ -107,22 +108,21 @@ public class CertificationsViewImpl extends VerticalLayout implements Certificat
     }
 
     private void setupTableColumns() {
-        certificationTable.addGeneratedColumn(Certification.EMPLOYEE, (source, itemId, columnId) ->
-                ((Employee) source.getItem(itemId).getItemProperty(columnId).getValue()).getSurname() + " "
-                        + ((Employee) source.getItem(itemId).getItemProperty(columnId).getValue()).getForename());
-        //certificationTable.addGeneratedColumn("employee.department");
-
         certificationTable.withProperties(
-                Certification.EMPLOYEE,
-                Certification.YEAR,
-                Certification.QUARTER,
-                Certification.RESPONSIBILITY,
-                Certification.COMPETENCE,
-                Certification.COMMUNICABILITY,
-                Certification.TEST_RESULT
+                CertificationDTO.SURNAME,
+                CertificationDTO.FORENAME,
+                CertificationDTO.POSITION,
+                CertificationDTO.YEAR,
+                CertificationDTO.QUARTER,
+                CertificationDTO.RESPONSIBILITY,
+                CertificationDTO.COMPETENCE,
+                CertificationDTO.COMMUNICABILITY,
+                CertificationDTO.TEST_RESULT
         );
         certificationTable.withColumnHeaders(
-                "Фамилия Имя",
+                "Фамилия",
+                "Имя",
+                "Должность",
                 "Год аттестации",
                 "Квартал аттестации",
                 "Ответственность",
@@ -145,9 +145,9 @@ public class CertificationsViewImpl extends VerticalLayout implements Certificat
     }
 
     @Override
-    public void setCertifications(Iterable<Certification> certifications) {
+    public void setCertifications(Iterable<CertificationDTO> certifications) {
         certificationTable.removeAllItems();
-        certificationTable.addBeans((Collection<Certification>) certifications);
+        certificationTable.addBeans((Collection<CertificationDTO>) certifications);
     }
 
     @Override
@@ -181,7 +181,7 @@ public class CertificationsViewImpl extends VerticalLayout implements Certificat
     }
 
     private void editEmployee(Button.ClickEvent event) {
-        Certification selectedCertification = certificationTable.getValue();
+        CertificationDTO selectedCertification = certificationTable.getValue();
         if (selectedCertification != null && certificationTable.getItemIds().contains(selectedCertification)) {
             eventBus.publish(EventScope.UI, this, new CertificationEditEvent(selectedCertification));
         } else {
@@ -191,7 +191,7 @@ public class CertificationsViewImpl extends VerticalLayout implements Certificat
 
     private void deleteCertification(Button.ClickEvent event) {
         // todo confirmation dialog
-        Certification selectedCertification = certificationTable.getValue();
+        CertificationDTO selectedCertification = certificationTable.getValue();
         if (selectedCertification != null && certificationTable.getItemIds().contains(selectedCertification)) {
             eventBus.publish(EventScope.UI, this, new CertificationDeleteEvent(selectedCertification));
         } else {

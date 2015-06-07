@@ -10,6 +10,7 @@ import com.analitics.managerialstaff.ui.components.events.certifications.Certifi
 import com.analitics.managerialstaff.ui.components.events.certifications.CertificationSaveEvent;
 import com.analitics.managerialstaff.ui.view.navigations.certification.CertificationsView;
 import com.analitics.managerialstaff.ui.components.commands.CertificationsMenuCommand;
+import com.analitics.managerialstaff.ui.view.navigations.certification.dto.CertificationDTO;
 import com.analitics.managerialstaff.ui.view.navigations.certification.forms.CertificationAddEditForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.vaadin.spring.annotation.VaadinComponent;
@@ -19,6 +20,9 @@ import org.vaadin.spring.events.EventScope;
 import org.vaadin.spring.events.annotation.EventBusListenerMethod;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * @author by nikolai.pashkevich
@@ -43,7 +47,7 @@ public class CertificationsPresenter extends AbstractPresenter<CertificationsVie
 
     @EventBusListenerMethod(scope = EventScope.UI)
     private void onCertificationsMenuItemSelected(CertificationsMenuCommand certificationsMenuCommand) {
-        getView().setCertifications(certificationService.findCertifications());
+        getView().setCertifications(convertCertificationsToDTOs(certificationService.findCertifications()));
     }
 
     @EventBusListenerMethod(scope = EventScope.UI)
@@ -55,16 +59,18 @@ public class CertificationsPresenter extends AbstractPresenter<CertificationsVie
 
     @EventBusListenerMethod(scope = EventScope.UI)
     private void onCertificationEditEvent(CertificationEditEvent event) {
-        certificationAddEditForm.setFormEntity(event.getCertification());
+        Certification certification = certificationService.findById(event.getCertification().getId());
+        certificationAddEditForm.setFormEntity(certification);
         certificationAddEditForm.setEmployees(employeeService.findEmployees());
         certificationAddEditForm.openInModalWindow();
     }
 
     @EventBusListenerMethod(scope = EventScope.UI)
     private void onCertificationDeleteEvent(CertificationDeleteEvent event) {
-        certificationService.remove(event.getCertification());
+        Certification certificationToDelete = certificationService.findById(event.getCertification().getId());
+        certificationService.remove(certificationToDelete);
         getView().deleteCertificationSuccessNotification();
-        getView().setCertifications(certificationService.findCertifications());
+        getView().setCertifications(convertCertificationsToDTOs(certificationService.findCertifications()));
     }
 
     @EventBusListenerMethod(scope = EventScope.UI)
@@ -75,6 +81,14 @@ public class CertificationsPresenter extends AbstractPresenter<CertificationsVie
         } else {
             getView().editCertificationSuccessNotification();
         }
-        getView().setCertifications(certificationService.findCertifications());
+        getView().setCertifications(convertCertificationsToDTOs(certificationService.findCertifications()));
+    }
+
+    private List<CertificationDTO> convertCertificationsToDTOs(Iterable<Certification> certifications) {
+        List<CertificationDTO> certificationDTOs = new ArrayList<>();
+        for (Certification certification : certifications) {
+            certificationDTOs.add(new CertificationDTO(certification));
+        }
+        return certificationDTOs;
     }
 }

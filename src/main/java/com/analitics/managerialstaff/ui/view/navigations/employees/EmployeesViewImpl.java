@@ -85,8 +85,8 @@ public class EmployeesViewImpl extends VerticalLayout implements EmployeesView {
 
     private void setupTableColumns() {
         employeesTable.withProperties(
-                Employee.FORENAME,
                 Employee.SURNAME,
+                Employee.FORENAME,
                 Employee.GENDER,
                 Employee.AGE,
                 Employee.GRADE,

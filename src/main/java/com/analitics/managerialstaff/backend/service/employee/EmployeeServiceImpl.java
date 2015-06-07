@@ -37,6 +37,8 @@ public class EmployeeServiceImpl implements EmployeeService {
     public Iterable<Employee> findEmployees() {
         Iterable<Employee> employees = employeeRepository.findAll();
         employees.forEach(employee -> employee.getEducations().size());
+        employees.forEach(employee -> employee.getCertifications().size());
+        employees.forEach(employee -> employee.getTrainings().size());
         return employees;
     }
 
@@ -45,14 +47,20 @@ public class EmployeeServiceImpl implements EmployeeService {
         if (department != null && grade != null) {
             Iterable<Employee> employees = employeeRepository.findByDepartmentAndGrade(department, grade);
             employees.forEach(employee -> employee.getEducations().size());
+            employees.forEach(employee -> employee.getCertifications().size());
+            employees.forEach(employee -> employee.getTrainings().size());
             return employees;
         } else  if (department != null) {
             Iterable<Employee> employees = employeeRepository.findByDepartment(department);
             employees.forEach(employee -> employee.getEducations().size());
+            employees.forEach(employee -> employee.getCertifications().size());
+            employees.forEach(employee -> employee.getTrainings().size());
             return employees;
         } else if (grade != null) {
             Iterable<Employee> employees = employeeRepository.findByGrade(grade);
             employees.forEach(employee -> employee.getEducations().size());
+            employees.forEach(employee -> employee.getCertifications().size());
+            employees.forEach(employee -> employee.getTrainings().size());
             return employees;
         } else {
             return Collections.emptyList();

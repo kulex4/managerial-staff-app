@@ -35,4 +35,11 @@ public class CertificationServiceImpl implements CertificationService {
         certifications.forEach(certification -> certification.getEmployee().getEducations().size());
         return certifications;
     }
+
+    @Override
+    public Certification findById(Long id) {
+        Certification certification = certificationRepository.findOne(id);
+        certification.getEmployee().getCertifications().size();
+        return certification;
+    }
 }

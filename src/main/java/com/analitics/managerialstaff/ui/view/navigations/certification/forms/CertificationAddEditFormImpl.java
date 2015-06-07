@@ -5,7 +5,6 @@ import com.analitics.managerialstaff.backend.model.Employee;
 import com.analitics.managerialstaff.ui.common.forms.EntityFormImpl;
 import com.analitics.managerialstaff.ui.components.events.certifications.CertificationSaveEvent;
 import com.vaadin.data.util.BeanItemContainer;
-import com.vaadin.data.validator.IntegerRangeValidator;
 import com.vaadin.data.validator.NullValidator;
 import com.vaadin.ui.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,9 +39,6 @@ public class CertificationAddEditFormImpl
     private TextField testResult;
 
     private BeanItemContainer<Employee> employeeBeanItemContainer;
-
-    public static final int SCORE_MIN_VALUE = 1;
-    public static final int SCORE_MAX_VALUE = 100;
 
     @Autowired
     public CertificationAddEditFormImpl(EventBus.UIEventBus eventBus) {
@@ -82,51 +78,15 @@ public class CertificationAddEditFormImpl
                 .withFullWidth();
         responsibility = new MTextField("Ответственность")
                 .withInputPrompt("Ответственность")
-                /*.withValidator(new IntegerRangeValidator(
-                        String.format(
-                                "Ответственность должна быть от %d до %d",
-                                SCORE_MIN_VALUE,
-                                SCORE_MAX_VALUE
-                        ),
-                        SCORE_MIN_VALUE,
-                        SCORE_MAX_VALUE
-                ))*/
                 .withFullWidth();
         competence = new MTextField("Компетентность")
                 .withInputPrompt("Компетентность")
-                /*.withValidator(new IntegerRangeValidator(
-                        String.format(
-                                "Компетентность должна быть от %d до %d",
-                                SCORE_MIN_VALUE,
-                                SCORE_MAX_VALUE
-                        ),
-                        SCORE_MIN_VALUE,
-                        SCORE_MAX_VALUE
-                ))*/
                 .withFullWidth();
         communicability = new MTextField("Коммуникабельность")
                 .withInputPrompt("Коммуникабельность")
-                /*.withValidator(new IntegerRangeValidator(
-                        String.format(
-                                "Коммуникабельность должна быть от %d до %d",
-                                SCORE_MIN_VALUE,
-                                SCORE_MAX_VALUE
-                        ),
-                        SCORE_MIN_VALUE,
-                        SCORE_MAX_VALUE
-                ))*/
                 .withFullWidth();
         testResult = new MTextField("Результаты теста")
                 .withInputPrompt("Результаты теста")
-                /*.withValidator(new IntegerRangeValidator(
-                        String.format(
-                                "Результаты теста должны быть от %d до %d",
-                                SCORE_MIN_VALUE,
-                                SCORE_MAX_VALUE
-                        ),
-                        SCORE_MIN_VALUE,
-                        SCORE_MAX_VALUE
-                ))*/
                 .withFullWidth();
     }
 

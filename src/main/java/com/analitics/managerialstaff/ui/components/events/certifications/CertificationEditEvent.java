@@ -1,6 +1,6 @@
 package com.analitics.managerialstaff.ui.components.events.certifications;
 
-import com.analitics.managerialstaff.backend.model.Certification;
+import com.analitics.managerialstaff.ui.view.navigations.certification.dto.CertificationDTO;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -10,9 +10,9 @@ import lombok.Setter;
 @Getter
 @Setter
 public class CertificationEditEvent {
-    private Certification certification;
+    private CertificationDTO certification;
 
-    public CertificationEditEvent(Certification certification) {
+    public CertificationEditEvent(CertificationDTO certification) {
         this.certification = certification;
     }
 }

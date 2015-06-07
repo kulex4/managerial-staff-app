@@ -1,6 +1,7 @@
 package com.analitics.managerialstaff.ui.view.navigations.certification;
 
 import com.analitics.managerialstaff.backend.model.Certification;
+import com.analitics.managerialstaff.ui.view.navigations.certification.dto.CertificationDTO;
 import com.vaadin.navigator.View;
 
 /**
@@ -8,7 +9,7 @@ import com.vaadin.navigator.View;
  */
 public interface CertificationsView extends View {
     String NAME = "certification";
-    void setCertifications(Iterable<Certification> certifications);
+    void setCertifications(Iterable<CertificationDTO> certifications);
     void emptyCertificationNotification();
     void saveCertificationSuccessNotification();
     void editCertificationSuccessNotification();
